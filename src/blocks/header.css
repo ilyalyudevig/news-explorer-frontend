@@ -1,0 +1,41 @@
+.header__content {
+  width: 608px;
+  margin: 0 auto;
+  color: #fff;
+}
+
+.header__title {
+  font-family: "Roboto Slab", Arial, Helvetica, sans-serif;
+  font-size: 60px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.06667;
+  margin-top: 80px;
+  margin-bottom: 32px;
+}
+
+.header__paragraph {
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.33333;
+  margin: 0;
+}
+
+.header__search-form {
+  margin-top: 88px;
+  margin-bottom: 78px;
+}
+
+.header__bg-image {
+  width: 100%;
+  max-width: 1440px;
+  height: 576px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: -1;
+  object-fit: cover;
+}

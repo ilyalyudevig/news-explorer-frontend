@@ -1,0 +1,15 @@
+.footer {
+  height: 80px;
+  padding: 30px 66px 30px 106px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer__copyright {
+  color: #b6bcbf;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375;
+}
