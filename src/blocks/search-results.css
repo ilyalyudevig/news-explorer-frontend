@@ -1,0 +1,39 @@
+.search-results {
+  background-color: #f5f6f7;
+  padding: 80px 104px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-results__title {
+  margin: 0 auto 64px 0;
+  color: #1a1b22;
+  font-family: "Roboto Slab", Arial, Helvetica, sans-serif;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.search-results__cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.search-results__button {
+  margin-top: 64px;
+  padding: 20px 0;
+  width: 288px;
+  height: 64px;
+  color: #1a1b22;
+  border: none;
+  border-radius: 80px;
+  background-color: #fff;
+}
+
+.search-results__button:hover {
+  background-color: #e8e8e8;
+}

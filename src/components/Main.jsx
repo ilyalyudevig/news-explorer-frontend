@@ -1,8 +1,10 @@
 import About from "./About";
+import SearchResults from "./SearchResults";
 
 function Main() {
   return (
-    <main>
+    <main className="main">
+      <SearchResults />
       <About />
     </main>
   );
