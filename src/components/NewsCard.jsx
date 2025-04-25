@@ -1,8 +1,13 @@
 import cardImg from "../images/card_image-min.jpg";
+import Button from "./Button";
 
 function NewsCard() {
   return (
     <article className="card">
+      <Button
+        className="card__save-button"
+        onClick={() => console.log("clicked")}
+      />
       <img className="card__image" src={cardImg} />
       <div className="card__content">
         <p className="card__date">November 4, 2020</p>

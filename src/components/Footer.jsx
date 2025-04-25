@@ -2,10 +2,12 @@ import ghIconSrc from "../images/github.svg";
 import fbIconSrc from "../images/facebook.svg";
 
 function Footer() {
+  const date = new Date();
+
   return (
     <footer className="footer">
       <p className="footer__copyright">
-        &copy; 2024 Supersite, Powered by News API
+        &copy; {`${date.getFullYear()}`} Ilya Lyudevig, Powered by News API
       </p>
       <ul className="footer__links-list links">
         <li className="links__item">

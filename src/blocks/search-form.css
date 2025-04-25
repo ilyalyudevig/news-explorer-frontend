@@ -28,3 +28,7 @@
   background-color: #2f71e5;
   margin-left: auto;
 }
+
+.search-form__button:hover {
+  background-color: #347eff;
+}

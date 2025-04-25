@@ -4,6 +4,42 @@
   border-radius: 16px;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.card__save-button {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.card__save-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../images/bookmark-icon.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.5;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.card__save-button:hover::before {
+  opacity: 1;
+}
+
+.card__save-button--checked::before {
+  background-image: url("../images/bookmark-icon-checked.svg");
 }
 
 .card__image {
