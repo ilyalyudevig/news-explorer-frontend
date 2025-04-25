@@ -1,30 +1,100 @@
 .form {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.form__container {
-  border-radius: 100px;
-  background-color: #fff;
+.form__fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
   display: flex;
+  flex-direction: column;
+}
+
+.form__label {
+  color: #2f71e5;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .form__input {
-  border: none;
-  margin: 21px 24px;
-  width: 376px;
-  color: #b6bcbf;
-  font-family: "Roboto", Arial, Helvetica, sans-serif;
-  font-size: 16px;
-  font-style: normal;
+  padding: 9px 0;
+  font-family: "Inter", "Arial", sans-serif;
+  font-size: 14px;
   font-weight: 400;
-  line-height: 1.375;
+  line-height: 1.2;
+  color: #000;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  width: 100%;
+  display: flex;
+  align-items: start;
+  padding-bottom: 9px;
 }
 
-.form__button {
-  width: 168px;
-  padding: 20px 56px;
-  border-radius: 100px;
-  border: none;
+.form__input_type_error {
+  border-bottom: 1px solid #ff0000;
+}
+
+.form__input-error-container {
+  height: 30px;
+}
+
+.form__input-error {
+  margin: 5px 0 0;
+  color: #ff0000;
+  font-family: "Inter", "Arial", sans-serif;
+  font-size: 12px;
+  line-height: 1.2;
+  max-width: 358px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.form__button--signin {
+  width: 100%;
+  height: 64px;
   background-color: #2f71e5;
-  margin-left: auto;
+  border: none;
+}
+
+.form_button--signin:disabled {
+  background-color: #e6e8eb;
+  color: #b6bcbf;
+}
+
+.form__second-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 0 28px;
+}
+
+.form_button--signup {
+  border: none;
+  background-color: transparent;
+  color: #2f71e5;
+  text-align: center;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: auto;
+  padding: 0;
+}
+
+.form__paragraph {
+  color: #000;
+  text-align: center;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0;
 }

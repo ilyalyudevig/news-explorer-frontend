@@ -3,6 +3,7 @@
   justify-content: center;
   justify-items: center;
   list-style-type: none;
+  margin: 0;
 }
 
 .links__item {

@@ -1,5 +1,5 @@
-import githubSrc from "../images/github.svg";
-import facebookSrc from "../images/facebook.svg";
+import ghIconSrc from "../images/github.svg";
+import fbIconSrc from "../images/facebook.svg";
 
 function Footer() {
   return (
@@ -20,7 +20,7 @@ function Footer() {
         </li>
         <li className="links__item">
           <a className="links__link" href="https://github.com/ilyalyudevig">
-            <img src={githubSrc} />
+            <img src={ghIconSrc} />
           </a>
         </li>
         <li className="links__item">
@@ -28,7 +28,7 @@ function Footer() {
             className="links__link"
             href="https://www.facebook.com/ilya.lyudevig"
           >
-            <img src={facebookSrc} />
+            <img src={fbIconSrc} />
           </a>
         </li>
       </ul>

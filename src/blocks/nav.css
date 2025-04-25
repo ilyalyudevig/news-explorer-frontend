@@ -48,7 +48,7 @@
   padding-right: 8px;
 }
 
-.nav__button {
+.nav__button--signin {
   box-sizing: border-box;
   background-color: transparent;
   border: 1px solid #fff;

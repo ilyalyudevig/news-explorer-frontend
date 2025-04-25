@@ -9,7 +9,7 @@ function Navigation() {
           <a className="nav__nav-link">Home</a>
         </li>
         <li className="nav__item">
-          <Button buttonText="Sign in" className="nav__button" />
+          <Button buttonText="Sign in" className="nav__button--signin" />
         </li>
       </ul>
     </nav>
