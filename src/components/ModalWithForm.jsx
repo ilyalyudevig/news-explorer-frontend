@@ -2,22 +2,39 @@ import Modal from "./Modal";
 import Form from "./Form";
 import Button from "./Button";
 
-function ModalWithForm({ title, children }) {
+function ModalWithForm({
+  title,
+  name,
+  activeModal,
+  modalIsOpen,
+  handleModalClose,
+  buttonText,
+  switchBtnHandler,
+  switchBtnText,
+  children,
+}) {
   return (
-    <Modal title={title}>
+    <Modal
+      title={title}
+      name={name}
+      activeModal={activeModal}
+      modalIsOpen={modalIsOpen}
+      handleModalClose={handleModalClose}
+    >
       <Form>
         {children}
         <Button
-          buttonText="Sign in"
+          buttonText={buttonText}
           type="submit"
-          className="form__button--signin"
+          className={`form__button--main`}
         />
         <div className="form__second-btn-container">
           <p className="form__paragraph">or&nbsp;</p>
           <Button
-            buttonText="Sign up"
+            buttonText={switchBtnText}
             type="button"
-            className="form_button--signup"
+            className={`form_button--second`}
+            onClick={switchBtnHandler}
           />
         </div>
       </Form>

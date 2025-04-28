@@ -1,6 +1,6 @@
 import Button from "./Button";
 
-function Navigation() {
+function Navigation({ handleSignInModalOpen }) {
   return (
     <nav className="header__nav nav">
       <h1 className="nav__title">NewsExplorer</h1>
@@ -9,7 +9,11 @@ function Navigation() {
           <a className="nav__nav-link">Home</a>
         </li>
         <li className="nav__item">
-          <Button buttonText="Sign in" className="nav__button--signin" />
+          <Button
+            buttonText="Sign in"
+            className="nav__button--signin"
+            onClick={handleSignInModalOpen}
+          />
         </li>
       </ul>
     </nav>

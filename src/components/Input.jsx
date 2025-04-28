@@ -8,6 +8,8 @@ function Input({
   required,
   ariaLabel,
   errorClass,
+  value,
+  onChange,
 }) {
   return (
     <>
@@ -24,6 +26,8 @@ function Input({
         maxLength={maxLength}
         required={required}
         aria-label={ariaLabel}
+        value={value}
+        onChange={onChange}
       />
       <div className="form__input-error-container">
         <p className={`form__input-error ${errorClass}`}></p>
