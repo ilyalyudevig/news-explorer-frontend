@@ -14,7 +14,7 @@ function RegisterModal({
   switchBtnText,
   handleRegister,
 }) {
-  const { values, setValues, handleChange } = useForm({
+  const { values, setValues, handleChange, errors, getInputRef } = useForm({
     registerEmail: "",
     registerPassword: "",
     username: "",
@@ -52,35 +52,44 @@ function RegisterModal({
         type="email"
         name="registerEmail"
         placeholder="Enter email"
-        minLength="1"
-        maxLength="30"
+        minLength={5}
+        maxLength={254}
         required={true}
         ariaLabel="Email"
-        errorClass="email-input-error"
         value={values.registerEmail}
         onChange={handleChange}
+        inputRef={getInputRef("registerEmail")}
+        errorClass={errors.registerEmail ? "form__input-error_active" : ""}
+        errorMessage={errors.registerEmail}
       />
       <Input
         label="Password"
         type="password"
         name="registerPassword"
         placeholder="Enter password"
+        minLength={8}
+        maxLength={72}
         required={true}
         ariaLabel="Password"
-        errorClass="password-input-error"
         value={values.registerPassword}
         onChange={handleChange}
+        inputRef={getInputRef("registerPassword")}
+        errorClass={errors.registerPassword ? "form__input-error_active" : ""}
+        errorMessage={errors.registerPassword}
       />
       <Input
         label="Username"
         type="text"
         name="username"
         placeholder="Enter your username"
+        minLength={2}
+        maxLength={30}
         required={true}
         ariaLabel="Username"
-        errorClass="username-input-error"
         value={values.username}
         onChange={handleChange}
+        errorClass={errors.username ? "form__input-error_active" : ""}
+        errorMessage={errors.username}
       />
     </ModalWithForm>
   );

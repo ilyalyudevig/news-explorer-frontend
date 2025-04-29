@@ -10,6 +10,8 @@ function Input({
   errorClass,
   value,
   onChange,
+  inputRef,
+  errorMessage,
 }) {
   return (
     <>
@@ -28,9 +30,10 @@ function Input({
         aria-label={ariaLabel}
         value={value}
         onChange={onChange}
+        ref={inputRef}
       />
       <div className="form__input-error-container">
-        <p className={`form__input-error ${errorClass}`}></p>
+        <p className={`form__input-error ${errorClass}`}>{errorMessage}</p>
       </div>
     </>
   );

@@ -14,7 +14,7 @@ function LoginModal({
   switchBtnText,
   handleLogin,
 }) {
-  const { values, setValues, handleChange } = useForm({
+  const { values, setValues, handleChange, errors, getInputRef } = useForm({
     email: "",
     password: "",
   });
@@ -50,24 +50,30 @@ function LoginModal({
         type="email"
         name="email"
         placeholder="Enter email"
-        minLength="1"
-        maxLength="30"
+        minLength={5}
+        maxLength={254}
         required={true}
         ariaLabel="Email"
-        errorClass="title-input-error"
         value={values.email}
         onChange={handleChange}
+        inputRef={getInputRef("email")}
+        errorClass={errors.email ? "form__input-error_active" : ""}
+        errorMessage={errors.email}
       />
       <Input
         label="Password"
         type="password"
         name="password"
         placeholder="Enter password"
+        minLength={8}
+        maxLength={72}
         required={true}
         ariaLabel="Password"
-        errorClass="url-input-error"
         value={values.password}
         onChange={handleChange}
+        inputRef={getInputRef("password")}
+        errorClass={errors.password ? "form__input-error_active" : ""}
+        errorMessage={errors.password}
       />
     </ModalWithForm>
   );
