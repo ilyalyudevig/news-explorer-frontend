@@ -6,14 +6,19 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(196, 196, 196, 0.1);
-  color: #fff;
 }
 
 .nav__title {
+  color: #fff;
   font-family: "Roboto Slab", Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: bold;
   line-height: 1.2;
+  margin: 0;
+}
+
+.nav__title--black {
+  color: #1a1b22;
 }
 
 .nav__items {
@@ -28,28 +33,70 @@
 
 .nav__item {
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .nav__nav-link {
   box-sizing: border-box;
-  width: 68px;
+  width: auto;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-family: Roboto;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
   line-height: 1.33;
-  border-bottom: 3px solid #fff;
   height: 100%;
+  color: #b6bcbf;
+  text-decoration: none;
+}
+
+.nav__nav-link--black {
+  color: #1a1b22;
+}
+
+.nav__nav-link--active {
+  border-bottom: 3px solid #fff;
+  color: #fff;
+}
+
+.nav__button {
+  box-sizing: border-box;
+  padding: 12px 15px;
+  border: 1px solid #fff;
+  border-radius: 100px;
+  color: #fff;
+  text-align: center;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.33333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.nav__button--black {
+  color: #1a1b22;
+  border-color: #1a1b22;
 }
 
 .nav__button--signin {
-  box-sizing: border-box;
-  background-color: transparent;
+  width: 176px;
   border: 1px solid #fff;
-  margin-top: 15px;
+  background-color: transparent;
+  height: 48px;
+}
+
+.nav__button--signout {
+  width: auto;
+  background-color: transparent;
   height: 48px;
 }

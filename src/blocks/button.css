@@ -1,17 +1,3 @@
-.button {
-  padding: 12px;
-  border-radius: 100px;
-  width: 176px;
-  color: #fff;
-  text-align: center;
-  font-family: "Robot", Arial, Helvetica, sans-serif;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.33333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.3s ease-in-out;
-  cursor: pointer;
+.button__icon {
+  margin-left: 22px;
 }

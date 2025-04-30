@@ -2,10 +2,13 @@ import backgroundImg from "../images/background-image.png";
 import Navigation from "./Navigation";
 import SearchForm from "./SearchForm";
 
-function Header({ handleSignInModalOpen }) {
+function Header({ handleSignInModalOpen, handleLogout }) {
   return (
     <header className="header">
-      <Navigation handleSignInModalOpen={handleSignInModalOpen} />
+      <Navigation
+        handleSignInModalOpen={handleSignInModalOpen}
+        handleLogout={handleLogout}
+      />
       <div className="header__content">
         <h1 className="header__title">What's going on in the&nbsp;world?</h1>
         <p className="header__paragraph">

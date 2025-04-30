@@ -1,10 +1,11 @@
 import About from "./About";
+import Preloader from "./Preloader";
 import SearchResults from "./SearchResults";
 
-function Main() {
+function Main({ isLoading }) {
   return (
     <main className="main">
-      <SearchResults />
+      {isLoading ? <Preloader /> : <SearchResults />}
       <About />
     </main>
   );

@@ -27,6 +27,14 @@
   border: none;
   background-color: #2f71e5;
   margin-left: auto;
+  color: #fff;
+  text-align: center;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.33333;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .search-form__button:hover {

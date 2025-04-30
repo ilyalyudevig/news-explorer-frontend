@@ -11,4 +11,6 @@
 @import url("./blocks/modal.css");
 @import url("./blocks/form.css");
 @import url("./blocks/card.css");
+@import url("./blocks/preloader.css");
 @import url("./blocks/search-results.css");
+@import url("./blocks/saved-news.css");
