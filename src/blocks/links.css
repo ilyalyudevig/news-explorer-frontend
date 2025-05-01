@@ -4,13 +4,17 @@
   justify-items: center;
   list-style-type: none;
   margin: 0;
+  padding: 0;
+}
+
+.links--main {
+  gap: 40px;
 }
 
 .links__item {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 40px;
 }
 
 .links__item:nth-child(3) {
@@ -26,4 +30,17 @@
   font-style: normal;
   font-weight: 400;
   line-height: 1.33333;
+}
+
+@media screen and (max-width: 320px) {
+  .links--main {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .links--social {
+    align-items: flex-start;
+    gap: 26px;
+  }
 }

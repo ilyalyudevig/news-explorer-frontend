@@ -1,7 +1,6 @@
 .nav {
   box-sizing: border-box;
   height: 80px;
-  padding: 0 104px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -99,4 +98,39 @@
   width: auto;
   background-color: transparent;
   height: 48px;
+}
+
+@media screen and (max-width: 768px) {
+  .nav {
+    height: 66px;
+  }
+
+  .nav__items {
+    gap: 16px;
+  }
+
+  .nav__nav-link {
+    font-size: 16px;
+  }
+
+  .nav__button {
+    width: 152px;
+    height: 40px;
+    font-size: 16px;
+    padding: 6px 12px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .nav__title {
+    font-family: "Roboto Slab", Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-left: 16px;
+  }
+  .nav__items {
+    display: none;
+  }
 }

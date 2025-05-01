@@ -12,3 +12,13 @@
   flex-wrap: wrap;
   gap: 16px;
 }
+
+@media screen and (max-width: 768px) {
+  .saved-news {
+    padding: 32px 40px;
+  }
+
+  .saved-news__cards {
+    gap: 8px;
+  }
+}

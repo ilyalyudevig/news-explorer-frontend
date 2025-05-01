@@ -15,3 +15,27 @@
   line-height: 1.375;
   margin: 0;
 }
+
+@media screen and (max-width: 768px) {
+  .footer {
+    padding: 20px 40px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .footer {
+    padding: 20px 16px;
+    flex-direction: column-reverse;
+    height: 176px;
+  }
+
+  .footer__links-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .footer__copyright {
+    margin-top: 38px;
+  }
+}

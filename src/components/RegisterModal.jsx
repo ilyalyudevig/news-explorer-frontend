@@ -91,6 +91,7 @@ function RegisterModal({
         errorClass={errors.username ? "form__input-error_active" : ""}
         errorMessage={errors.username}
       />
+      <p className="form__registration-error">This email is not available</p>
     </ModalWithForm>
   );
 }

@@ -11,6 +11,7 @@ function ModalWithForm({
   buttonText,
   switchBtnHandler,
   switchBtnText,
+  onSubmit,
   children,
 }) {
   return (
@@ -21,7 +22,7 @@ function ModalWithForm({
       modalIsOpen={modalIsOpen}
       handleModalClose={handleModalClose}
     >
-      <Form>
+      <Form onSubmit={onSubmit}>
         {children}
         <Button
           buttonText={buttonText}
