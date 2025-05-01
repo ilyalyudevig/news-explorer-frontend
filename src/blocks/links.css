@@ -11,6 +11,10 @@
   gap: 40px;
 }
 
+.links--social {
+  gap: 24px;
+}
+
 .links__item {
   display: flex;
   justify-content: center;
@@ -32,15 +36,10 @@
   line-height: 1.33333;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 500px) {
   .links--main {
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-  }
-
-  .links--social {
-    align-items: flex-start;
-    gap: 26px;
   }
 }

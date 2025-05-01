@@ -61,7 +61,7 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 500px) {
   .about {
     padding: 16px;
     flex-direction: column;

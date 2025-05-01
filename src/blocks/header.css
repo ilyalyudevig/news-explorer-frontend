@@ -1,9 +1,9 @@
 .header {
-  padding: 0 104px;
+  padding: 0;
 }
 
 .header__content {
-  width: 608px;
+  max-width: 608px;
   margin: 0 auto;
   color: #fff;
 }
@@ -78,12 +78,9 @@
 }
 
 @media screen and (max-width: 768px) {
-  .header {
-    padding: 0 40px;
-  }
-
   .header__content {
     max-width: 452px;
+    padding: 0 40px;
   }
 
   .header__title {
@@ -120,13 +117,13 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 500px) {
   .header {
     padding: 0;
   }
 
   .header__content {
-    width: 285px;
+    padding: 0 16px;
   }
 
   .header__title {
@@ -143,9 +140,5 @@
 
   .header__search-form {
     margin: auto 0 32px;
-  }
-
-  .header__bg-image {
-    width: 320px;
   }
 }

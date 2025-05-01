@@ -16,26 +16,33 @@
   margin: 0;
 }
 
+.footer__links-container {
+  display: flex;
+  gap: 40px;
+}
+
 @media screen and (max-width: 768px) {
   .footer {
     padding: 20px 40px;
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 500px) {
   .footer {
     padding: 20px 16px;
     flex-direction: column-reverse;
+    align-items: flex-start;
     height: 176px;
   }
 
   .footer__links-container {
-    display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     width: 100%;
   }
 
   .footer__copyright {
+    text-align: start;
     margin-top: 38px;
   }
 }
