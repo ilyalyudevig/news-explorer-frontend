@@ -1,4 +1,8 @@
 import logoutIcon from "../images/logout-icon.svg";
+import mobileMenuIcon from "../images/mobile-menu-icon.svg";
+import mobileMenuIconBlack from "../images/mobile-menu-icon-black.svg";
+import closeIcon from "../images/close-icon.svg";
+import closeIconBlack from "../images/close-icon-black.svg";
 import logoutIconBlack from "../images/logout-icon-black.svg";
 import Button from "./Button";
 
@@ -7,11 +11,21 @@ import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { useContext } from "react";
 
-function Navigation({ handleSignInModalOpen, handleLogout, color }) {
+function Navigation({
+  handleSignInModalOpen,
+  handleLogout,
+  color,
+  toggleMobileMenu,
+  isMobileMenuOpen,
+}) {
   const { isLoggedIn, currentUser } = useContext(CurrentUserContext);
 
   return (
-    <nav className="header__nav nav">
+    <nav
+      className={`header__nav nav ${
+        isMobileMenuOpen ? "nav--mobile-menu-open" : ""
+      }`}
+    >
       <Link className="nav__nav-link" to="/">
         <h1
           className={`nav__title ${
@@ -21,12 +35,29 @@ function Navigation({ handleSignInModalOpen, handleLogout, color }) {
           NewsExplorer
         </h1>
       </Link>
-      <ul className="nav__items">
-        <li className="nav__item">
+      <Button className="nav__mobile-menu-btn" onClick={toggleMobileMenu}>
+        {color === "black" ? (
+          <img
+            className="nav__mobile-menu-icon"
+            src={isMobileMenuOpen ? closeIconBlack : mobileMenuIconBlack}
+          />
+        ) : (
+          <img
+            className="nav__mobile-menu-icon"
+            src={isMobileMenuOpen ? closeIcon : mobileMenuIcon}
+          />
+        )}
+      </Button>
+      <ul
+        className={`nav__items ${isMobileMenuOpen ? "nav__items--mobile" : ""}`}
+      >
+        <li
+          className={`nav__item ${isMobileMenuOpen ? "nav__item--mobile" : ""}`}
+        >
           <Link
             className={`nav__nav-link ${
               color === "black" ? "nav__nav-link--black" : ""
-            }`}
+            } ${isMobileMenuOpen ? "nav__nav-link--mobile" : ""}`}
             to="/"
           >
             Home
@@ -34,7 +65,11 @@ function Navigation({ handleSignInModalOpen, handleLogout, color }) {
         </li>
         {isLoggedIn ? (
           <>
-            <li className="nav__item">
+            <li
+              className={`nav__item ${
+                color === "black" ? "nav__item--black" : ""
+              }`}
+            >
               <Link
                 className={`nav__nav-link ${
                   color === "black" ? "nav__nav-link--black" : ""
@@ -58,15 +93,26 @@ function Navigation({ handleSignInModalOpen, handleLogout, color }) {
             </li>
           </>
         ) : (
-          <li className="nav__item">
+          <li
+            className={`nav__item ${
+              isMobileMenuOpen ? "nav__item--mobile" : ""
+            }`}
+          >
             <Button
               buttonText="Sign in"
-              className="nav__button nav__button--signin"
+              className={`nav__button nav__button--signin nav__button--${
+                isMobileMenuOpen ? "mobile" : ""
+              }`}
               onClick={handleSignInModalOpen}
             />
           </li>
         )}
       </ul>
+      <div
+        className={`nav__overlay ${
+          isMobileMenuOpen ? "nav__overlay--open" : ""
+        }`}
+      ></div>
     </nav>
   );
 }

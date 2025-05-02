@@ -19,6 +19,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleModalOpen = (modalName) => {
     setActiveModal(modalName);
@@ -28,6 +29,10 @@ function App() {
   const handleModalClose = () => {
     setActiveModal("");
     setModalIsOpen(false);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((prev) => !prev);
   };
 
   // TODO:
@@ -45,6 +50,8 @@ function App() {
               <Header
                 handleSignInModalOpen={() => handleModalOpen("sign-in")}
                 handleLogout={handleLogout}
+                toggleMobileMenu={toggleMobileMenu}
+                isMobileMenuOpen={isMobileMenuOpen}
               />
               <Main isLoading={isLoading} />
             </>

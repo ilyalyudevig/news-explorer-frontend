@@ -129,3 +129,9 @@
   font-weight: 400;
   line-height: normal;
 }
+
+@media screen and (max-width: 500px) {
+  .form__second-btn-container {
+    padding-bottom: 188px;
+  }
+}
