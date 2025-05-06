@@ -1,26 +1,32 @@
-import cardImg from "../images/card_image-min.jpg";
 import Button from "./Button";
 
-function NewsCard() {
+import { formatDisplayDate } from "../utils/formatDate";
+import { useContext, useState } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+
+function NewsCard({ source, title, publishedAt, content, urlToImage }) {
+  const displayDate = formatDisplayDate(publishedAt);
+  const { isLoggedIn } = useContext(CurrentUserContext);
+
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <article className="card">
+      {!isLoggedIn && isHovered && (
+        <div className="card__tooltip">Sign in to save articles</div>
+      )}
       <Button
         className="card__save-button"
-        onClick={() => console.log("clicked")}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onClick={() => console.log("TODO: Implement save article")}
       />
-      <img className="card__image" src={cardImg} />
+      <img className="card__image" src={urlToImage} />
       <div className="card__content">
-        <p className="card__date">November 4, 2020</p>
-        <h3 className="card__title">
-          Everyone Needs a Special 'Sit&nbsp;Spot' in Nature
-        </h3>
-        <p className="card__paragraph">
-          Ever since I read Richard Louv's influential book, "Last Child in the
-          Woods," the idea of having a special "sit spot" has stuck with me.
-          This advice, which Louv attributes to nature educator Jon Young, is
-          for both adults and children to find...
-        </p>
-        <h4 className="card__source">treehugger</h4>
+        <p className="card__date">{displayDate}</p>
+        <h3 className="card__title">{title}</h3>
+        <p className="card__paragraph">{content}</p>
+        <h4 className="card__source">{source.name}</h4>
       </div>
     </article>
   );

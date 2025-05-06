@@ -7,6 +7,8 @@ import SavedNews from "./SavedNews";
 import SavedNewsHeader from "./SavedNewsHeader";
 import ProtectedRoute from "./ProtectedRoute";
 
+import { getSearchResults } from "../utils/newsApi";
+
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
@@ -14,6 +16,10 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
+  const [apiError, setApiError] = useState(
+    "Sorry, something went wrong during the request. Please try again later."
+  );
+  const [searchAttempted, setSearchAttempted] = useState(false);
   const [activeModal, setActiveModal] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +41,22 @@ function App() {
     setIsMobileMenuOpen((prev) => !prev);
   };
 
+  const handleSearch = async (query) => {
+    setIsLoading(true);
+    setApiError(null);
+    setSearchAttempted(true);
+    try {
+      const data = await getSearchResults({ query });
+      setSearchResults(data.articles);
+      setSearchAttempted(false);
+    } catch (error) {
+      setApiError(error.message);
+      setSearchResults([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // TODO:
   const handleLogin = () => {};
   const handleRegister = () => {};
@@ -52,8 +74,14 @@ function App() {
                 handleLogout={handleLogout}
                 toggleMobileMenu={toggleMobileMenu}
                 isMobileMenuOpen={isMobileMenuOpen}
+                onSearch={handleSearch}
               />
-              <Main isLoading={isLoading} />
+              <Main
+                isLoading={isLoading}
+                searchResults={searchResults}
+                searchAttempted={searchAttempted}
+                apiError={apiError}
+              />
             </>
           }
         />

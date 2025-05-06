@@ -12,12 +12,16 @@
   border: none;
   margin: 20px 24px;
   width: 376px;
-  color: #b6bcbf;
+  color: #1a1b22;
   font-family: "Roboto", Arial, Helvetica, sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: 1.375;
+}
+
+.search-form__input::placeholder {
+  color: #b6bcbf;
 }
 
 .search-form__button {
@@ -39,6 +43,10 @@
 
 .search-form__button:hover {
   background-color: #347eff;
+}
+
+.search-form__button:active {
+  background-attachment: #2a65cc;
 }
 
 @media screen and (max-width: 768px) {

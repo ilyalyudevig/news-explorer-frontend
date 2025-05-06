@@ -22,7 +22,7 @@ function ModalWithForm({
       modalIsOpen={modalIsOpen}
       handleModalClose={handleModalClose}
     >
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={onSubmit} formName={name}>
         {children}
         <Button
           buttonText={buttonText}

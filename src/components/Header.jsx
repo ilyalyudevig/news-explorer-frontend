@@ -7,6 +7,7 @@ function Header({
   handleLogout,
   toggleMobileMenu,
   isMobileMenuOpen,
+  onSearch,
 }) {
   return (
     <header className="header">
@@ -26,7 +27,7 @@ function Header({
           Find the latest news on any topic and save them in your personal
           account.
         </p>
-        <SearchForm />
+        <SearchForm onSearch={onSearch} />
       </div>
       <img className="header__bg-image" src={backgroundImg} />
     </header>

@@ -41,15 +41,37 @@
   background-image: url("../images/bookmark-icon-checked.svg");
 }
 
+.card__tooltip {
+  position: absolute;
+  top: 24px;
+  right: 69px;
+  border-radius: 8px;
+  background: #fff;
+  border: none;
+  padding: 13px 30px;
+  color: #000;
+  text-align: center;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
 .card__image {
   width: 400px;
+  height: 272px;
   border-radius: 16px 16px 0 0;
+  object-fit: cover;
 }
 
 .card__content {
   background-color: #fff;
   padding: 24px;
   border-radius: 0 0 16px 16px;
+  height: 304px;
+  display: flex;
+  flex-direction: column;
 }
 
 .card__date {
@@ -82,6 +104,7 @@
   line-height: 1.375;
   text-overflow: ellipsis;
   overflow: hidden;
+  flex: 1;
 }
 
 .card__source {
@@ -109,6 +132,12 @@
   .card__save-button {
     top: 8px;
     right: 8px;
+  }
+
+  .card__tooltip {
+    top: 8px;
+    right: 52px;
+    padding: 13px 20px;
   }
 
   .card__content {
