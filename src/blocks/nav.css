@@ -96,6 +96,10 @@
   cursor: pointer;
 }
 
+.nav__button-icon {
+  margin-left: 10px;
+}
+
 .nav__button--black {
   color: #1a1b22;
   border-color: #1a1b22;

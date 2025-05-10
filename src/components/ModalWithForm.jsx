@@ -27,14 +27,14 @@ function ModalWithForm({
         <Button
           buttonText={buttonText}
           type="submit"
-          className={`form__button form__button--main`}
+          className="form__button form__button--main"
         />
         <div className="form__second-btn-container">
           <p className="form__paragraph">or&nbsp;</p>
           <Button
             buttonText={switchBtnText}
             type="button"
-            className={`form__button form__button--second`}
+            className="form__button form__button--second"
             onClick={switchBtnHandler}
           />
         </div>

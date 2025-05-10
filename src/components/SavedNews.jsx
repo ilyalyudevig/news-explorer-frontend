@@ -1,15 +1,26 @@
 import NewsCard from "./NewsCard";
 
-function SavedNews() {
+function SavedNews({ savedArticles, handleDeleteArticle }) {
   return (
     <main className="main">
       <section className="saved-news">
         <div className="saved-news__cards">
-          <NewsCard />
-          <NewsCard />
-          <NewsCard />
-          <NewsCard />
-          <NewsCard />
+          {savedArticles.map(
+            ({ source, title, publishedAt, content, urlToImage, url }) => (
+              <NewsCard
+                key={url}
+                source={source}
+                title={title}
+                publishedAt={publishedAt}
+                content={content}
+                urlToImage={urlToImage}
+                url={url}
+                handleDeleteArticle={handleDeleteArticle}
+                isSaved={true}
+                cardType={"saved"}
+              />
+            )
+          )}
         </div>
       </section>
     </main>

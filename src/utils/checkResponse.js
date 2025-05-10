@@ -1,6 +1,3 @@
 export function checkResponse(res) {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Error: ${res.status}`);
+  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 }

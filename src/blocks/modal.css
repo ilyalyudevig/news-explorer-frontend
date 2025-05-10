@@ -64,6 +64,20 @@
   margin: 34px 0 22px;
 }
 
+.modal__button--signin {
+  border: none;
+  background-color: transparent;
+  color: #2f71e5;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0 auto 50px 0;
+  padding: 0;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 500px) {
   .modal__container {
     align-self: end;

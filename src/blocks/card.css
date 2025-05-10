@@ -39,6 +39,15 @@
 
 .card__save-button--checked::before {
   background-image: url("../images/bookmark-icon-checked.svg");
+  opacity: 1;
+}
+
+.card__save-button--checked:hover::before {
+  opacity: 0.5;
+}
+
+.card__save-button--delete::before {
+  background-image: url("../images/trash-icon.svg");
 }
 
 .card__tooltip {

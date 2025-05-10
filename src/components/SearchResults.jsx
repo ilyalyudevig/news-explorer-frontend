@@ -3,9 +3,13 @@ import NewsCard from "./NewsCard";
 
 import { useState } from "react";
 
-function SearchResults({ searchResults, apiError }) {
+function SearchResults({
+  searchResults,
+  savedArticles,
+  handleSaveArticle,
+  handleDeleteArticle,
+}) {
   const [visibleCount, setVisibleCount] = useState(3);
-
   const handleShowMore = () => {
     setVisibleCount((prev) => prev + 3);
   };
@@ -14,24 +18,28 @@ function SearchResults({ searchResults, apiError }) {
     <section className="search-results">
       <h2 className="search-results__title">Search results</h2>
       <div className="search-results__cards">
-        {apiError ? (
-          <div className="search-results__api-error">{apiError}</div>
-        ) : (
-          searchResults
-            .slice(0, visibleCount)
-            .map(
-              ({ source, title, publishedAt, content, urlToImage }, index) => (
-                <NewsCard
-                  key={index}
-                  source={source}
-                  title={title}
-                  publishedAt={publishedAt}
-                  content={content}
-                  urlToImage={urlToImage}
-                />
-              )
-            )
-        )}
+        {searchResults
+          .slice(0, visibleCount)
+          .map(({ source, title, publishedAt, content, urlToImage, url }) => {
+            const isSaved = savedArticles.some(
+              (savedArticle) => savedArticle.url == url
+            );
+            return (
+              <NewsCard
+                key={url}
+                source={source}
+                title={title}
+                publishedAt={publishedAt}
+                content={content}
+                urlToImage={urlToImage}
+                url={url}
+                handleSaveArticle={handleSaveArticle}
+                handleDeleteArticle={handleDeleteArticle}
+                isSaved={isSaved}
+                cardType="search-result"
+              />
+            );
+          })}
       </div>
       {visibleCount < searchResults.length && (
         <Button

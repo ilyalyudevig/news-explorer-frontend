@@ -2,17 +2,33 @@ import About from "./About";
 import Preloader from "./Preloader";
 import SearchResults from "./SearchResults";
 import NothingFound from "./NothingFound";
+import ApiError from "./ApiError";
 
-function Main({ isLoading, searchResults, searchAttempted, apiError }) {
+function Main({
+  isLoading,
+  searchResults,
+  savedArticles,
+  searchAttempted,
+  apiError,
+  handleSaveArticle,
+  handleDeleteArticle,
+}) {
   return (
     <main className="main">
       {isLoading ? (
         <Preloader />
-      ) : searchAttempted && searchResults.length === 0 ? (
+      ) : searchAttempted && apiError ? (
+        <ApiError />
+      ) : searchAttempted && !apiError && searchResults.length === 0 ? (
         <NothingFound />
       ) : (
         searchResults.length > 0 && (
-          <SearchResults searchResults={searchResults} apiError={apiError} />
+          <SearchResults
+            searchResults={searchResults}
+            savedArticles={savedArticles}
+            handleSaveArticle={handleSaveArticle}
+            handleDeleteArticle={handleDeleteArticle}
+          />
         )
       )}
       <About />

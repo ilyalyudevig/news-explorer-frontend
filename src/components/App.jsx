@@ -3,22 +3,25 @@ import Main from "./Main";
 import Footer from "./Footer";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
+import SuccessModal from "./SuccessModal";
 import SavedNews from "./SavedNews";
 import SavedNewsHeader from "./SavedNewsHeader";
 import ProtectedRoute from "./ProtectedRoute";
 
 import { getSearchResults } from "../utils/newsApi";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
+import { api } from "../utils/api";
+import * as auth from "../utils/auth";
+import { setToken, getToken, removeToken } from "../utils/token";
+
 function App() {
   const [searchResults, setSearchResults] = useState([]);
-  const [apiError, setApiError] = useState(
-    "Sorry, something went wrong during the request. Please try again later."
-  );
+  const [apiError, setApiError] = useState(null);
   const [searchAttempted, setSearchAttempted] = useState(false);
   const [activeModal, setActiveModal] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -26,6 +29,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [savedArticles, setSavedArticles] = useState([]);
 
   const handleModalOpen = (modalName) => {
     setActiveModal(modalName);
@@ -50,7 +54,7 @@ function App() {
       setSearchResults(data.articles);
       setSearchAttempted(false);
     } catch (error) {
-      setApiError(error.message);
+      setApiError(error);
       setSearchResults([]);
     } finally {
       setIsLoading(false);
@@ -58,9 +62,63 @@ function App() {
   };
 
   // TODO:
-  const handleLogin = () => {};
-  const handleRegister = () => {};
-  const handleLogout = () => {};
+  const handleLogin = (inputValues) => {
+    setIsLoading(true);
+    return auth
+      .authorize(inputValues)
+      .then((data) => {
+        if (data.token) {
+          setToken(data.token);
+          return auth.checkToken(data.token);
+        }
+      })
+      .then(setCurrentUser)
+      .then(setIsLoggedIn(true))
+      .then(() => api.getSavedArticles())
+      .then(setSavedArticles)
+      .then(handleModalClose)
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  };
+
+  const handleRegister = (inputValues) => {
+    setIsLoading(true);
+    return auth
+      .register(inputValues)
+      .then(handleModalClose)
+      .then(() => handleModalOpen("success"))
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  };
+
+  const handleLogout = () => {
+    removeToken();
+    setSearchResults([]);
+    setIsLoggedIn(false);
+  };
+
+  const handleSaveArticle = (article) => {
+    setSavedArticles((prev) => [article, ...prev]);
+  };
+
+  const handleDeleteArticle = (url) => {
+    setSavedArticles((prev) => prev.filter((article) => article.url !== url));
+  };
+
+  useEffect(() => {
+    const token = getToken();
+    if (!token) return;
+
+    setIsLoading(true);
+    auth
+      .checkToken(token)
+      .then((user) => {
+        setCurrentUser(user);
+        setIsLoggedIn(true);
+      })
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  }, []);
 
   return (
     <CurrentUserContext.Provider value={{ isLoggedIn, currentUser }}>
@@ -79,8 +137,11 @@ function App() {
               <Main
                 isLoading={isLoading}
                 searchResults={searchResults}
+                savedArticles={savedArticles}
                 searchAttempted={searchAttempted}
                 apiError={apiError}
+                handleSaveArticle={handleSaveArticle}
+                handleDeleteArticle={handleDeleteArticle}
               />
             </>
           }
@@ -89,8 +150,11 @@ function App() {
           path="/saved-news"
           element={
             <ProtectedRoute>
-              <SavedNewsHeader />
-              <SavedNews />
+              <SavedNewsHeader savedArticles={savedArticles} />
+              <SavedNews
+                savedArticles={savedArticles}
+                handleDeleteArticle={handleDeleteArticle}
+              />
             </ProtectedRoute>
           }
         />
@@ -117,6 +181,15 @@ function App() {
         switchBtnHandler={() => handleModalOpen("sign-in")}
         switchBtnText="Sign in"
         handleRegister={handleRegister}
+      />
+      <SuccessModal
+        title="Registration successfully completed!"
+        name="success"
+        activeModal={activeModal}
+        modalIsOpen={modalIsOpen}
+        handleModalClose={handleModalClose}
+        buttonText={"Sign in"}
+        handleLogin={handleLogin}
       />
     </CurrentUserContext.Provider>
   );

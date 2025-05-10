@@ -3,4 +3,9 @@ const newsApiBaseUrl =
     ? "https://nomoreparties.co/news/v2/everything"
     : "https://newsapi.org/v2/everything";
 
-export { newsApiBaseUrl };
+const backendBaseUrl =
+  process.env.NODE_ENV === "production"
+    ? "" // TODO
+    : "http://localhost:3001";
+
+export { newsApiBaseUrl, backendBaseUrl };

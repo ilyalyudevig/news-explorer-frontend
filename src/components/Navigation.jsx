@@ -14,7 +14,7 @@ import { useContext } from "react";
 function Navigation({
   handleSignInModalOpen,
   handleLogout,
-  color,
+  color = "white",
   toggleMobileMenu,
   isMobileMenuOpen,
 }) {
@@ -81,12 +81,12 @@ function Navigation({
             </li>
             <li className="nav__item">
               <Button
-                buttonText={currentUser.username || "Loading..."}
+                buttonText={`${currentUser.username}${" "}`}
                 className={`nav__button nav__button--signout nav__button--${color}`}
                 onClick={handleLogout}
               >
                 <img
-                  className="button__icon"
+                  className="nav__button-icon"
                   src={color === "black" ? logoutIconBlack : logoutIcon}
                 />
               </Button>
@@ -100,8 +100,8 @@ function Navigation({
           >
             <Button
               buttonText="Sign in"
-              className={`nav__button nav__button--signin nav__button--${
-                isMobileMenuOpen ? "mobile" : ""
+              className={`nav__button nav__button--signin ${
+                isMobileMenuOpen ? "nav__button--mobile" : ""
               }`}
               onClick={handleSignInModalOpen}
             />

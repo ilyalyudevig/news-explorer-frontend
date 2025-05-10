@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import Navigation from "./Navigation";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function SavedNewsHeader() {
+function SavedNewsHeader({ savedArticles }) {
+  const { currentUser } = useContext(CurrentUserContext);
   return (
     <header className="header header--saved-news">
       <Navigation color={"black"} />
@@ -9,7 +12,7 @@ function SavedNewsHeader() {
           Saved articles
         </p>
         <h2 className="header__title header__title--saved-news">
-          Elise, you have 5 saved articles
+          {`${currentUser.username}, you have ${savedArticles.length} saved articles`}
         </h2>
         <p className="header__paragraph header__paragraph--keywords">
           By keywords:{" "}

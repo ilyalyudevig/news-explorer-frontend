@@ -13,7 +13,11 @@ function SearchForm({ onSearch }) {
   };
 
   return (
-    <form className="header__search-form search-form" onSubmit={handleSubmit}>
+    <form
+      className="header__search-form search-form"
+      onSubmit={handleSubmit}
+      name="search-form"
+    >
       <div className="search-form__container">
         <input
           className="search-form__input"
