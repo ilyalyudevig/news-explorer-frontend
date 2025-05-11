@@ -126,7 +126,8 @@
   }
 
   .nav__item:nth-child(1) {
-    padding: 0 6px;
+    padding: 0;
+    margin: 0;
   }
 
   .nav__nav-link {
@@ -228,7 +229,7 @@
     font-style: normal;
     font-weight: 500;
     line-height: 1.33333;
-    margin-bottom: 8px;
+    margin-bottom: 7px;
   }
 
   .nav__nav-link {
@@ -241,5 +242,6 @@
     font-style: normal;
     font-weight: 500;
     line-height: 3.11111;
+    margin: 0;
   }
 }

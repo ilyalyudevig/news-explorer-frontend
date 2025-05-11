@@ -6,7 +6,15 @@ function SavedNews({ savedArticles, handleDeleteArticle }) {
       <section className="saved-news">
         <div className="saved-news__cards">
           {savedArticles.map(
-            ({ source, title, publishedAt, content, urlToImage, url }) => (
+            ({
+              source,
+              title,
+              publishedAt,
+              content,
+              urlToImage,
+              url,
+              keywords,
+            }) => (
               <NewsCard
                 key={url}
                 source={source}
@@ -18,6 +26,7 @@ function SavedNews({ savedArticles, handleDeleteArticle }) {
                 handleDeleteArticle={handleDeleteArticle}
                 isSaved={true}
                 cardType={"saved"}
+                keywords={keywords}
               />
             )
           )}

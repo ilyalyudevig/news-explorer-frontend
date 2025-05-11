@@ -2,11 +2,20 @@ import { useContext } from "react";
 import Navigation from "./Navigation";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function SavedNewsHeader({ savedArticles }) {
+function SavedNewsHeader({
+  savedArticles,
+  handleLogout,
+  keywords,
+  toggleMobileMenu,
+}) {
   const { currentUser } = useContext(CurrentUserContext);
   return (
     <header className="header header--saved-news">
-      <Navigation color={"black"} />
+      <Navigation
+        color={"black"}
+        handleLogout={handleLogout}
+        toggleMobileMenu={toggleMobileMenu}
+      />
       <div className="header__saved-news-info">
         <p className="header__paragraph header__paragraph--saved-news">
           Saved articles
@@ -16,9 +25,7 @@ function SavedNewsHeader({ savedArticles }) {
         </h2>
         <p className="header__paragraph header__paragraph--keywords">
           By keywords:{" "}
-          <span className="header__keywords-bold">
-            Nature, Yellowstone, and 2 other
-          </span>
+          <span className="header__keywords-bold">{keywords.join(", ")}</span>
         </p>
       </div>
     </header>

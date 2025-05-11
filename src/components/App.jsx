@@ -30,6 +30,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [savedArticles, setSavedArticles] = useState([]);
+  const [keywords, setKeywords] = useState([]);
 
   const handleModalOpen = (modalName) => {
     setActiveModal(modalName);
@@ -51,6 +52,14 @@ function App() {
     setSearchAttempted(true);
     try {
       const data = await getSearchResults({ query });
+      const keywords = query.split(" ");
+      data.articles.forEach((article) => (article["keywords"] = keywords));
+      setKeywords((prev) => {
+        const allKeywords = [...prev, ...keywords];
+        return allKeywords.filter(
+          (keyword, index, self) => self.indexOf(keyword) === index
+        );
+      });
       setSearchResults(data.articles);
       setSearchAttempted(false);
     } catch (error) {
@@ -61,7 +70,6 @@ function App() {
     }
   };
 
-  // TODO:
   const handleLogin = (inputValues) => {
     setIsLoading(true);
     return auth
@@ -150,7 +158,12 @@ function App() {
           path="/saved-news"
           element={
             <ProtectedRoute>
-              <SavedNewsHeader savedArticles={savedArticles} />
+              <SavedNewsHeader
+                savedArticles={savedArticles}
+                handleLogout={handleLogout}
+                keywords={keywords}
+                toggleMobileMenu={toggleMobileMenu}
+              />
               <SavedNews
                 savedArticles={savedArticles}
                 handleDeleteArticle={handleDeleteArticle}
@@ -181,6 +194,7 @@ function App() {
         switchBtnHandler={() => handleModalOpen("sign-in")}
         switchBtnText="Sign in"
         handleRegister={handleRegister}
+        apiError={apiError}
       />
       <SuccessModal
         title="Registration successfully completed!"

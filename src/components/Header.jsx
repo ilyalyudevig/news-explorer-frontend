@@ -16,6 +16,7 @@ function Header({
         handleLogout={handleLogout}
         toggleMobileMenu={toggleMobileMenu}
         isMobileMenuOpen={isMobileMenuOpen}
+        color="white"
       />
       <div
         className={`header__content ${

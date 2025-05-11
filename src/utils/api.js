@@ -25,6 +25,7 @@ class Api {
           publishedAt: "2025-05-06T11:00:00Z",
           content:
             "Few foods are more American than apple pie, but the truth is, some of the countrys favorite apple products arent actually made in the United States. Apple juice, a perennial lunchroom staple, is a pr… [+2760 chars]",
+          keywords: ["Apple"],
         },
         {
           source: {
@@ -41,6 +42,7 @@ class Api {
           publishedAt: "2025-05-02T12:11:20Z",
           content:
             "Following the update, Spotify can freely advertise prices to US users if they subscribe outside the app.\r\nFollowing the update, Spotify can freely advertise prices to US users if they subscribe outsi… [+1054 chars]",
+          keywords: ["Apple"],
         },
       ])
     );
@@ -63,6 +65,7 @@ class Api {
         publishedAt: "2025-05-02T12:42:08Z",
         content:
           "On The Vergecast: Monopoly Madness! Heres whats coming for Apple, Google, and Meta in court.\r\nOn The Vergecast: Monopoly Madness! Heres whats coming for Apple, Google, and Meta in court.\r\nCook chose … [+1922 chars]",
+        keywords: ["Apple"],
       });
     });
   }

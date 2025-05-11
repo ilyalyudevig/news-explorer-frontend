@@ -50,6 +50,23 @@
   background-image: url("../images/trash-icon.svg");
 }
 
+.card__keywords {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  border-radius: 8px;
+  background: #fff;
+  border: none;
+  padding: 13px 30px;
+  color: #000;
+  text-align: center;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
 .card__tooltip {
   position: absolute;
   top: 24px;
@@ -141,6 +158,12 @@
   .card__save-button {
     top: 8px;
     right: 8px;
+  }
+
+  .card__keywords {
+    top: 8px;
+    left: 8px;
+    padding: 13px 20px;
   }
 
   .card__tooltip {

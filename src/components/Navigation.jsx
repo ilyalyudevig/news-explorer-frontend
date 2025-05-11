@@ -14,105 +14,103 @@ import { useContext } from "react";
 function Navigation({
   handleSignInModalOpen,
   handleLogout,
-  color = "white",
+  color,
   toggleMobileMenu,
   isMobileMenuOpen,
 }) {
   const { isLoggedIn, currentUser } = useContext(CurrentUserContext);
 
+  const navClasses = `header__nav nav ${
+    isMobileMenuOpen ? "nav--mobile-menu-open" : ""
+  }`;
+
+  const titleClasses = `nav__title ${
+    color === "black" ? "nav__title--black" : ""
+  }`;
+
+  const mobileMenuIconSrc = isMobileMenuOpen
+    ? color === "black"
+      ? closeIconBlack
+      : closeIcon
+    : color === "black"
+    ? mobileMenuIconBlack
+    : mobileMenuIcon;
+
+  const navItemsClasses = `nav__items ${
+    isMobileMenuOpen ? "nav__items--mobile" : ""
+  }`;
+  const navItemBaseClasses = `nav__item ${
+    isMobileMenuOpen ? "nav__item--mobile" : ""
+  }`;
+
+  const homeLinkClasses = `nav__nav-link ${
+    color === "black" ? "nav__nav-link--black" : ""
+  } ${isMobileMenuOpen ? "nav__nav-link--mobile" : ""}`;
+
+  const savedArticlesLinkClasses = `nav__nav-link ${
+    isMobileMenuOpen ? "nav__nav-link--mobile" : ""
+  } ${color === "black" ? "nav__nav-link--black" : ""}`;
+
+  const signOutButtonClasses = `nav__button nav__button--signout nav__button--${color} ${
+    isMobileMenuOpen ? "nav__button--mobile" : ""
+  }`;
+
+  const signInButtonClasses = `nav__button nav__button--signin ${
+    isMobileMenuOpen ? "nav__button--mobile" : ""
+  }`;
+
+  const logoutIconSrc = color === "black" ? logoutIconBlack : logoutIcon;
+
+  const overlayClasses = `nav__overlay ${
+    isMobileMenuOpen ? "nav__overlay--open" : ""
+  }`;
+
   return (
-    <nav
-      className={`header__nav nav ${
-        isMobileMenuOpen ? "nav--mobile-menu-open" : ""
-      }`}
-    >
+    <nav className={navClasses}>
       <Link className="nav__nav-link" to="/">
-        <h1
-          className={`nav__title ${
-            color === "black" ? "nav__title--black" : ""
-          }`}
-        >
-          NewsExplorer
-        </h1>
+        <h1 className={titleClasses}>NewsExplorer</h1>
       </Link>
       <Button className="nav__mobile-menu-btn" onClick={toggleMobileMenu}>
-        {color === "black" ? (
-          <img
-            className="nav__mobile-menu-icon"
-            src={isMobileMenuOpen ? closeIconBlack : mobileMenuIconBlack}
-          />
-        ) : (
-          <img
-            className="nav__mobile-menu-icon"
-            src={isMobileMenuOpen ? closeIcon : mobileMenuIcon}
-          />
-        )}
+        <img className="nav__mobile-menu-icon" src={mobileMenuIconSrc} />
       </Button>
-      <ul
-        className={`nav__items ${isMobileMenuOpen ? "nav__items--mobile" : ""}`}
-      >
-        <li
-          className={`nav__item ${isMobileMenuOpen ? "nav__item--mobile" : ""}`}
-        >
-          <Link
-            className={`nav__nav-link ${
-              color === "black" ? "nav__nav-link--black" : ""
-            } ${isMobileMenuOpen ? "nav__nav-link--mobile" : ""}`}
-            to="/"
-          >
+      <ul className={navItemsClasses}>
+        <li className={navItemBaseClasses}>
+          <Link className={homeLinkClasses} to="/">
             Home
           </Link>
         </li>
         {isLoggedIn ? (
           <>
             <li
-              className={`nav__item ${
+              className={`${navItemBaseClasses} ${
                 color === "black" ? "nav__item--black" : ""
               }`}
             >
-              <Link
-                className={`nav__nav-link ${
-                  color === "black" ? "nav__nav-link--black" : ""
-                }`}
-                to="/saved-news"
-              >
+              <Link className={savedArticlesLinkClasses} to="/saved-news">
                 Saved articles
               </Link>
             </li>
-            <li className="nav__item">
+            <li className={navItemBaseClasses}>
               <Button
-                buttonText={`${currentUser.username}${" "}`}
-                className={`nav__button nav__button--signout nav__button--${color}`}
+                buttonText={currentUser.username}
+                className={signOutButtonClasses}
                 onClick={handleLogout}
               >
-                <img
-                  className="nav__button-icon"
-                  src={color === "black" ? logoutIconBlack : logoutIcon}
-                />
+                <img className="nav__button-icon" src={logoutIconSrc} />
               </Button>
             </li>
           </>
         ) : (
-          <li
-            className={`nav__item ${
-              isMobileMenuOpen ? "nav__item--mobile" : ""
-            }`}
-          >
+          <li className={navItemBaseClasses}>
             <Button
               buttonText="Sign in"
-              className={`nav__button nav__button--signin ${
-                isMobileMenuOpen ? "nav__button--mobile" : ""
-              }`}
+              className={signInButtonClasses}
               onClick={handleSignInModalOpen}
             />
           </li>
         )}
       </ul>
-      <div
-        className={`nav__overlay ${
-          isMobileMenuOpen ? "nav__overlay--open" : ""
-        }`}
-      ></div>
+      <div className={overlayClasses}></div>
     </nav>
   );
 }

@@ -20,26 +20,37 @@ function SearchResults({
       <div className="search-results__cards">
         {searchResults
           .slice(0, visibleCount)
-          .map(({ source, title, publishedAt, content, urlToImage, url }) => {
-            const isSaved = savedArticles.some(
-              (savedArticle) => savedArticle.url == url
-            );
-            return (
-              <NewsCard
-                key={url}
-                source={source}
-                title={title}
-                publishedAt={publishedAt}
-                content={content}
-                urlToImage={urlToImage}
-                url={url}
-                handleSaveArticle={handleSaveArticle}
-                handleDeleteArticle={handleDeleteArticle}
-                isSaved={isSaved}
-                cardType="search-result"
-              />
-            );
-          })}
+          .map(
+            ({
+              source,
+              title,
+              publishedAt,
+              content,
+              urlToImage,
+              url,
+              keywords,
+            }) => {
+              const isSaved = savedArticles.some(
+                (savedArticle) => savedArticle.url == url
+              );
+              return (
+                <NewsCard
+                  key={url}
+                  source={source}
+                  title={title}
+                  publishedAt={publishedAt}
+                  content={content}
+                  urlToImage={urlToImage}
+                  url={url}
+                  handleSaveArticle={handleSaveArticle}
+                  handleDeleteArticle={handleDeleteArticle}
+                  isSaved={isSaved}
+                  cardType="search-result"
+                  keywords={keywords}
+                />
+              );
+            }
+          )}
       </div>
       {visibleCount < searchResults.length && (
         <Button

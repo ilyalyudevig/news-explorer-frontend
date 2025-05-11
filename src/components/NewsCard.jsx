@@ -15,6 +15,7 @@ function NewsCard({
   handleDeleteArticle,
   isSaved,
   cardType,
+  keywords,
 }) {
   const displayDate = formatDisplayDate(publishedAt);
   const { isLoggedIn } = useContext(CurrentUserContext);
@@ -35,6 +36,7 @@ function NewsCard({
         content,
         urlToImage,
         url,
+        keywords,
       });
     }
   };
@@ -58,6 +60,9 @@ function NewsCard({
 
   return (
     <article className="card">
+      {cardType === "saved" && keywords && (
+        <div className="card__keywords">{keywords[0]}</div>
+      )}
       {tooltipText && <div className="card__tooltip">{tooltipText}</div>}
       <Button
         className={buttonClassName}
