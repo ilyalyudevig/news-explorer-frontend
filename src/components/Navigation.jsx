@@ -2,7 +2,6 @@ import logoutIcon from "../images/logout-icon.svg";
 import mobileMenuIcon from "../images/mobile-menu-icon.svg";
 import mobileMenuIconBlack from "../images/mobile-menu-icon-black.svg";
 import closeIcon from "../images/close-icon.svg";
-import closeIconBlack from "../images/close-icon-black.svg";
 import logoutIconBlack from "../images/logout-icon-black.svg";
 import Button from "./Button";
 
@@ -25,13 +24,11 @@ function Navigation({
   }`;
 
   const titleClasses = `nav__title ${
-    color === "black" ? "nav__title--black" : ""
+    color === "black" && !isMobileMenuOpen ? "nav__title--black" : ""
   }`;
 
   const mobileMenuIconSrc = isMobileMenuOpen
-    ? color === "black"
-      ? closeIconBlack
-      : closeIcon
+    ? closeIcon
     : color === "black"
     ? mobileMenuIconBlack
     : mobileMenuIcon;
@@ -44,22 +41,25 @@ function Navigation({
   }`;
 
   const homeLinkClasses = `nav__nav-link ${
-    color === "black" ? "nav__nav-link--black" : ""
+    color === "black" && !isMobileMenuOpen ? "nav__nav-link--black" : ""
   } ${isMobileMenuOpen ? "nav__nav-link--mobile" : ""}`;
 
   const savedArticlesLinkClasses = `nav__nav-link ${
     isMobileMenuOpen ? "nav__nav-link--mobile" : ""
-  } ${color === "black" ? "nav__nav-link--black" : ""}`;
+  } ${color === "black" && !isMobileMenuOpen ? "nav__nav-link--black" : ""}`;
 
-  const signOutButtonClasses = `nav__button nav__button--signout nav__button--${color} ${
-    isMobileMenuOpen ? "nav__button--mobile" : ""
+  const signOutButtonClasses = `nav__button nav__button--signout ${
+    color === "black" && !isMobileMenuOpen
+      ? "nav__button--black"
+      : "nav__button--mobile"
   }`;
 
   const signInButtonClasses = `nav__button nav__button--signin ${
     isMobileMenuOpen ? "nav__button--mobile" : ""
   }`;
 
-  const logoutIconSrc = color === "black" ? logoutIconBlack : logoutIcon;
+  const logoutIconSrc =
+    color === "black" && !isMobileMenuOpen ? logoutIconBlack : logoutIcon;
 
   const overlayClasses = `nav__overlay ${
     isMobileMenuOpen ? "nav__overlay--open" : ""
@@ -83,7 +83,7 @@ function Navigation({
           <>
             <li
               className={`${navItemBaseClasses} ${
-                color === "black" ? "nav__item--black" : ""
+                color === "black" && !isMobileMenuOpen ? "nav__item--black" : ""
               }`}
             >
               <Link className={savedArticlesLinkClasses} to="/saved-news">
@@ -92,7 +92,7 @@ function Navigation({
             </li>
             <li className={navItemBaseClasses}>
               <Button
-                buttonText={currentUser.username}
+                buttonText={currentUser.name}
                 className={signOutButtonClasses}
                 onClick={handleLogout}
               >

@@ -1,29 +1,38 @@
 import { backendBaseUrl as baseUrl } from "./constants";
+import { checkResponse } from "./checkResponse";
 
-export const register = (email, password, username) => {
-  return new Promise((resolve, reject) => {
-    resolve({
-      user: {
-        username: "John Doe",
-        email: "jdoe@example.com",
-        _id: "67dc82803cc720b833a37bfe",
-      },
-    });
-  });
+export const register = (userData) => {
+  const { registerEmail, registerPassword, username } = userData;
+
+  return fetch(`${baseUrl}/signup`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: registerEmail,
+      password: registerPassword,
+      name: username,
+    }),
+  }).then(checkResponse);
 };
 
-export const authorize = (email, password) => {
-  return new Promise((resolve, reject) => {
-    resolve({ token: "dev-token" });
-  });
+export const authorize = (userData) => {
+  return fetch(`${baseUrl}/signin`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  }).then(checkResponse);
 };
 
 export const checkToken = (token) => {
-  return new Promise((resolve, reject) => {
-    resolve({
-      username: "Test User",
-      email: "test-user@example.com",
-      _id: "67dc82813cc720b833a37c00",
-    });
-  });
+  return fetch(`${baseUrl}/users/me`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  }).then(checkResponse);
 };

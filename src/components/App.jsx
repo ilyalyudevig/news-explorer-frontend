@@ -85,7 +85,10 @@ function App() {
       .then(() => api.getSavedArticles())
       .then(setSavedArticles)
       .then(handleModalClose)
-      .catch(console.error)
+      .catch((err) => {
+        console.error(err);
+        setApiError(err.message || "Login failed");
+      })
       .finally(() => setIsLoading(false));
   };
 
@@ -95,7 +98,10 @@ function App() {
       .register(inputValues)
       .then(handleModalClose)
       .then(() => handleModalOpen("success"))
-      .catch(console.error)
+      .catch((err) => {
+        console.error(err);
+        setApiError(err.message || "Registration failed");
+      })
       .finally(() => setIsLoading(false));
   };
 
@@ -106,11 +112,30 @@ function App() {
   };
 
   const handleSaveArticle = (article) => {
-    setSavedArticles((prev) => [article, ...prev]);
+    const token = getToken();
+    api
+      .saveArticle(article, token)
+      .then(() => setSavedArticles((prev) => [article, ...prev]))
+      .catch((err) => {
+        console.error(err);
+        setApiError(err.message || "Error during saving an article");
+      });
   };
 
   const handleDeleteArticle = (url) => {
-    setSavedArticles((prev) => prev.filter((article) => article.url !== url));
+    const token = getToken();
+    const article = savedArticles.find((article) => article.url === url);
+    api
+      .deleteArticle(article._id, token)
+      .then(() =>
+        setSavedArticles((prev) =>
+          prev.filter((article) => article.url !== url)
+        )
+      )
+      .catch((err) => {
+        console.error(err);
+        setApiError(err.message || "Error during deleting an article");
+      });
   };
 
   useEffect(() => {
@@ -163,10 +188,17 @@ function App() {
                 handleLogout={handleLogout}
                 keywords={keywords}
                 toggleMobileMenu={toggleMobileMenu}
+                isMobileMenuOpen={isMobileMenuOpen}
               />
               <SavedNews
                 savedArticles={savedArticles}
+                setSavedArticles={setSavedArticles}
                 handleDeleteArticle={handleDeleteArticle}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                api={api}
+                apiError={apiError}
+                setApiError={setApiError}
               />
             </ProtectedRoute>
           }
