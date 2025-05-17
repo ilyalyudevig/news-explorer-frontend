@@ -32,6 +32,20 @@ function App() {
   const [savedArticles, setSavedArticles] = useState([]);
   const [keywords, setKeywords] = useState([]);
 
+  const extractAndSetKeywords = (articles) => {
+    const articleKeywords = articles
+      .map((article) => article.keywords)
+      .flat()
+      .filter(Boolean);
+
+    setKeywords((prev) => {
+      const allKeywords = [...prev, ...articleKeywords];
+      return allKeywords.filter(
+        (keyword, index, self) => self.indexOf(keyword) === index
+      );
+    });
+  };
+
   const handleModalOpen = (modalName) => {
     setActiveModal(modalName);
     setModalIsOpen(true);
@@ -88,7 +102,10 @@ function App() {
         return getToken();
       })
       .then((token) => api.getSavedArticles(token))
-      .then((articles) => setSavedArticles(articles.reverse()))
+      .then((articles) => {
+        setSavedArticles(articles.reverse());
+        extractAndSetKeywords(articles);
+      })
       .then(handleModalClose)
       .catch((err) => {
         console.error(err);
@@ -202,6 +219,7 @@ function App() {
                 api={api}
                 apiError={apiError}
                 setApiError={setApiError}
+                extractAndSetKeywords={extractAndSetKeywords}
               />
             </ProtectedRoute>
           }

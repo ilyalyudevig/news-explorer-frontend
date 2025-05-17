@@ -14,13 +14,17 @@ function SavedNews({
   api,
   apiError,
   setApiError,
+  extractAndSetKeywords,
 }) {
   useEffect(() => {
     const token = getToken();
     setIsLoading(true);
     api
       .getSavedArticles(token)
-      .then((articles) => setSavedArticles(articles.reverse()))
+      .then((articles) => {
+        setSavedArticles(articles.reverse());
+        extractAndSetKeywords(articles);
+      })
       .catch((err) => {
         console.error(err);
         setApiError(err.message || "Error fetching saved articles");
