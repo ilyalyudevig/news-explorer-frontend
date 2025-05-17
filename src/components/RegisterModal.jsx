@@ -89,12 +89,18 @@ function RegisterModal({
         ariaLabel="Username"
         value={values.username}
         onChange={handleChange}
-        errorClass={errors.username ? "form__input-error_active" : ""}
-        errorMessage={errors.username}
+        inputRef={getInputRef("username")}
+        errorClass={
+          errors.username
+            ? "form__input-error_active"
+            : apiError
+            ? "form__registration-error"
+            : ""
+        }
+        errorMessage={
+          apiError ? "This email is not available" : errors.username
+        }
       />
-      {apiError && (
-        <p className="form__registration-error">This email is not available</p>
-      )}
     </ModalWithForm>
   );
 }

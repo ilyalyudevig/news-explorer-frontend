@@ -92,7 +92,7 @@ function Navigation({
             </li>
             <li className={navItemBaseClasses}>
               <Button
-                buttonText={currentUser.name}
+                buttonText={currentUser.name.split(" ")[0]}
                 className={signOutButtonClasses}
                 onClick={handleLogout}
               >

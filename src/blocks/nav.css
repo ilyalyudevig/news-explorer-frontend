@@ -116,7 +116,7 @@
   background-color: transparent;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 845px) {
   .nav {
     padding: 0 40px;
   }
@@ -126,7 +126,7 @@
   }
 
   .nav__item:nth-child(1) {
-    padding: 0;
+    padding: 0 12px;
     margin: 0;
   }
 
@@ -136,7 +136,7 @@
   }
 
   .nav__button {
-    width: 152px;
+    width: auto;
     padding: 7px 11px;
     text-align: center;
     font-family: "Roboto", Arial, Helvetica, sans-serif;
@@ -144,6 +144,12 @@
     font-style: normal;
     font-weight: 500;
     line-height: 1.5;
+  }
+}
+
+@media screen and (max-width: 615px) {
+  .nav__item:nth-child(2) {
+    padding: 0 12px;
   }
 }
 
@@ -233,7 +239,7 @@
   }
 
   .nav__nav-link {
-    margin: 16px 0;
+    margin: 16px 0 15px;
   }
 
   .nav__nav-link--mobile {

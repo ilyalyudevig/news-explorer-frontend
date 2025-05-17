@@ -145,7 +145,7 @@
   text-transform: uppercase;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 845px) {
   .card {
     width: 224px;
   }
