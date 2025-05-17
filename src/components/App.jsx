@@ -72,6 +72,7 @@ function App() {
 
   const handleLogin = (inputValues) => {
     setIsLoading(true);
+    setApiError(null);
     return auth
       .authorize(inputValues)
       .then((data) => {
@@ -79,11 +80,15 @@ function App() {
           setToken(data.token);
           return auth.checkToken(data.token);
         }
+        throw new Error("No token received");
       })
-      .then(setCurrentUser)
-      .then(setIsLoggedIn(true))
-      .then(() => api.getSavedArticles())
-      .then(setSavedArticles)
+      .then((user) => {
+        setCurrentUser(user);
+        setIsLoggedIn(true);
+        return getToken();
+      })
+      .then((token) => api.getSavedArticles(token))
+      .then((articles) => setSavedArticles(articles.reverse()))
       .then(handleModalClose)
       .catch((err) => {
         console.error(err);
@@ -115,7 +120,8 @@ function App() {
     const token = getToken();
     api
       .saveArticle(article, token)
-      .then(() => setSavedArticles((prev) => [article, ...prev]))
+      .then(() => api.getSavedArticles(token))
+      .then((articles) => setSavedArticles(articles.reverse()))
       .catch((err) => {
         console.error(err);
         setApiError(err.message || "Error during saving an article");
@@ -127,11 +133,8 @@ function App() {
     const article = savedArticles.find((article) => article.url === url);
     api
       .deleteArticle(article._id, token)
-      .then(() =>
-        setSavedArticles((prev) =>
-          prev.filter((article) => article.url !== url)
-        )
-      )
+      .then(() => api.getSavedArticles(token))
+      .then((articles) => setSavedArticles(articles.reverse()))
       .catch((err) => {
         console.error(err);
         setApiError(err.message || "Error during deleting an article");

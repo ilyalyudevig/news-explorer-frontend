@@ -36,7 +36,7 @@
   line-height: 1.33333;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 585px) {
   .links--main {
     flex-direction: column;
     justify-content: space-between;

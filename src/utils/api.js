@@ -11,9 +11,9 @@ class Api {
     return fetch(url, options).then(checkResponse);
   }
 
-  getSavedArticles() {
+  getSavedArticles(token) {
     return this._request(`${this._baseUrl}/articles`, {
-      headers: this._headers,
+      headers: { ...this._headers, Authorization: `Bearer ${token}` },
     });
   }
 

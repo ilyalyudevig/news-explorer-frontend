@@ -78,7 +78,7 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 585px) {
   .modal__container {
     align-self: end;
     border-radius: 16px 16px 0 0;

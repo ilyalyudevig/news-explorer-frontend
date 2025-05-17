@@ -130,7 +130,7 @@
   line-height: normal;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 585px) {
   .form__second-btn-container {
     padding-bottom: 188px;
   }

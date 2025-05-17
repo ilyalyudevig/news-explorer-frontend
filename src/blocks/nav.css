@@ -116,7 +116,7 @@
   background-color: transparent;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
   .nav {
     padding: 0 40px;
   }
@@ -147,7 +147,7 @@
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 585px) {
   .nav {
     padding: 0 16px;
   }

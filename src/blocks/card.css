@@ -129,7 +129,7 @@
   font-weight: 400;
   line-height: 1.375;
   text-overflow: ellipsis;
-  overflow: hidden;
+  overflow: auto;
   flex: 1;
 }
 
@@ -145,7 +145,7 @@
   text-transform: uppercase;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
   .card {
     width: 224px;
   }
@@ -195,7 +195,7 @@
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 585px) {
   .card {
     width: 288px;
   }

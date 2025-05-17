@@ -77,7 +77,7 @@
   object-fit: cover;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
   .header__content {
     max-width: 452px;
     padding: 0 40px;
@@ -121,7 +121,7 @@
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 585px) {
   .header__content {
     padding: 30px 16px;
   }

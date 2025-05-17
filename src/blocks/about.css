@@ -35,11 +35,10 @@
   margin: 0;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
   .about {
     padding: 40px;
   }
-
   .about__avatar {
     width: 232px;
     height: 232px;
@@ -61,7 +60,7 @@
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 585px) {
   .about {
     padding: 16px;
     flex-direction: column;

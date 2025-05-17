@@ -21,13 +21,13 @@
   gap: 40px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
   .footer {
     padding: 20px 40px;
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 585px) {
   .footer {
     padding: 20px 16px;
     flex-direction: column-reverse;

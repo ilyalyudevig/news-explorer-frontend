@@ -1,6 +1,8 @@
 import NewsCard from "./NewsCard";
 import Preloader from "./Preloader";
 import ApiError from "./ApiError";
+
+import { getToken } from "../utils/token";
 import { useEffect } from "react";
 
 function SavedNews({
@@ -14,9 +16,10 @@ function SavedNews({
   setApiError,
 }) {
   useEffect(() => {
+    const token = getToken();
     setIsLoading(true);
     api
-      .getSavedArticles()
+      .getSavedArticles(token)
       .then((articles) => setSavedArticles(articles.reverse()))
       .catch((err) => {
         console.error(err);
