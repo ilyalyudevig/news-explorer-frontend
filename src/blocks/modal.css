@@ -83,9 +83,14 @@
     align-self: end;
     border-radius: 16px 16px 0 0;
     padding: 16px;
+    top: 16px;
   }
 
   .modal__title {
     margin: 0 0 18px;
+  }
+
+  .modal__close-button {
+    display: none;
   }
 }

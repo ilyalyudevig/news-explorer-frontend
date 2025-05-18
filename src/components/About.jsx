@@ -2,9 +2,9 @@ import avatar from "../images/avatar.jpeg";
 
 function About() {
   return (
-    <section className="about">
+    <section className="about" aria-label="About the author">
       <div className="about__avatar-container">
-        <img className="about__avatar" src={avatar} />
+        <img className="about__avatar" src={avatar} alt="Author's avatar" />
       </div>
       <div className="about__content">
         <h2 className="about__title">About the author</h2>

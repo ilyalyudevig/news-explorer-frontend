@@ -1,6 +1,6 @@
 function ApiError() {
   return (
-    <section className="api-error">
+    <section className="api-error" aria-live="assertive" role="alert">
       <div className="api-error__container">
         <h2 className="api-error__title">
           Sorry, something went wrong during the request.

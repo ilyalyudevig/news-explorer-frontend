@@ -22,7 +22,11 @@ function ModalWithForm({
       modalIsOpen={modalIsOpen}
       handleModalClose={handleModalClose}
     >
-      <Form onSubmit={onSubmit} formName={name}>
+      <Form
+        onSubmit={onSubmit}
+        formName={name}
+        ariaLabelledby={`modal-title-${name}`}
+      >
         {children}
         <Button
           buttonText={buttonText}

@@ -14,7 +14,7 @@ function Main({
   handleDeleteArticle,
 }) {
   return (
-    <main className="main">
+    <main className="main" aria-label="Main content">
       {isLoading ? (
         <Preloader />
       ) : searchAttempted && apiError ? (

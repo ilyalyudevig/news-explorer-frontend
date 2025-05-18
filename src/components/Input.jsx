@@ -12,6 +12,7 @@ function Input({
   onChange,
   inputRef,
   errorMessage,
+  'aria-describedby': ariaDescribedby,
 }) {
   return (
     <>
@@ -31,11 +32,15 @@ function Input({
         value={value}
         onChange={onChange}
         ref={inputRef}
+        aria-describedby={ariaDescribedby}
       />
       <div className="form__input-error-container">
-        <p className={`form__input-error ${errorClass}`}>{errorMessage}</p>
+        <p className={`form__input-error ${errorClass}`} id={ariaDescribedby}>
+          {errorMessage}
+        </p>
       </div>
     </>
   );
 }
+
 export default Input;

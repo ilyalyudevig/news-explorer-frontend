@@ -8,6 +8,10 @@
   display: flex;
 }
 
+.search-form__label {
+  display: none;
+}
+
 .search-form__input {
   border: none;
   margin: 20px 24px;

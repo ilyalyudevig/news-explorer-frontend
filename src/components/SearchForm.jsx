@@ -17,11 +17,17 @@ function SearchForm({ onSearch }) {
       className="header__search-form search-form"
       onSubmit={handleSubmit}
       name="search-form"
+      role="search"
+      aria-label="Search form"
     >
       <div className="search-form__container">
+        <label htmlFor="search-input" className="search-form__label">
+          Search for news
+        </label>
         <input
           className="search-form__input"
           type="search"
+          id="search-input"
           name="query"
           value={values.query}
           onChange={handleChange}
@@ -29,11 +35,13 @@ function SearchForm({ onSearch }) {
           placeholder={errors.query}
           ref={getInputRef("query")}
           required
+          aria-label="Search for news"
         />
         <Button
           className="search-form__button"
           buttonText="Search"
           type="submit"
+          aria-label="Search"
         />
       </div>
     </form>

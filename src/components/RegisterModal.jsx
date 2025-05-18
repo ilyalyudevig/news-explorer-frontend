@@ -62,6 +62,9 @@ function RegisterModal({
         inputRef={getInputRef("registerEmail")}
         errorClass={errors.registerEmail ? "form__input-error_active" : ""}
         errorMessage={errors.registerEmail}
+        aria-describedby={
+          errors.registerEmail ? "register-email-error" : undefined
+        }
       />
       <Input
         label="Password"
@@ -77,6 +80,9 @@ function RegisterModal({
         inputRef={getInputRef("registerPassword")}
         errorClass={errors.registerPassword ? "form__input-error_active" : ""}
         errorMessage={errors.registerPassword}
+        aria-describedby={
+          errors.registerPassword ? "register-password-error" : undefined
+        }
       />
       <Input
         label="Username"
@@ -99,6 +105,9 @@ function RegisterModal({
         }
         errorMessage={
           apiError ? "This email is not available" : errors.username
+        }
+        aria-describedby={
+          errors.username || apiError ? "register-username-error" : undefined
         }
       />
     </ModalWithForm>

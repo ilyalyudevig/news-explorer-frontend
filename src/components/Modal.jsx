@@ -15,15 +15,20 @@ function Modal({
       className={`modal modal_type_${name} ${
         name === activeModal ? "modal_open" : ""
       }`}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={`modal-title-${name}`}
     >
       <div className="modal__container">
         <button
           className="modal__close-button"
           type="button"
-          aria-label="close"
+          aria-label="Close modal"
           onClick={handleModalClose}
         />
-        <h2 className="modal__title">{title}</h2>
+        <h2 className="modal__title" id={`modal-title-${name}`}>
+          {title}
+        </h2>
         {children}
       </div>
     </div>

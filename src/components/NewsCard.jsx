@@ -59,7 +59,7 @@ function NewsCard({
   }
 
   return (
-    <article className="card">
+    <article className="card" aria-label={title}>
       {cardType === "saved" && keywords && (
         <div className="card__keywords">{keywords[0]}</div>
       )}
@@ -69,8 +69,9 @@ function NewsCard({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={onButtonClick}
+        aria-label={isSaved ? "Remove from saved" : "Save article"}
       />
-      <img className="card__image" src={urlToImage} />
+      <img className="card__image" src={urlToImage} alt={title} />
       <div className="card__content">
         <p className="card__date">{displayDate}</p>
         <h3 className="card__title">{title}</h3>

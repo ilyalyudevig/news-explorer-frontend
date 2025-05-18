@@ -6,7 +6,7 @@ function Footer() {
   const date = new Date();
 
   return (
-    <footer className="footer">
+    <footer className="footer" aria-label="Footer">
       <p className="footer__copyright">
         &copy; {`${date.getFullYear()}`} Supersite, Powered by News API
       </p>
@@ -35,8 +35,9 @@ function Footer() {
               href="https://github.com/ilyalyudevig"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="GitHub profile"
             >
-              <img src={ghIconSrc} />
+              <img src={ghIconSrc} alt="GitHub" />
             </a>
           </li>
           <li className="links__item">
@@ -45,8 +46,9 @@ function Footer() {
               href="https://www.facebook.com/ilya.lyudevig"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Facebook profile"
             >
-              <img src={fbIconSrc} />
+              <img src={fbIconSrc} alt="Facebook" />
             </a>
           </li>
         </ul>

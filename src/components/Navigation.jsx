@@ -66,16 +66,16 @@ function Navigation({
   }`;
 
   return (
-    <nav className={navClasses}>
+    <nav className={navClasses} aria-label="Main navigation">
       <Link className="nav__nav-link" to="/">
-        <h1 className={titleClasses}>NewsExplorer</h1>
+        <span className={titleClasses} aria-label="NewsExplorer logo">NewsExplorer</span>
       </Link>
-      <Button className="nav__mobile-menu-btn" onClick={toggleMobileMenu}>
-        <img className="nav__mobile-menu-icon" src={mobileMenuIconSrc} />
+      <Button className="nav__mobile-menu-btn" onClick={toggleMobileMenu} aria-label="Toggle mobile menu" aria-expanded={isMobileMenuOpen}>
+        <img className="nav__mobile-menu-icon" src={mobileMenuIconSrc} alt="" aria-hidden="true" />
       </Button>
-      <ul className={navItemsClasses}>
-        <li className={navItemBaseClasses}>
-          <Link className={homeLinkClasses} to="/">
+      <ul className={navItemsClasses} role="menubar">
+        <li className={navItemBaseClasses} role="none">
+          <Link className={homeLinkClasses} to="/" role="menuitem">
             Home
           </Link>
         </li>
@@ -85,32 +85,37 @@ function Navigation({
               className={`${navItemBaseClasses} ${
                 color === "black" && !isMobileMenuOpen ? "nav__item--black" : ""
               }`}
+              role="none"
             >
-              <Link className={savedArticlesLinkClasses} to="/saved-news">
+              <Link className={savedArticlesLinkClasses} to="/saved-news" role="menuitem">
                 Saved articles
               </Link>
             </li>
-            <li className={navItemBaseClasses}>
+            <li className={navItemBaseClasses} role="none">
               <Button
                 buttonText={currentUser.name.split(" ")[0]}
                 className={signOutButtonClasses}
                 onClick={handleLogout}
+                role="menuitem"
+                aria-label="Sign out"
               >
-                <img className="nav__button-icon" src={logoutIconSrc} />
+                <img className="nav__button-icon" src={logoutIconSrc} alt="" aria-hidden="true" />
               </Button>
             </li>
           </>
         ) : (
-          <li className={navItemBaseClasses}>
+          <li className={navItemBaseClasses} role="none">
             <Button
               buttonText="Sign in"
               className={signInButtonClasses}
               onClick={handleSignInModalOpen}
+              role="menuitem"
+              aria-label="Sign in"
             />
           </li>
         )}
       </ul>
-      <div className={overlayClasses}></div>
+      <div className={overlayClasses} aria-hidden={!isMobileMenuOpen}></div>
     </nav>
   );
 }

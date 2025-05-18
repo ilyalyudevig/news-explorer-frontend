@@ -15,7 +15,11 @@ function SearchResults({
   };
 
   return (
-    <section className="search-results">
+    <section
+      className="search-results"
+      aria-label="Search results"
+      aria-live="polite"
+    >
       <h2 className="search-results__title">Search results</h2>
       <div className="search-results__cards">
         {searchResults

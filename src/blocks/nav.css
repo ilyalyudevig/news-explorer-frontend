@@ -145,6 +145,10 @@
     font-weight: 500;
     line-height: 1.5;
   }
+
+  .nav__button--signin {
+    width: 152px;
+  }
 }
 
 @media screen and (max-width: 615px) {
@@ -192,6 +196,11 @@
 
   .nav__item:nth-child(1) {
     border: none;
+    padding: 0;
+  }
+
+  .nav__item:nth-child(2) {
+    padding: 0;
   }
 
   .nav__mobile-menu-btn {
@@ -209,7 +218,7 @@
     align-items: flex-start;
     position: fixed;
     background-color: #1a1b22;
-    top: 57px;
+    top: 56px;
     left: 0;
     margin: 0;
     padding: 16px;
@@ -220,6 +229,7 @@
 
   .nav__item--mobile {
     width: 100%;
+    padding: 0;
   }
 
   .nav__button--mobile {
@@ -235,7 +245,7 @@
     font-style: normal;
     font-weight: 500;
     line-height: 1.33333;
-    margin-bottom: 7px;
+    margin-bottom: 8px;
   }
 
   .nav__nav-link {

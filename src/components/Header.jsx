@@ -30,7 +30,12 @@ function Header({
         </p>
         <SearchForm onSearch={onSearch} />
       </div>
-      <img className="header__bg-image" src={backgroundImg} />
+      <img
+        className="header__bg-image"
+        src={backgroundImg}
+        alt=""
+        aria-hidden="true"
+      />
     </header>
   );
 }
