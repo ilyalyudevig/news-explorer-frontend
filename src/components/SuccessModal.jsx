@@ -8,7 +8,7 @@ function SuccessModal({
   modalIsOpen,
   handleModalClose,
   buttonText,
-  handleLogin,
+  handleModalOpen,
 }) {
   return (
     <Modal
@@ -21,7 +21,7 @@ function SuccessModal({
       <Button
         buttonText={buttonText}
         className="modal__button modal__button--signin"
-        onClick={handleLogin}
+        onClick={handleModalOpen}
       />
     </Modal>
   );

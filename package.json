@@ -3,11 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://news-explorer.info",
   "scripts": {
     "dev": "vite --open",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build && scp -r ./dist/* lyudevig@news-explorer.info:/home/lyudevig/news-explorer-frontend"
   },
   "dependencies": {
     "react": "^19.0.0",

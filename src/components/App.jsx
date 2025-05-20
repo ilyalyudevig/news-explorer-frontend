@@ -256,7 +256,7 @@ function App() {
         modalIsOpen={modalIsOpen}
         handleModalClose={handleModalClose}
         buttonText={"Sign in"}
-        handleLogin={handleLogin}
+        handleModalOpen={() => handleModalOpen("sign-in")}
       />
     </CurrentUserContext.Provider>
   );

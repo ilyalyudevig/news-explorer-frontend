@@ -5,7 +5,7 @@ const newsApiBaseUrl =
 
 const backendBaseUrl =
   process.env.NODE_ENV === "production"
-    ? "" // TODO
+    ? "https://api.news-explorer.info"
     : "http://localhost:3001";
 
 export { newsApiBaseUrl, backendBaseUrl };
