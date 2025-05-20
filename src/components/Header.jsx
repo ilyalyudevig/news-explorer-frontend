@@ -10,7 +10,7 @@ function Header({
   onSearch,
 }) {
   return (
-    <header className="header">
+    <header className="header" id="header">
       <Navigation
         handleSignInModalOpen={handleSignInModalOpen}
         handleLogout={handleLogout}

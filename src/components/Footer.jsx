@@ -13,9 +13,9 @@ function Footer() {
       <div className="footer__links-container">
         <ul className="footer__links-list links links--main">
           <li className="links__item">
-            <Link to="/" className="links__link">
+            <a className="links__link" href="#header">
               Home
-            </Link>
+            </a>
           </li>
           <li className="links__item">
             <a
