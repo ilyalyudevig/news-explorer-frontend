@@ -260,4 +260,9 @@
     line-height: 3.11111;
     margin: 0;
   }
+
+  .nav__mobile-menu-icon {
+    width: 24px;
+    height: 24px;
+  }
 }
