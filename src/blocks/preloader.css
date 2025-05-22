@@ -1,5 +1,5 @@
 .preloader {
-  padding: 80px 580px;
+  padding: 80px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -52,4 +52,16 @@
   line-height: 1.33333;
   margin: 24px 0 0;
   min-width: 280px;
+}
+
+@media screen and (max-width: 845px) {
+  .preloader {
+    padding: 80px 40px;
+  }
+}
+
+@media screen and (max-width: 585px) {
+  .preloader {
+    padding: 80px 16px;
+  }
 }
