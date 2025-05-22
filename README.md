@@ -8,3 +8,5 @@ The frontend has two main features:
 2. It displays all articles a user saves on a separate page (a protected route).
 
 The design is implemented according to the 🎨 [Figma design specification for News Explorer](https://www.figma.com/file/3ottwMEhlBt95Dbn8dw1NH/Your-Final-Project?type=design&node-id=0-1&mode=design&t=n8iPbRbVKSAS2dCI-0)
+
+## The link for the live demo: [https://news-explorer.info](https://news-explorer.info)
