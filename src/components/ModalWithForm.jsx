@@ -12,6 +12,7 @@ function ModalWithForm({
   switchBtnHandler,
   switchBtnText,
   onSubmit,
+  submitDisabled,
   children,
 }) {
   return (
@@ -32,6 +33,7 @@ function ModalWithForm({
           buttonText={buttonText}
           type="submit"
           className="form__button form__button--main"
+          disabled={submitDisabled}
         />
         <div className="form__second-btn-container">
           <p className="form__paragraph">or&nbsp;</p>

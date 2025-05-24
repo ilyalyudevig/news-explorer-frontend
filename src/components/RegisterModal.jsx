@@ -15,11 +15,12 @@ function RegisterModal({
   handleRegister,
   apiError,
 }) {
-  const { values, setValues, handleChange, errors, getInputRef } = useForm({
-    registerEmail: "",
-    registerPassword: "",
-    username: "",
-  });
+  const { values, setValues, handleChange, errors, setErrors, getInputRef } =
+    useForm({
+      registerEmail: "",
+      registerPassword: "",
+      username: "",
+    });
 
   useEffect(() => {
     if (modalIsOpen) {
@@ -28,8 +29,14 @@ function RegisterModal({
         registerPassword: "",
         username: "",
       }));
+
+      setErrors(() => ({
+        registerEmail: "",
+        registerPassword: "",
+        username: "",
+      }));
     }
-  }, [modalIsOpen, setValues]);
+  }, [modalIsOpen, setValues, setErrors]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,6 +54,9 @@ function RegisterModal({
       switchBtnHandler={switchBtnHandler}
       switchBtnText={switchBtnText}
       onSubmit={handleSubmit}
+      submitDisabled={
+        errors.registerEmail || errors.registerPassword || errors.username
+      }
     >
       <Input
         label="Email"

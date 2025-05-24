@@ -14,10 +14,11 @@ function LoginModal({
   switchBtnText,
   handleLogin,
 }) {
-  const { values, setValues, handleChange, errors, getInputRef } = useForm({
-    email: "",
-    password: "",
-  });
+  const { values, setValues, handleChange, errors, setErrors, getInputRef } =
+    useForm({
+      email: "",
+      password: "",
+    });
 
   useEffect(() => {
     if (modalIsOpen) {
@@ -25,8 +26,13 @@ function LoginModal({
         email: "",
         password: "",
       }));
+
+      setErrors(() => ({
+        email: "",
+        password: "",
+      }));
     }
-  }, [modalIsOpen, setValues]);
+  }, [modalIsOpen, setValues, setErrors]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,6 +50,7 @@ function LoginModal({
       switchBtnHandler={switchBtnHandler}
       switchBtnText={switchBtnText}
       onSubmit={handleSubmit}
+      submitDisabled={errors.email || errors.password}
     >
       <Input
         label="Email"

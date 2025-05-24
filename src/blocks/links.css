@@ -34,6 +34,11 @@
   font-style: normal;
   font-weight: 400;
   line-height: 1.33333;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.links__link:hover {
+  opacity: 0.5;
 }
 
 @media screen and (max-width: 585px) {

@@ -18,5 +18,5 @@ export function useForm(inputValues) {
     if (el) inputRefs.current[name] = el;
   };
 
-  return { values, setValues, handleChange, errors, getInputRef };
+  return { values, setValues, handleChange, errors, setErrors, getInputRef };
 }
