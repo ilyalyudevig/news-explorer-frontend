@@ -5,32 +5,24 @@ import ApiError from "./ApiError";
 import { getToken } from "../utils/token";
 import { useEffect } from "react";
 
+import { useApiCall } from "../hooks/useApiCall";
+
 function SavedNews({
   savedArticles,
   setSavedArticles,
-  isLoading,
-  setIsLoading,
   handleDeleteArticle,
   api,
-  apiError,
-  setApiError,
   extractAndSetKeywords,
 }) {
+  const { execute, isLoading, apiError } = useApiCall();
+
   useEffect(() => {
     const token = getToken();
-    setIsLoading(true);
-    api
-      .getSavedArticles(token)
-      .then((articles) => {
-        setSavedArticles(articles.reverse());
-        extractAndSetKeywords(articles);
-      })
-      .catch((err) => {
-        console.error(err);
-        setApiError(err.message || "Error fetching saved articles");
-      })
-      .finally(() => setIsLoading(false));
-    // This effect only needs to run once on the first render, and api, setIsLoading, and setSavedArticles are not expected to change.
+    execute(() => api.getSavedArticles(token)).then((articles) => {
+      setSavedArticles(articles.reverse());
+      extractAndSetKeywords(articles);
+    });
+    // This effect only needs to run once on the first render, and execute, api, setSavedArticles, and extractAndSetKeywords are not expected to change.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

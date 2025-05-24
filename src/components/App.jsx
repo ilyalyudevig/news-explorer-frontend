@@ -15,22 +15,26 @@ import { Routes, Route } from "react-router-dom";
 
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
+import { useModal } from "../hooks/useModal";
+import { useApiCall } from "../hooks/useApiCall";
+
 import { api } from "../utils/api";
 import * as auth from "../utils/auth";
 import { setToken, getToken, removeToken } from "../utils/token";
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
-  const [apiError, setApiError] = useState(null);
   const [searchAttempted, setSearchAttempted] = useState(false);
-  const [activeModal, setActiveModal] = useState("");
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [savedArticles, setSavedArticles] = useState([]);
   const [keywords, setKeywords] = useState([]);
+
+  const { activeModal, modalIsOpen, handleModalOpen, handleModalClose } =
+    useModal();
+
+  const { isLoading, execute, apiError } = useApiCall();
 
   const extractAndSetKeywords = (articles) => {
     const articleKeywords = articles
@@ -46,85 +50,48 @@ function App() {
     });
   };
 
-  const handleModalOpen = (modalName) => {
-    setActiveModal(modalName);
-    setModalIsOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setActiveModal("");
-    setModalIsOpen(false);
-  };
-
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
   };
 
   const handleSearch = async (query) => {
-    setIsLoading(true);
-    setApiError(null);
     setSearchAttempted(true);
-    try {
-      const data = await getSearchResults({ query });
-      const keywords = query.split(" ");
-      data.articles.forEach((article) => (article["keywords"] = keywords));
-      setKeywords((prev) => {
-        const allKeywords = [...prev, ...keywords];
-        return allKeywords.filter(
-          (keyword, index, self) => self.indexOf(keyword) === index
-        );
-      });
-      setSearchResults(data.articles);
-      setSearchAttempted(false);
-    } catch (error) {
-      setApiError(error);
-      setSearchResults([]);
-    } finally {
-      setIsLoading(false);
+    const data = await execute(getSearchResults, { query });
+    const keywords = query.split(" ");
+    data.articles.forEach((article) => (article["keywords"] = keywords));
+    setKeywords((prev) => {
+      const allKeywords = [...prev, ...keywords];
+      return allKeywords.filter(
+        (keyword, index, self) => self.indexOf(keyword) === index
+      );
+    });
+    setSearchResults(data.articles);
+    setSearchAttempted(false);
+  };
+
+  const handleLogin = async (inputValues) => {
+    const data = await execute(auth.authorize, inputValues);
+    if (!data.token) {
+      throw new Error("No token received");
     }
+    setToken(data.token);
+
+    const user = await execute(auth.checkToken, data.token);
+    setCurrentUser(user);
+    setIsLoggedIn(true);
+
+    const token = getToken();
+    const articles = await execute(() => api.getSavedArticles(token));
+    setSavedArticles(articles.reverse());
+    extractAndSetKeywords(articles);
+
+    handleModalClose();
   };
 
-  const handleLogin = (inputValues) => {
-    setIsLoading(true);
-    setApiError(null);
-    return auth
-      .authorize(inputValues)
-      .then((data) => {
-        if (data.token) {
-          setToken(data.token);
-          return auth.checkToken(data.token);
-        }
-        throw new Error("No token received");
-      })
-      .then((user) => {
-        setCurrentUser(user);
-        setIsLoggedIn(true);
-        return getToken();
-      })
-      .then((token) => api.getSavedArticles(token))
-      .then((articles) => {
-        setSavedArticles(articles.reverse());
-        extractAndSetKeywords(articles);
-      })
-      .then(handleModalClose)
-      .catch((err) => {
-        console.error(err);
-        setApiError(err.message || "Login failed");
-      })
-      .finally(() => setIsLoading(false));
-  };
-
-  const handleRegister = (inputValues) => {
-    setIsLoading(true);
-    return auth
-      .register(inputValues)
-      .then(handleModalClose)
-      .then(() => handleModalOpen("success"))
-      .catch((err) => {
-        console.error(err);
-        setApiError(err.message || "Registration failed");
-      })
-      .finally(() => setIsLoading(false));
+  const handleRegister = async (inputValues) => {
+    await execute(auth.register, inputValues);
+    handleModalClose();
+    handleModalOpen("success");
   };
 
   const handleLogout = () => {
@@ -133,44 +100,36 @@ function App() {
     setIsLoggedIn(false);
   };
 
-  const handleSaveArticle = (article) => {
+  const handleSaveArticle = async (article) => {
     const token = getToken();
-    api
-      .saveArticle(article, token)
-      .then(() => api.getSavedArticles(token))
-      .then((articles) => setSavedArticles(articles.reverse()))
-      .catch((err) => {
-        console.error(err);
-        setApiError(err.message || "Error during saving an article");
-      });
+    const savedArticle = await api.saveArticle(article, token);
+    setSavedArticles((prevArticles) => [savedArticle, ...prevArticles]);
+    extractAndSetKeywords([savedArticle]);
   };
 
-  const handleDeleteArticle = (url) => {
+  const handleDeleteArticle = async (url) => {
     const token = getToken();
-    const article = savedArticles.find((article) => article.url === url);
-    api
-      .deleteArticle(article._id, token)
-      .then(() => api.getSavedArticles(token))
-      .then((articles) => setSavedArticles(articles.reverse()))
-      .catch((err) => {
-        console.error(err);
-        setApiError(err.message || "Error during deleting an article");
-      });
+    const articleToDelete = savedArticles.find(
+      (article) => article.url === url
+    );
+    await api.deleteArticle(articleToDelete._id, token);
+
+    const updatedSavedArticles = savedArticles.filter(
+      (article) => article._id !== articleToDelete._id
+    );
+    setSavedArticles(() => updatedSavedArticles.reverse());
   };
 
   useEffect(() => {
     const token = getToken();
     if (!token) return;
 
-    setIsLoading(true);
-    auth
-      .checkToken(token)
-      .then((user) => {
-        setCurrentUser(user);
-        setIsLoggedIn(true);
-      })
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
+    execute(auth.checkToken, token).then((user) => {
+      setCurrentUser(user);
+      setIsLoggedIn(true);
+    });
+    // This effect only needs to run once on the first render, and execute, auth, setCurrentUser, and setIsLoggedIn are not expected to change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -215,10 +174,7 @@ function App() {
                 setSavedArticles={setSavedArticles}
                 handleDeleteArticle={handleDeleteArticle}
                 isLoading={isLoading}
-                setIsLoading={setIsLoading}
                 api={api}
-                apiError={apiError}
-                setApiError={setApiError}
                 extractAndSetKeywords={extractAndSetKeywords}
               />
             </ProtectedRoute>
