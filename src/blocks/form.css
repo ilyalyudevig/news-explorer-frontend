@@ -1,0 +1,144 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.form__label {
+  color: #2f71e5;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.form__input {
+  padding: 9px 0;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #000;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  width: 100%;
+  display: flex;
+  align-items: start;
+  padding-bottom: 9px;
+}
+
+.form__input-error-container {
+  height: 30px;
+  display: flex;
+  width: 100%;
+}
+
+.form__input-error {
+  margin: 5px 0 0;
+  color: #f00;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 1.2;
+  max-width: 358px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.form__registration-error {
+  margin: 0 auto;
+  text-align: center;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.2;
+  align-self: end;
+}
+
+.form__button {
+  border-radius: 100px;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.33333;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.form__button--main {
+  width: 100%;
+  height: 64px;
+  background-color: #2f71e5;
+  border: none;
+  margin-top: 9px;
+}
+
+.form__button--main:hover {
+  background-color: #347eff;
+}
+
+.form__button--main:disabled {
+  background-color: #e6e8eb;
+  color: #b6bcbf;
+}
+
+.form__second-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 0 28px;
+}
+
+.form__button--second {
+  border: none;
+  background-color: transparent;
+  color: #2f71e5;
+  text-align: center;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: auto;
+  padding: 0;
+}
+
+.form__button--second:hover {
+  color: #347eff;
+}
+
+.form__paragraph {
+  color: #000;
+  text-align: center;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0;
+}
+
+@media screen and (max-width: 585px) {
+  .form__second-btn-container {
+    padding-bottom: 188px;
+  }
+
+  .form__fieldset {
+    width: calc(100vw - 32px);
+  }
+
+  .form__input-error {
+    width: calc(100vw - 32px);
+  }
+}

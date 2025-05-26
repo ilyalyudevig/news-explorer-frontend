@@ -1,0 +1,30 @@
+.saved-news {
+  background-color: #f5f6f7;
+  padding: 80px 104px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.saved-news__cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+@media screen and (max-width: 845px) {
+  .saved-news {
+    padding: 32px 40px 40px;
+  }
+
+  .saved-news__cards {
+    gap: 8px;
+  }
+}
+
+@media screen and (max-width: 585px) {
+  .saved-news {
+    padding: 24px 16px 16px;
+  }
+}
