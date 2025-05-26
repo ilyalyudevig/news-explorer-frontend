@@ -161,7 +161,9 @@ function App() {
         <Route
           path="/saved-news"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute
+              handleSigninModalOpen={() => handleModalOpen("sign-in")}
+            >
               <SavedNewsHeader
                 savedArticles={savedArticles}
                 handleLogout={handleLogout}
