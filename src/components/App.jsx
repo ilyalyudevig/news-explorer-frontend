@@ -10,7 +10,7 @@ import ProtectedRoute from "./ProtectedRoute";
 
 import { getSearchResults } from "../utils/newsApi";
 
-import { useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -25,8 +25,7 @@ import { setToken, getToken, removeToken } from "../utils/token";
 function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [searchAttempted, setSearchAttempted] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [savedArticles, setSavedArticles] = useState([]);
   const [keywords, setKeywords] = useState([]);
@@ -35,6 +34,8 @@ function App() {
     useModal();
 
   const { isLoading, execute, apiError } = useApiCall();
+  const { setUser } = useContext(CurrentUserContext);
+  const { currentUser } = useContext(CurrentUserContext);
 
   const extractAndSetKeywords = (articles) => {
     const articleKeywords = articles
@@ -69,6 +70,10 @@ function App() {
     setSearchAttempted(false);
   };
 
+  const setUserContext = (user) => {
+    setUser(user);
+  };
+
   const handleLogin = async (inputValues) => {
     const data = await execute(auth.authorize, inputValues);
     if (!data.token) {
@@ -77,8 +82,9 @@ function App() {
     setToken(data.token);
 
     const user = await execute(auth.checkToken, data.token);
-    setCurrentUser(user);
-    setIsLoggedIn(true);
+    setUserContext(user);
+    // setCurrentUser(user);
+    // setIsLoggedIn(true);
 
     const token = getToken();
     const articles = await execute(() => api.getSavedArticles(token));
@@ -97,7 +103,8 @@ function App() {
   const handleLogout = () => {
     removeToken();
     setSearchResults([]);
-    setIsLoggedIn(false);
+    setUserContext(null);
+    // setIsLoggedIn(false);
   };
 
   const handleSaveArticle = async (article) => {
@@ -120,20 +127,10 @@ function App() {
     setSavedArticles(() => updatedSavedArticles.reverse());
   };
 
-  useEffect(() => {
-    const token = getToken();
-    if (!token) return;
-
-    execute(auth.checkToken, token).then((user) => {
-      setCurrentUser(user);
-      setIsLoggedIn(true);
-    });
-    // This effect only needs to run once on the first render, and execute, auth, setCurrentUser, and setIsLoggedIn are not expected to change.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  console.log("From App", currentUser);
 
   return (
-    <CurrentUserContext.Provider value={{ isLoggedIn, currentUser }}>
+    <>
       <Routes>
         <Route
           path="/"
@@ -216,7 +213,7 @@ function App() {
         buttonText={"Sign in"}
         handleModalOpen={() => handleModalOpen("sign-in")}
       />
-    </CurrentUserContext.Provider>
+    </>
   );
 }
 

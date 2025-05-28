@@ -23,7 +23,7 @@ function SavedNewsHeader({
           Saved articles
         </p>
         <h2 className="header__title header__title--saved-news">
-          {`${currentUser.name}, you have ${savedArticles.length} saved articles`}
+          {`${currentUser?.name}, you have ${savedArticles.length} saved articles`}
         </h2>
         <p className="header__paragraph header__paragraph--keywords">
           By keywords:{" "}

@@ -1,15 +1,18 @@
-import { useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function ProtectedRoute({ children, handleSigninModalOpen }) {
-  const { isLoggedIn } = useContext(CurrentUserContext);
-
-  if (!isLoggedIn) {
-    handleSigninModalOpen();
-    return <Navigate to="/" replace />;
-  }
+  const { isLoggedIn, currentUser } = useContext(CurrentUserContext);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!isLoggedIn) {
+      console.log(isLoggedIn);
+      navigate("/", { replace: true });
+      handleSigninModalOpen();
+    }
+  }, [isLoggedIn]);
 
   return children;
 }

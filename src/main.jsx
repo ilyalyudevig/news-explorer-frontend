@@ -4,11 +4,14 @@ import { BrowserRouter } from "react-router-dom";
 
 import "./index.css";
 import App from "./components/App";
+import CurrentUserContextWrapper from "./contexts/CurrentUserContextWrapper";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <CurrentUserContextWrapper>
+        <App />
+      </CurrentUserContextWrapper>
     </BrowserRouter>
   </StrictMode>
 );
