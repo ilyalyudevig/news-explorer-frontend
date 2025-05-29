@@ -16,7 +16,7 @@ function Main({
   return (
     <main className="main" aria-label="Main content">
       {isLoading ? (
-        <Preloader />
+        <Preloader text={"Searching for news..."} />
       ) : searchAttempted && apiError ? (
         <ApiError />
       ) : searchAttempted && !apiError && searchResults.length === 0 ? (

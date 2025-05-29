@@ -29,7 +29,7 @@ function SavedNews({
   return (
     <main className="main">
       {isLoading ? (
-        <Preloader />
+        <Preloader text={"Loading news..."} />
       ) : apiError ? (
         <ApiError />
       ) : (

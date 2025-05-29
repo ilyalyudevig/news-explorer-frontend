@@ -21,12 +21,14 @@ import { useApiCall } from "../hooks/useApiCall";
 import { api } from "../utils/api";
 import * as auth from "../utils/auth";
 import { setToken, getToken, removeToken } from "../utils/token";
+import Preloader from "./Preloader";
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [searchAttempted, setSearchAttempted] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [savedArticles, setSavedArticles] = useState([]);
   const [keywords, setKeywords] = useState([]);
@@ -122,15 +124,29 @@ function App() {
 
   useEffect(() => {
     const token = getToken();
-    if (!token) return;
+    if (!token) {
+      setIsAuthChecked(true);
+      return;
+    }
 
-    execute(auth.checkToken, token).then((user) => {
-      setCurrentUser(user);
-      setIsLoggedIn(true);
-    });
+    execute(auth.checkToken, token)
+      .then((user) => {
+        setCurrentUser(user);
+        setIsLoggedIn(true);
+      })
+      .catch(() => {
+        setIsLoggedIn(false);
+      })
+      .finally(() => {
+        setIsAuthChecked(true);
+      });
     // This effect only needs to run once on the first render, and execute, auth, setCurrentUser, and setIsLoggedIn are not expected to change.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (!isAuthChecked) {
+    return <Preloader text={"Loading..."} />;
+  }
 
   return (
     <CurrentUserContext.Provider value={{ isLoggedIn, currentUser }}>
