@@ -12,7 +12,7 @@ function ProtectedRoute({ children, handleSigninModalOpen }) {
       navigate("/", { replace: true });
       handleSigninModalOpen();
     }
-  }, []);
+  });
 
   return children;
 }

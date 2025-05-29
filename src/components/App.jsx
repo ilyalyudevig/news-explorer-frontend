@@ -11,7 +11,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import { getSearchResults } from "../utils/newsApi";
 
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
@@ -37,6 +37,8 @@ function App() {
     useModal();
 
   const { isLoading, execute, apiError } = useApiCall();
+
+  const navigate = useNavigate();
 
   const extractAndSetKeywords = (articles) => {
     const articleKeywords = articles
@@ -100,6 +102,7 @@ function App() {
     removeToken();
     setSearchResults([]);
     setIsLoggedIn(false);
+    navigate("/", { replace: true });
   };
 
   const handleSaveArticle = async (article) => {
