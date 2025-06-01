@@ -68,10 +68,22 @@ function Navigation({
   return (
     <nav className={navClasses} aria-label="Main navigation">
       <Link className="nav__nav-link" to="/">
-        <span className={titleClasses} aria-label="NewsExplorer logo">NewsExplorer</span>
+        <span className={titleClasses} aria-label="NewsExplorer logo">
+          NewsExplorer
+        </span>
       </Link>
-      <Button className="nav__mobile-menu-btn" onClick={toggleMobileMenu} aria-label="Toggle mobile menu" aria-expanded={isMobileMenuOpen}>
-        <img className="nav__mobile-menu-icon" src={mobileMenuIconSrc} alt="" aria-hidden="true" />
+      <Button
+        className="nav__mobile-menu-btn"
+        onClick={toggleMobileMenu}
+        aria-label="Toggle mobile menu"
+        aria-expanded={isMobileMenuOpen}
+      >
+        <img
+          className="nav__mobile-menu-icon"
+          src={mobileMenuIconSrc}
+          alt=""
+          aria-hidden="true"
+        />
       </Button>
       <ul className={navItemsClasses} role="menubar">
         <li className={navItemBaseClasses} role="none">
@@ -87,7 +99,12 @@ function Navigation({
               }`}
               role="none"
             >
-              <Link className={savedArticlesLinkClasses} to="/saved-news" role="menuitem">
+              <Link
+                className={savedArticlesLinkClasses}
+                to="/saved-news"
+                role="menuitem"
+                data-testid="nav-link-savednews"
+              >
                 Saved articles
               </Link>
             </li>
@@ -98,8 +115,14 @@ function Navigation({
                 onClick={handleLogout}
                 role="menuitem"
                 aria-label="Sign out"
+                dataTestId="nav-button-signout"
               >
-                <img className="nav__button-icon" src={logoutIconSrc} alt="" aria-hidden="true" />
+                <img
+                  className="nav__button-icon"
+                  src={logoutIconSrc}
+                  alt=""
+                  aria-hidden="true"
+                />
               </Button>
             </li>
           </>
@@ -111,6 +134,7 @@ function Navigation({
               onClick={handleSignInModalOpen}
               role="menuitem"
               aria-label="Sign in"
+              dataTestId="nav-button-signin"
             />
           </li>
         )}

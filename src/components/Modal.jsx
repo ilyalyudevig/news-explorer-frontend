@@ -7,6 +7,7 @@ function Modal({
   modalIsOpen,
   handleModalClose,
   children,
+  dataTestId,
 }) {
   useModalClose(modalIsOpen, handleModalClose);
 
@@ -18,6 +19,7 @@ function Modal({
       role="dialog"
       aria-modal="true"
       aria-labelledby={`modal-title-${name}`}
+      data-testid={dataTestId}
     >
       <div className="modal__container">
         <button

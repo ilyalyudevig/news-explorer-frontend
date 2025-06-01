@@ -51,6 +51,7 @@ function LoginModal({
       switchBtnText={switchBtnText}
       onSubmit={handleSubmit}
       submitDisabled={errors.email || errors.password}
+      dataTestId="sign-in-modal"
     >
       <Input
         label="Email"
@@ -66,6 +67,7 @@ function LoginModal({
         inputRef={getInputRef("email")}
         errorClass={errors.email ? "form__input-error_active" : ""}
         errorMessage={errors.email}
+        dataTestId="email-input"
       />
       <Input
         label="Password"
@@ -81,6 +83,7 @@ function LoginModal({
         inputRef={getInputRef("password")}
         errorClass={errors.password ? "form__input-error_active" : ""}
         errorMessage={errors.password}
+        dataTestId="password-input"
       />
     </ModalWithForm>
   );

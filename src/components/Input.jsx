@@ -12,7 +12,8 @@ function Input({
   onChange,
   inputRef,
   errorMessage,
-  'aria-describedby': ariaDescribedby,
+  "aria-describedby": ariaDescribedby,
+  dataTestId,
 }) {
   return (
     <>
@@ -33,6 +34,7 @@ function Input({
         onChange={onChange}
         ref={inputRef}
         aria-describedby={ariaDescribedby}
+        data-testid={dataTestId}
       />
       <div className="form__input-error-container">
         <p className={`form__input-error ${errorClass}`} id={ariaDescribedby}>

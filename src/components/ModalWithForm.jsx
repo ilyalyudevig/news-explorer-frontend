@@ -14,6 +14,7 @@ function ModalWithForm({
   onSubmit,
   submitDisabled,
   children,
+  dataTestId,
 }) {
   return (
     <Modal
@@ -22,6 +23,7 @@ function ModalWithForm({
       activeModal={activeModal}
       modalIsOpen={modalIsOpen}
       handleModalClose={handleModalClose}
+      dataTestId={dataTestId}
     >
       <Form
         onSubmit={onSubmit}
@@ -34,6 +36,7 @@ function ModalWithForm({
           type="submit"
           className="form__button form__button--main"
           disabled={submitDisabled}
+          dataTestId="form-submit-button"
         />
         <div className="form__second-btn-container">
           <p className="form__paragraph">or&nbsp;</p>

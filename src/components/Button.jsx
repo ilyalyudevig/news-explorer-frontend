@@ -7,6 +7,7 @@ function Button({
   disabled,
   className,
   children,
+  dataTestId,
 }) {
   return (
     <button
@@ -16,6 +17,7 @@ function Button({
       onMouseLeave={onMouseLeave}
       onClick={onClick}
       disabled={disabled}
+      data-testid={dataTestId}
     >
       {buttonText}
       {children}

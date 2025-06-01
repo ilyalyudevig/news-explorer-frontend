@@ -33,7 +33,7 @@ function SavedNews({
       ) : apiError ? (
         <ApiError />
       ) : (
-        <section className="saved-news">
+        <section className="saved-news" data-testid="saved-news-content">
           <div className="saved-news__cards">
             {savedArticles.map(
               ({
