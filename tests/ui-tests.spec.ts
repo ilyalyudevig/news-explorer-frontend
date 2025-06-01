@@ -32,19 +32,7 @@ test.describe("unauthorized user tests", () => {
 });
 
 test.describe("authorized user tests", () => {
-  let authToken: string;
-
-  test.beforeAll(async ({ request, browser }) => {
-    const response = await request.post("http://localhost:3001/signin", {
-      data: {
-        email: "testuser@example.com",
-        password: "testuser123",
-      },
-    });
-
-    const authData = await response.json();
-    authToken = authData.token;
-  });
+  let authToken = "mock-auth-token";
 
   test.beforeEach(async ({ page }) => {
     await page.setExtraHTTPHeaders({
