@@ -5,6 +5,7 @@
   "type": "module",
   "homepage": "https://news-explorer.info",
   "scripts": {
+    "start": "vite",
     "dev": "vite --open",
     "build": "vite build",
     "lint": "eslint .",
