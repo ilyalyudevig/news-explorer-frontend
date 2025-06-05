@@ -2,18 +2,19 @@ import { useState } from "react";
 
 export function useApiCall() {
   const [isLoading, setIsLoading] = useState(false);
-  const [apiError, setApiError] = useState(null);
+  const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
 
   const execute = async (apiFunction, args) => {
     setIsLoading(true);
-    setApiError(null);
+    setError(null);
 
     try {
       const result = await apiFunction(args);
+      setData(result);
       return result;
     } catch (err) {
-      setApiError(err);
-      console.error("API call failed with error: ", err);
+      setError(err);
       throw err;
     } finally {
       setIsLoading(false);
@@ -22,8 +23,8 @@ export function useApiCall() {
 
   return {
     isLoading,
+    error,
+    data,
     execute,
-    apiError,
-    setApiError,
   };
 }

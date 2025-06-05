@@ -28,7 +28,6 @@ function App() {
   const [searchAttempted, setSearchAttempted] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-  const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [savedArticles, setSavedArticles] = useState([]);
   const [keywords, setKeywords] = useState([]);
@@ -36,7 +35,9 @@ function App() {
   const { activeModal, modalIsOpen, handleModalOpen, handleModalClose } =
     useModal();
 
-  const { isLoading, execute, apiError } = useApiCall();
+  const authApi = useApiCall();
+  const searchApi = useApiCall();
+  const articlesApi = useApiCall();
 
   const navigate = useNavigate();
 
@@ -60,32 +61,35 @@ function App() {
 
   const handleSearch = async (query) => {
     setSearchAttempted(true);
-    const data = await execute(getSearchResults, { query });
-    const keywords = query.split(" ");
-    data.articles.forEach((article) => (article["keywords"] = keywords));
-    setKeywords((prev) => {
-      const allKeywords = [...prev, ...keywords];
-      return allKeywords.filter(
-        (keyword, index, self) => self.indexOf(keyword) === index
-      );
-    });
-    setSearchResults(data.articles);
-    setSearchAttempted(false);
+    try {
+      const data = await searchApi.execute(getSearchResults, { query });
+      const keywords = query.split(" ");
+      data.articles.forEach((article) => (article["keywords"] = keywords));
+      setKeywords((prev) => {
+        const allKeywords = [...prev, ...keywords];
+        return allKeywords.filter(
+          (keyword, index, self) => self.indexOf(keyword) === index
+        );
+      });
+      setSearchResults(data.articles);
+    } finally {
+      setSearchAttempted(false);
+    }
   };
 
   const handleLogin = async (inputValues) => {
-    const data = await execute(auth.authorize, inputValues);
+    const data = await authApi.execute(auth.authorize, inputValues);
     if (!data.token) {
       throw new Error("No token received");
     }
     setToken(data.token);
 
-    const user = await execute(auth.checkToken, data.token);
+    const user = await authApi.execute(auth.checkToken, data.token);
     setCurrentUser(user);
     setIsLoggedIn(true);
 
     const token = getToken();
-    const articles = await execute(() => api.getSavedArticles(token));
+    const articles = await articlesApi.execute(() => api.getSavedArticles(token));
     setSavedArticles(articles.reverse());
     extractAndSetKeywords(articles);
 
@@ -93,7 +97,7 @@ function App() {
   };
 
   const handleRegister = async (inputValues) => {
-    await execute(auth.register, inputValues);
+    await authApi.execute(auth.register, inputValues);
     handleModalClose();
     handleModalOpen("success");
   };
@@ -107,7 +111,7 @@ function App() {
 
   const handleSaveArticle = async (article) => {
     const token = getToken();
-    const savedArticle = await api.saveArticle(article, token);
+    const savedArticle = await articlesApi.execute(() => api.saveArticle(article, token));
     setSavedArticles((prevArticles) => [savedArticle, ...prevArticles]);
     extractAndSetKeywords([savedArticle]);
   };
@@ -117,7 +121,7 @@ function App() {
     const articleToDelete = savedArticles.find(
       (article) => article.url === url
     );
-    await api.deleteArticle(articleToDelete._id, token);
+    await articlesApi.execute(() => api.deleteArticle(articleToDelete._id, token));
 
     const updatedSavedArticles = savedArticles.filter(
       (article) => article._id !== articleToDelete._id
@@ -126,28 +130,30 @@ function App() {
   };
 
   useEffect(() => {
-    const token = getToken();
-    if (!token) {
-      setIsAuthChecked(true);
-      return;
-    }
+    const checkAuth = async () => {
+      const token = getToken();
+      if (!token) {
+        return;
+      }
 
-    execute(auth.checkToken, token)
-      .then((user) => {
+      try {
+        const user = await authApi.execute(auth.checkToken, token);
         setCurrentUser(user);
         setIsLoggedIn(true);
-      })
-      .catch(() => {
-        setIsLoggedIn(false);
-      })
-      .finally(() => {
-        setIsAuthChecked(true);
-      });
-    // This effect only needs to run once on the first render, and execute, auth, setCurrentUser, and setIsLoggedIn are not expected to change.
+        
+        const articles = await articlesApi.execute(() => api.getSavedArticles(token));
+        setSavedArticles(articles.reverse());
+        extractAndSetKeywords(articles);
+      } catch {
+        removeToken();
+      }
+    };
+
+    checkAuth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!isAuthChecked) {
+  if (authApi.isLoading) {
     return <Preloader text={"Loading..."} />;
   }
 
@@ -166,11 +172,11 @@ function App() {
                 onSearch={handleSearch}
               />
               <Main
-                isLoading={isLoading}
+                isLoading={searchApi.isLoading}
                 searchResults={searchResults}
                 savedArticles={savedArticles}
                 searchAttempted={searchAttempted}
-                apiError={apiError}
+                apiError={searchApi.error}
                 handleSaveArticle={handleSaveArticle}
                 handleDeleteArticle={handleDeleteArticle}
               />
@@ -194,7 +200,7 @@ function App() {
                 savedArticles={savedArticles}
                 setSavedArticles={setSavedArticles}
                 handleDeleteArticle={handleDeleteArticle}
-                isLoading={isLoading}
+                isLoading={articlesApi.isLoading}
                 api={api}
                 extractAndSetKeywords={extractAndSetKeywords}
               />
@@ -224,7 +230,7 @@ function App() {
         switchBtnHandler={() => handleModalOpen("sign-in")}
         switchBtnText="Sign in"
         handleRegister={handleRegister}
-        apiError={apiError}
+        apiError={authApi.error}
       />
       <SuccessModal
         title="Registration successfully completed!"
