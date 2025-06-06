@@ -1,6 +1,5 @@
-import { useContext } from "react";
 import Navigation from "./Navigation";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 function SavedNewsHeader({
   savedArticles,
@@ -9,7 +8,7 @@ function SavedNewsHeader({
   toggleMobileMenu,
   isMobileMenuOpen,
 }) {
-  const { currentUser } = useContext(CurrentUserContext);
+  const { currentUser } = useCurrentUser();
   return (
     <header className="header header--saved-news">
       <Navigation

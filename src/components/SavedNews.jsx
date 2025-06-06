@@ -2,35 +2,18 @@ import NewsCard from "./NewsCard";
 import Preloader from "./Preloader";
 import ApiError from "./ApiError";
 
-import { getToken } from "../utils/token";
-import { useEffect } from "react";
-
 import { useApiCall } from "../hooks/useApiCall";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
-function SavedNews({
-  savedArticles,
-  setSavedArticles,
-  handleDeleteArticle,
-  api,
-  extractAndSetKeywords,
-}) {
-  const { execute, isLoading, apiError } = useApiCall();
-
-  useEffect(() => {
-    const token = getToken();
-    execute(() => api.getSavedArticles(token)).then((articles) => {
-      setSavedArticles(articles.reverse());
-      extractAndSetKeywords(articles);
-    });
-    // This effect only needs to run once on the first render, and execute, api, setSavedArticles, and extractAndSetKeywords are not expected to change.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+function SavedNews({ handleDeleteArticle }) {
+  const { savedArticles } = useCurrentUser();
+  const articlesApi = useApiCall();
 
   return (
     <main className="main">
-      {isLoading ? (
+      {articlesApi.isLoading ? (
         <Preloader text={"Loading news..."} />
-      ) : apiError ? (
+      ) : articlesApi.error ? (
         <ApiError />
       ) : (
         <section className="saved-news" data-testid="saved-news-content">

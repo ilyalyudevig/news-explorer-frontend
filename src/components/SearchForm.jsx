@@ -36,12 +36,14 @@ function SearchForm({ onSearch }) {
           ref={getInputRef("query")}
           required
           aria-label="Search for news"
+          data-testid="search-input"
         />
         <Button
           className="search-form__button"
           buttonText="Search"
           type="submit"
           aria-label="Search"
+          dataTestId="search-button"
         />
       </div>
     </form>

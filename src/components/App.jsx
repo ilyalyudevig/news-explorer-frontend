@@ -10,50 +10,36 @@ import ProtectedRoute from "./ProtectedRoute";
 
 import { getSearchResults } from "../utils/newsApi";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 import { useModal } from "../hooks/useModal";
 import { useApiCall } from "../hooks/useApiCall";
-
-import { api } from "../utils/api";
-import * as auth from "../utils/auth";
-import { setToken, getToken, removeToken } from "../utils/token";
-import Preloader from "./Preloader";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [searchAttempted, setSearchAttempted] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [savedArticles, setSavedArticles] = useState([]);
-  const [keywords, setKeywords] = useState([]);
+
+  const {
+    savedArticles,
+    keywords,
+    setKeywords,
+    login,
+    register,
+    logout,
+    saveArticle,
+    deleteArticle,
+  } = useCurrentUser();
 
   const { activeModal, modalIsOpen, handleModalOpen, handleModalClose } =
     useModal();
 
-  const authApi = useApiCall();
   const searchApi = useApiCall();
-  const articlesApi = useApiCall();
+  const authApi = useApiCall();
 
   const navigate = useNavigate();
-
-  const extractAndSetKeywords = (articles) => {
-    const articleKeywords = articles
-      .map((article) => article.keywords)
-      .flat()
-      .filter(Boolean);
-
-    setKeywords((prev) => {
-      const allKeywords = [...prev, ...articleKeywords];
-      return allKeywords.filter(
-        (keyword, index, self) => self.indexOf(keyword) === index
-      );
-    });
-  };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
@@ -78,87 +64,32 @@ function App() {
   };
 
   const handleLogin = async (inputValues) => {
-    const data = await authApi.execute(auth.authorize, inputValues);
-    if (!data.token) {
-      throw new Error("No token received");
-    }
-    setToken(data.token);
-
-    const user = await authApi.execute(auth.checkToken, data.token);
-    setCurrentUser(user);
-    setIsLoggedIn(true);
-
-    const token = getToken();
-    const articles = await articlesApi.execute(() => api.getSavedArticles(token));
-    setSavedArticles(articles.reverse());
-    extractAndSetKeywords(articles);
-
+    await authApi.execute(login, inputValues);
     handleModalClose();
   };
 
   const handleRegister = async (inputValues) => {
-    await authApi.execute(auth.register, inputValues);
+    await authApi.execute(register, inputValues);
     handleModalClose();
     handleModalOpen("success");
   };
 
   const handleLogout = () => {
-    removeToken();
+    logout();
     setSearchResults([]);
-    setIsLoggedIn(false);
     navigate("/", { replace: true });
   };
 
   const handleSaveArticle = async (article) => {
-    const token = getToken();
-    const savedArticle = await articlesApi.execute(() => api.saveArticle(article, token));
-    setSavedArticles((prevArticles) => [savedArticle, ...prevArticles]);
-    extractAndSetKeywords([savedArticle]);
+    await authApi.execute(saveArticle, article);
   };
 
   const handleDeleteArticle = async (url) => {
-    const token = getToken();
-    const articleToDelete = savedArticles.find(
-      (article) => article.url === url
-    );
-    await articlesApi.execute(() => api.deleteArticle(articleToDelete._id, token));
-
-    const updatedSavedArticles = savedArticles.filter(
-      (article) => article._id !== articleToDelete._id
-    );
-    setSavedArticles(() => updatedSavedArticles.reverse());
+    await authApi.execute(deleteArticle, url);
   };
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const token = getToken();
-      if (!token) {
-        return;
-      }
-
-      try {
-        const user = await authApi.execute(auth.checkToken, token);
-        setCurrentUser(user);
-        setIsLoggedIn(true);
-        
-        const articles = await articlesApi.execute(() => api.getSavedArticles(token));
-        setSavedArticles(articles.reverse());
-        extractAndSetKeywords(articles);
-      } catch {
-        removeToken();
-      }
-    };
-
-    checkAuth();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  if (authApi.isLoading) {
-    return <Preloader text={"Loading..."} />;
-  }
-
   return (
-    <CurrentUserContext.Provider value={{ isLoggedIn, currentUser }}>
+    <>
       <Routes>
         <Route
           path="/"
@@ -198,11 +129,8 @@ function App() {
               />
               <SavedNews
                 savedArticles={savedArticles}
-                setSavedArticles={setSavedArticles}
                 handleDeleteArticle={handleDeleteArticle}
-                isLoading={articlesApi.isLoading}
-                api={api}
-                extractAndSetKeywords={extractAndSetKeywords}
+                isLoading={authApi.isLoading}
               />
             </ProtectedRoute>
           }
@@ -241,7 +169,7 @@ function App() {
         buttonText={"Sign in"}
         handleModalOpen={() => handleModalOpen("sign-in")}
       />
-    </CurrentUserContext.Provider>
+    </>
   );
 }
 

@@ -1,18 +1,23 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { useCurrentUser } from "../hooks/useCurrentUser";
+import Preloader from "./Preloader";
 
 function ProtectedRoute({ children, handleSigninModalOpen }) {
-  const { isLoggedIn } = useContext(CurrentUserContext);
+  const { isLoggedIn, authLoading } = useCurrentUser();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!authLoading && !isLoggedIn) {
       navigate("/", { replace: true });
       handleSigninModalOpen();
     }
-  });
+  }, [isLoggedIn, authLoading, navigate, handleSigninModalOpen]);
+
+  if (authLoading) {
+    return <Preloader text="Loading..." />;
+  }
 
   return children;
 }

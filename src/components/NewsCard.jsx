@@ -1,8 +1,8 @@
 import Button from "./Button";
 
 import { formatDisplayDate } from "../utils/formatDate";
-import { useContext, useState } from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { useState } from "react";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 function NewsCard({
   source,
@@ -18,7 +18,7 @@ function NewsCard({
   keywords,
 }) {
   const displayDate = formatDisplayDate(publishedAt);
-  const { isLoggedIn } = useContext(CurrentUserContext);
+  const { isLoggedIn } = useCurrentUser();
   const [isHovered, setIsHovered] = useState(false);
 
   const onButtonClick = (e) => {
@@ -59,7 +59,7 @@ function NewsCard({
   }
 
   return (
-    <article className="card" aria-label={title}>
+    <article className="card" aria-label={title} data-testid="news-card">
       {cardType === "saved" && keywords && (
         <div className="card__keywords">{keywords[0]}</div>
       )}
@@ -70,6 +70,7 @@ function NewsCard({
         onMouseLeave={() => setIsHovered(false)}
         onClick={onButtonClick}
         aria-label={isSaved ? "Remove from saved" : "Save article"}
+        dataTestId={isSaved ? "delete-button" : "save-button"}
       />
       <img className="card__image" src={urlToImage} alt={title} />
       <div className="card__content">

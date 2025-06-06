@@ -7,8 +7,7 @@ import Button from "./Button";
 
 import { Link } from "react-router-dom";
 
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import { useContext } from "react";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 function Navigation({
   handleSignInModalOpen,
@@ -17,7 +16,7 @@ function Navigation({
   toggleMobileMenu,
   isMobileMenuOpen,
 }) {
-  const { isLoggedIn, currentUser } = useContext(CurrentUserContext);
+  const { isLoggedIn, currentUser } = useCurrentUser();
 
   const navClasses = `header__nav nav ${
     isMobileMenuOpen ? "nav--mobile-menu-open" : ""
