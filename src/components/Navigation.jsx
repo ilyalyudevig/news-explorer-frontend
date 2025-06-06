@@ -87,7 +87,16 @@ function Navigation({
       </Button>
       <ul className={navItemsClasses} role="menubar">
         <li className={navItemBaseClasses} role="none">
-          <Link className={homeLinkClasses} to="/" role="menuitem">
+          <Link
+            className={homeLinkClasses}
+            to="/"
+            role="menuitem"
+            onClick={() => {
+              if (isMobileMenuOpen) {
+                toggleMobileMenu();
+              }
+            }}
+          >
             Home
           </Link>
         </li>
@@ -104,6 +113,11 @@ function Navigation({
                 to="/saved-news"
                 role="menuitem"
                 data-testid="nav-link-savednews"
+                onClick={() => {
+                  if (isMobileMenuOpen) {
+                    toggleMobileMenu();
+                  }
+                }}
               >
                 Saved articles
               </Link>
