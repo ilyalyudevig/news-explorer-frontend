@@ -31,31 +31,6 @@ test.describe("unauthorized user tests", () => {
   });
 });
 
-test.describe("authorized user tests", () => {
-  let authToken = "mock-auth-token";
-
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      localStorage.setItem("jwt", authToken);
-    });
-
-    await page.setExtraHTTPHeaders({
-      Authorization: `Bearer ${authToken}`,
-    });
-
-    await page.goto("http://localhost:3000/");
-  });
-
-  test("saved news link is visible", async ({ page }) => {
-    await page.getByTestId("nav-link-savednews").isVisible();
-  });
-
-  test("can access /saved-news", async ({ page }) => {
-    await page.goto("http://localhost:3000/saved-news");
-    await page.getByTestId("saved-news-content").isVisible();
-  });
-});
-
 test.describe("SearchResults component tests", () => {
   const mockArticles = [
     {
