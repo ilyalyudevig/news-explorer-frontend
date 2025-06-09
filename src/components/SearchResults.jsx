@@ -10,6 +10,7 @@ function SearchResults({
   handleDeleteArticle,
 }) {
   const [visibleCount, setVisibleCount] = useState(3);
+
   const handleShowMore = () => {
     setVisibleCount((prev) => prev + 3);
   };

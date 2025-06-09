@@ -2,18 +2,16 @@ import NewsCard from "./NewsCard";
 import Preloader from "./Preloader";
 import ApiError from "./ApiError";
 
-import { useApiCall } from "../hooks/useApiCall";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 
 function SavedNews({ handleDeleteArticle }) {
-  const { savedArticles } = useCurrentUser();
-  const articlesApi = useApiCall();
+  const { savedArticles, isLoading, error } = useCurrentUser();
 
   return (
     <main className="main">
-      {articlesApi.isLoading ? (
+      {isLoading ? (
         <Preloader text={"Loading news..."} />
-      ) : articlesApi.error ? (
+      ) : error ? (
         <ApiError />
       ) : (
         <section className="saved-news" data-testid="saved-news-content">

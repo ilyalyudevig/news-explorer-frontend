@@ -4,9 +4,11 @@ export const CurrentUserContext = createContext({
   isLoggedIn: false,
   currentUser: {},
   authLoading: true,
+  apiLoading: false,
+  isLoading: true, // Backward compatibility
+  error: null,
   savedArticles: [],
   keywords: [],
-  setKeywords: () => {},
   login: () => {},
   register: () => {},
   logout: () => {},

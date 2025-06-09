@@ -5,17 +5,17 @@ import { useCurrentUser } from "../hooks/useCurrentUser";
 import Preloader from "./Preloader";
 
 function ProtectedRoute({ children, handleSigninModalOpen }) {
-  const { isLoggedIn, authLoading } = useCurrentUser();
+  const { isLoggedIn, isLoading } = useCurrentUser();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!authLoading && !isLoggedIn) {
+    if (!isLoading && !isLoggedIn) {
       navigate("/", { replace: true });
       handleSigninModalOpen();
     }
-  }, [isLoggedIn, authLoading, navigate, handleSigninModalOpen]);
+  }, [handleSigninModalOpen, isLoading, isLoggedIn, navigate]);
 
-  if (authLoading) {
+  if (isLoading) {
     return <Preloader text="Loading..." />;
   }
 

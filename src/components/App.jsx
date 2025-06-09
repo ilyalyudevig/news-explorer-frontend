@@ -47,20 +47,21 @@ function App() {
 
   const handleSearch = async (query) => {
     setSearchAttempted(true);
-    try {
-      const data = await searchApi.execute(getSearchResults, { query });
-      const keywords = query.split(" ");
-      data.articles.forEach((article) => (article["keywords"] = keywords));
-      setKeywords((prev) => {
-        const allKeywords = [...prev, ...keywords];
-        return allKeywords.filter(
-          (keyword, index, self) => self.indexOf(keyword) === index
-        );
-      });
-      setSearchResults(data.articles);
-    } finally {
-      setSearchAttempted(false);
-    }
+    const data = await searchApi.execute(getSearchResults, { query });
+    const keywords = query.split(" ");
+
+    const articlesWithKeywords = data.articles.map((article) => ({
+      ...article,
+      keywords,
+    }));
+
+    setSearchResults(articlesWithKeywords);
+    setKeywords((prev) => {
+      const allKeywords = [...prev, ...keywords];
+      return allKeywords.filter(
+        (keyword, index, self) => self.indexOf(keyword) === index
+      );
+    });
   };
 
   const handleLogin = async (inputValues) => {
