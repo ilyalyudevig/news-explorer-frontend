@@ -38,7 +38,7 @@ jobs:
       - name: Deploy to VM
         run: |
           # Copy build files to VM
-          gcloud compute scp --recurse ./dist/* lyudevig@news-explorer.info:/home/lyudevig/news-explorer-frontend --zone=${{secrets.GCP_ZONE}}
+          gcloud compute scp --recurse ./dist/* lyudevig@${{secrets.VM_INSTANCE_NAME}}:/home/lyudevig/news-explorer-frontend --zone=${{secrets.GCP_ZONE}}
 
           # Restart web server
-          gcloud compute ssh lyudevig@news-explorer.info --zone=${{secrets.GCP_ZONE}}E --command="pm2 restart app"
+          gcloud compute ssh lyudevig@lyudevig@${{secrets.VM_INSTANCE_NAME}} --zone=${{secrets.GCP_ZONE}} --command="pm2 restart app"
