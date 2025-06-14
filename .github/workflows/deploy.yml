@@ -38,7 +38,7 @@ jobs:
       - name: Deploy to VM
         run: |
           # Copy build files to VM
-          gcloud compute scp -r ./dist/* lyudevig@news-explorer.info:/home/lyudevig/news-explorer-frontend
+          gcloud compute scp --recurse ./dist/* lyudevig@news-explorer.info:/home/lyudevig/news-explorer-frontend
 
           # Restart web server
           gcloud compute ssh lyudevig@news-explorer.info --command="pm2 restart app"
