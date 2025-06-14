@@ -41,4 +41,4 @@ jobs:
           gcloud compute scp --recurse ./dist/* lyudevig@${{secrets.VM_INSTANCE_NAME}}:/home/lyudevig/news-explorer-frontend --zone=${{secrets.GCP_ZONE}}
 
           # Restart web server
-          gcloud compute ssh lyudevig@lyudevig@${{secrets.VM_INSTANCE_NAME}} --zone=${{secrets.GCP_ZONE}} --command="pm2 restart app"
+          gcloud compute ssh lyudevig@${{secrets.VM_INSTANCE_NAME}} --zone=${{secrets.GCP_ZONE}} --command="pm2 restart app"
