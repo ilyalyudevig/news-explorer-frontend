@@ -53,7 +53,7 @@ test.describe("User Authentication", () => {
       .click();
     await expect(page.getByTestId("nav-link-savednews")).toBeVisible();
     // Log out
-    await page.getByTestId("nav-button-logout").click();
+    await page.getByTestId("nav-button-signout").click();
     // Check for unauthenticated UI
     await expect(page.getByTestId("nav-button-signin")).toBeVisible();
     await expect(page.getByTestId("nav-link-savednews")).toBeHidden();

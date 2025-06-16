@@ -110,7 +110,7 @@ function RegisterModal({
           errors.username
             ? "form__input-error_active"
             : apiError
-            ? "form__registration-error"
+            ? "form__api-error"
             : ""
         }
         errorMessage={
