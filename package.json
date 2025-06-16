@@ -10,8 +10,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "npx playwright test",
-    "deploy": "npm run build && scp -r ./dist/* lyudevig@news-explorer.info:/home/lyudevig/news-explorer-frontend"
+    "test": "npx playwright test"
   },
   "dependencies": {
     "react": "^19.0.0",
