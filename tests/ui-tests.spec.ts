@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("unauthorized user tests", () => {
+test.describe("Unauthorized user tests", () => {
   test.beforeAll(async ({ browser }) => {
     const context = await browser.newContext();
     const page = await context.newPage();

@@ -148,6 +148,7 @@ function App() {
         switchBtnHandler={() => handleModalOpen("sign-up")}
         switchBtnText="Sign up"
         handleLogin={handleLogin}
+        apiError={authApi.error}
       />
       <RegisterModal
         title="Sign up"

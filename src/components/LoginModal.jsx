@@ -13,6 +13,7 @@ function LoginModal({
   switchBtnHandler,
   switchBtnText,
   handleLogin,
+  apiError,
 }) {
   const { values, setValues, handleChange, errors, setErrors, getInputRef } =
     useForm({
@@ -81,8 +82,14 @@ function LoginModal({
         value={values.password}
         onChange={handleChange}
         inputRef={getInputRef("password")}
-        errorClass={errors.password ? "form__input-error_active" : ""}
-        errorMessage={errors.password}
+        errorClass={
+          errors.password
+            ? "form__input-error_active"
+            : apiError
+            ? "form__api-error"
+            : ""
+        }
+        errorMessage={apiError ? apiError.message : errors.password}
         dataTestId="password-input"
       />
     </ModalWithForm>

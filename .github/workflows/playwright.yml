@@ -20,6 +20,8 @@ jobs:
 
       - name: Build React app
         run: npm run build
+        env:
+          NODE_ENV: staging
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
@@ -31,6 +33,9 @@ jobs:
           npx playwright test
         env:
           CI: true
+          NODE_ENV: staging
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
