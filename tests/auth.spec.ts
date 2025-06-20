@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
-const TEST_EMAIL = process.env.VITE_TEST_USER_EMAIL || "test@test.com";
-const TEST_PASSWORD = process.env.VITE_TEST_USER_PASSWORD || "testtest123";
+const TEST_EMAIL = process.env.TEST_USER_EMAIL || "test@test.com";
+const TEST_PASSWORD = process.env.TEST_USER_PASSWORD || "testtest123";
 
 // Adjust selectors and credentials as needed for your app
 

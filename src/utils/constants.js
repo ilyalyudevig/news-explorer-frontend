@@ -6,6 +6,8 @@ const newsApiBaseUrl =
 const backendBaseUrl =
   process.env.NODE_ENV === "production"
     ? "https://api.news-explorer.info"
+    : process.env.NODE_ENV === "staging"
+    ? "https://staging-api.news-explorer.info"
     : "http://localhost:3001";
 
 export { newsApiBaseUrl, backendBaseUrl };
