@@ -21,7 +21,6 @@ jobs:
       - name: Build React app
         run: npm run build
         env:
-          NODE_ENV: staging
           VITE_NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
 
       - name: Install Playwright Browsers
@@ -29,12 +28,11 @@ jobs:
 
       - name: Start server and run tests
         run: |
-          npm start &
+          npm run staging &
           npx wait-on http://localhost:3000
           npx playwright test
         env:
           CI: true
-          NODE_ENV: staging
           TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
           TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
           TEST_USER_NAME: ${{secrets.TEST_USER_NAME}}
