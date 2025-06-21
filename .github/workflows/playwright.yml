@@ -1,9 +1,9 @@
 name: Playwright Tests
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   pull_request:
-    branches: [main, master]
+    branches: [main]
 jobs:
   test:
     timeout-minutes: 60
@@ -36,6 +36,7 @@ jobs:
           NODE_ENV: staging
           TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
           TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+          TEST_USER_NAME: ${{secrets.TEST_USER_NAME}}
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
