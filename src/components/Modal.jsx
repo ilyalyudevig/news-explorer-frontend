@@ -1,4 +1,5 @@
 import { useModalClose } from "../hooks/useModalClose";
+import { useFocusTrap } from "../hooks/useFocusTrap";
 
 function Modal({
   title,
@@ -9,6 +10,9 @@ function Modal({
   children,
   dataTestId,
 }) {
+  const isActive = name === activeModal && modalIsOpen;
+  const focusTrapRef = useFocusTrap(isActive);
+
   useModalClose(modalIsOpen, handleModalClose);
 
   return (
@@ -21,7 +25,7 @@ function Modal({
       aria-labelledby={`modal-title-${name}`}
       data-testid={dataTestId}
     >
-      <div className="modal__container">
+      <div className="modal__container" ref={focusTrapRef}>
         <button
           className="modal__close-button"
           type="button"
