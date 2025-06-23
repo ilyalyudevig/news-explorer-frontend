@@ -11,7 +11,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "npx playwright test"
+    "test": "npx playwright test",
+    "test:staging": "NODE_ENV=staging npx playwright test"
   },
   "dependencies": {
     "dotenv": "^16.5.0",

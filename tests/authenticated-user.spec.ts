@@ -1,43 +1,16 @@
 import { test, expect } from "@playwright/test";
-
-const TEST_EMAIL = process.env.TEST_USER_EMAIL || "test@test.com";
-const TEST_PASSWORD = process.env.TEST_USER_PASSWORD || "testtest123";
-const TEST_NAME = process.env.TEST_USER_NAME || "John Doe";
+import { testConfig } from "./config/test-config";
+import { loginUser, verifyAuthenticatedState } from "./helpers/auth-helpers";
 
 test.describe("Authenticated User Functionality", () => {
   test.beforeEach(async ({ page }) => {
-    // Navigate to homepage and login before each test
-    await page.goto("http://localhost:3000/");
-
-    await page.getByTestId("nav-button-signin").click();
-    await expect(page.getByTestId("sign-in-modal")).toBeVisible();
-    await page.getByTestId("email-input").fill(TEST_EMAIL);
-    await page.getByTestId("password-input").fill(TEST_PASSWORD);
-    await page
-      .getByTestId("sign-in-modal")
-      .getByTestId("form-submit-button")
-      .click();
-
-    // Wait for authentication to complete by checking for navigation changes
-    await expect(page.getByTestId("nav-link-savednews")).toBeVisible({
-      timeout: 10000,
-    });
-    await expect(page.getByTestId("nav-button-signout")).toBeVisible();
+    await loginUser(page);
   });
 
   test("should display authenticated navigation after login", async ({
     page,
   }) => {
-    // Verify authenticated navigation elements are visible
-    await expect(page.getByTestId("nav-link-savednews")).toBeVisible();
-    await expect(page.getByTestId("nav-button-signout")).toBeVisible();
-
-    // Verify unauthenticated elements are hidden
-    await expect(page.getByTestId("nav-button-signin")).not.toBeVisible();
-
-    // Verify user profile button shows user name
-    const userButton = page.getByTestId("nav-button-signout");
-    await expect(userButton).toContainText(`${TEST_NAME.split(" ")[0]}`);
+    await verifyAuthenticatedState(page);
   });
 
   test("should handle article bookmarking and unbookmarking", async ({
@@ -113,7 +86,7 @@ test.describe("Authenticated User Functionality", () => {
 
     // Verify user info is displayed with article count
     const articleCountHeading = page.getByRole("heading", {
-      name: new RegExp(`${TEST_NAME}, you have \\d+ saved articles`),
+      name: new RegExp(`${testConfig.user.name}, you have \\d+ saved articles`),
     });
     await expect(articleCountHeading).toBeVisible();
 
@@ -155,7 +128,9 @@ test.describe("Authenticated User Functionality", () => {
         await expect(
           page.getByRole("heading", {
             name: new RegExp(
-              `${TEST_NAME}, you have ${initialCount - 1} saved articles`
+              `${testConfig.user.name}, you have ${
+                initialCount - 1
+              } saved articles`
             ),
           })
         ).toBeVisible();
@@ -172,6 +147,7 @@ test.describe("Authenticated User Functionality", () => {
     await page.getByRole("link", { name: "NewsExplorer logo" }).click();
     await page.getByTestId("search-input").fill("technology");
     await page.getByTestId("search-button").click();
+
     await expect(
       page.getByRole("region", { name: "Search results" })
     ).toBeVisible();
@@ -183,8 +159,15 @@ test.describe("Authenticated User Functionality", () => {
     await expect(bookmarkButton).toBeVisible();
     await bookmarkButton.click();
 
-    // Navigate to saved articles
+    // Navigate to saved articles and wait for the new article to appear
     await page.getByTestId("nav-link-savednews").click();
+    await expect(page.getByRole("article")).toHaveCount(
+      initialArticlesOnSavedPage + 1,
+      {
+        timeout: testConfig.timeouts.navigation,
+      }
+    );
+
     const newArticlesCount = await page.getByRole("article").count();
 
     // Navigate back to home
@@ -194,7 +177,16 @@ test.describe("Authenticated User Functionality", () => {
     await page.getByTestId("nav-link-savednews").click();
 
     // Verify the same number of articles are still there
-    await expect(page.getByRole("article")).toHaveCount(newArticlesCount);
+    await expect(page.getByRole("article")).toHaveCount(newArticlesCount, {
+      timeout: testConfig.timeouts.navigation,
+    });
+
+    // Remove article to preserve the initial state
+    await page
+      .getByRole("article")
+      .getByTestId("delete-button")
+      .first()
+      .click();
   });
 
   test("should handle user authentication flow", async ({ page }) => {
