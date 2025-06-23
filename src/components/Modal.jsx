@@ -10,8 +10,8 @@ function Modal({
   children,
   dataTestId,
 }) {
-  const isActive = name === activeModal && modalIsOpen;
-  const focusTrapRef = useFocusTrap(isActive);
+  const isModalActive = name === activeModal && modalIsOpen;
+  const focusTrapRef = useFocusTrap(isModalActive);
 
   useModalClose(modalIsOpen, handleModalClose);
 

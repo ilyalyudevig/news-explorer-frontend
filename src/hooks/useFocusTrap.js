@@ -19,6 +19,7 @@ export function useFocusTrap(isActive) {
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];
 
+    // Wait for a modal to render
     setTimeout(() => {
       firstElement.focus();
     }, 0);
