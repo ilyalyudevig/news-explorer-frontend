@@ -22,7 +22,7 @@ export function useFocusTrap(isActive) {
     // Wait for a modal to render
     setTimeout(() => {
       firstElement.focus();
-    }, 0);
+    }, 50);
 
     const handleTabKey = (e) => {
       if (e.key !== "Tab") return;
