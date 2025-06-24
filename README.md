@@ -1,5 +1,8 @@
 # News Explorer Frontend
 
+[![Playwright Tests](https://github.com/ilyalyudevig/news-explorer-frontend/actions/workflows/playwright.yml/badge.svg)](https://github.com/ilyalyudevig/news-explorer-frontend/actions/workflows/playwright.yml)
+[![Deploy to Production](https://github.com/ilyalyudevig/news-explorer-frontend/actions/workflows/deploy.yml/badge.svg)](https://github.com/ilyalyudevig/news-explorer-frontend/actions/workflows/deploy.yml)
+
 This is the frontend code for a [News Explorer](https://news-explorer.info), a React-based web app for searching and saving news articles by keyword, powered by the [News API](https://newsapi.org). The project implements a clean, modular architecture and follows a [Figma-based design spec](https://www.figma.com/design/3ottwMEhlBt95Dbn8dw1NH/Your-Final-Project?node-id=0-1&p=f&t=OIWocUqPQrdjeWJf-0).
 
 ## Description
