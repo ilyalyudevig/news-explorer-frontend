@@ -2,10 +2,27 @@
 import { Page, expect } from "@playwright/test";
 import { testConfig } from "../config/test-config";
 
+async function accessNavigation(page: Page, action: () => Promise<void>) {
+  const hamburgerButton = page.getByTestId("mobile-menu-btn");
+
+  if (await hamburgerButton.isVisible()) {
+    await hamburgerButton.click();
+    await expect(page.getByTestId("nav-items")).toBeVisible();
+  }
+
+  await action();
+}
+
+export async function navigateToSignIn(page: Page) {
+  await accessNavigation(page, async () => {
+    await page.getByTestId("nav-button-signin").click();
+  });
+}
+
 export async function loginUser(page: Page) {
   await page.goto(testConfig.baseUrl);
 
-  await page.getByTestId("nav-button-signin").click();
+  await navigateToSignIn(page);
   await expect(page.getByTestId("sign-in-modal")).toBeVisible();
 
   await page.getByTestId("email-input").fill(testConfig.user.email);
@@ -23,7 +40,9 @@ export async function loginUser(page: Page) {
 }
 
 export async function logoutUser(page: Page) {
-  await page.getByTestId("nav-button-signout").click();
+  await accessNavigation(page, async () => {
+    await page.getByTestId("nav-button-signout").click();
+  });
   await expect(page.getByTestId("nav-button-signin")).toBeVisible();
   await expect(page.getByTestId("nav-link-savednews")).not.toBeVisible();
 }

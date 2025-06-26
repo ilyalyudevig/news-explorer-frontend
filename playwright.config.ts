@@ -48,15 +48,53 @@ export default defineConfig({
       use: { ...devices["Desktop Safari"] },
     },
 
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
+    /* Mobile device testing */
+    {
+      name: "Mobile Chrome - iPhone SE",
+      use: { ...devices["iPhone SE"] },
+      testMatch: ["**/mobile.spec.ts", "**/cross-device-mobile-tablet.spec.ts"],
+    },
+    {
+      name: "Mobile Chrome - iPhone 12",
+      use: { ...devices["iPhone 12"] },
+      testMatch: [
+        "**/mobile.spec.ts",
+        "**/comprehensive-mobile-tablet.spec.ts",
+      ],
+    },
+    {
+      name: "Mobile Safari - iPhone 13",
+      use: { ...devices["iPhone 13"] },
+      testMatch: ["**/mobile.spec.ts"],
+    },
+    {
+      name: "Mobile Chrome - Galaxy S21",
+      use: { ...devices["Galaxy S8"] }, // Using similar Android device
+      testMatch: ["**/mobile.spec.ts"],
+    },
+
+    /* Tablet device testing */
+    {
+      name: "Tablet Safari - iPad",
+      use: { ...devices["iPad Pro"] },
+      testMatch: ["**/tablet.spec.ts", "**/cross-device-mobile-tablet.spec.ts"],
+    },
+    {
+      name: "Tablet Safari - iPad Pro",
+      use: { ...devices["iPad Pro landscape"] },
+      testMatch: [
+        "**/tablet.spec.ts",
+        "**/comprehensive-mobile-tablet.spec.ts",
+      ],
+    },
+    {
+      name: "Tablet Chrome - iPad",
+      use: {
+        ...devices["iPad Pro"],
+        channel: "chrome",
+      },
+      testMatch: ["**/tablet.spec.ts"],
+    },
 
     /* Test against branded browsers. */
     // {

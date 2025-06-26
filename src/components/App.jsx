@@ -149,6 +149,7 @@ function App() {
         switchBtnText="Sign up"
         handleLogin={handleLogin}
         apiError={authApi.error}
+        dataTestId="sign-in-modal"
       />
       <RegisterModal
         title="Sign up"
@@ -161,6 +162,7 @@ function App() {
         switchBtnText="Sign in"
         handleRegister={handleRegister}
         apiError={authApi.error}
+        dataTestId="sign-up-modal"
       />
       <SuccessModal
         title="Registration successfully completed!"
