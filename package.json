@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "npx playwright test",
-    "test:staging-desktop": "NODE_ENV=staging npx playwright test --project='chromium' --project='firefox' --project='webkit'",
+    "test:staging-desktop": "NODE_ENV=staging npx playwright test auth.spec.ts authenticated-user.spec.ts news-search.spec.ts --project=chromium --project=firefox --project=webkit",
     "test:staging-mobile": "NODE_ENV=staging npx playwright test mobile.spec.ts",
     "test:staging-tablet": "NODE_ENV=staging npx playwright test tablet.spec.ts",
     "test:mobile-tablet": "npx playwright test mobile.spec.ts tablet.spec.ts",
