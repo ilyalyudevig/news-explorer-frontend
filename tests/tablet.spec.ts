@@ -221,10 +221,11 @@ test.describe("Tablet - News Explorer App", () => {
 
       // Verify modal is visible and appropriately sized for tablet
       const modal = page.getByTestId("sign-in-modal");
+      const modalContainer = modal.getByTestId("modal-container");
       await expect(modal).toBeVisible();
 
       // Verify modal positioning (should be centered)
-      const modalRect = await modal.boundingBox();
+      const modalRect = await modalContainer.boundingBox();
       const pageWidth = await page.evaluate(() => window.innerWidth);
       const pageHeight = await page.evaluate(() => window.innerHeight);
 
@@ -271,10 +272,9 @@ test.describe("Tablet - News Explorer App", () => {
       // Test invalid email
       await page.getByTestId("email-input").fill("invalid-email");
       await page.getByTestId("password-input").fill("short");
-      await page
-        .getByTestId("sign-in-modal")
-        .getByTestId("form-submit-button")
-        .click();
+      await expect(
+        page.getByTestId("sign-in-modal").getByTestId("form-submit-button")
+      ).toBeDisabled();
 
       // Verify validation feedback
       await expect(page.getByTestId("sign-in-modal")).toBeVisible();
@@ -295,7 +295,10 @@ test.describe("Tablet - News Explorer App", () => {
       await expect(page.getByTestId("username-input")).toBeVisible();
 
       // Switch back to sign-in
-      await page.getByRole("button", { name: "Sign in" }).click();
+      await page
+        .getByTestId("sign-up-modal")
+        .getByRole("button", { name: "Sign in" })
+        .click();
       await expect(page.getByTestId("sign-in-modal")).toBeVisible();
     });
 
@@ -312,14 +315,15 @@ test.describe("Tablet - News Explorer App", () => {
       await expect(page.getByTestId("sign-in-modal")).toBeVisible();
 
       // Test Tab navigation through form fields
-      await page.keyboard.press("Tab"); // Should focus email input
-      await expect(page.getByTestId("email-input")).toBeFocused();
+      await expect(page.getByTestId("email-input")).toBeFocused(); // Should focus on email input first
 
       await page.keyboard.press("Tab"); // Should focus password input
       await expect(page.getByTestId("password-input")).toBeFocused();
 
       await page.keyboard.press("Tab"); // Should focus submit button
-      await expect(page.getByTestId("form-submit-button")).toBeFocused();
+      await expect(
+        page.getByTestId("sign-in-modal").getByTestId("form-submit-button")
+      ).toBeFocused();
     });
   });
 
@@ -595,14 +599,16 @@ test.describe("Tablet - News Explorer App", () => {
       await expect(page.getByTestId("sign-in-modal")).toBeVisible();
 
       // Verify focus is trapped in modal
-      const emailInput = page.getByTestId("email-input");
-      const passwordInput = page.getByTestId("password-input");
-      const submitButton = page.getByTestId("form-submit-button");
-      const closeButton = page.getByRole("button", { name: "Close modal" });
+      const signinModal = page.getByTestId("sign-in-modal");
+      const emailInput = signinModal.getByTestId("email-input");
+      const passwordInput = signinModal.getByTestId("password-input");
+      const submitButton = signinModal.getByTestId("form-submit-button");
+      const closeButton = signinModal.getByRole("button", {
+        name: "Close modal",
+      });
 
       // Test tab navigation within modal
-      await page.keyboard.press("Tab");
-      await expect(emailInput).toBeFocused();
+      await expect(emailInput).toBeFocused(); // Focus on the first input
 
       await page.keyboard.press("Tab");
       await expect(passwordInput).toBeFocused();
@@ -665,8 +671,8 @@ test.describe("Tablet - News Explorer App", () => {
         const deleteButton = firstArticle.getByTestId("delete-button");
         if (await deleteButton.isVisible()) {
           const deleteRect = await deleteButton.boundingBox();
-          expect(deleteRect!.width).toBeGreaterThanOrEqual(44);
-          expect(deleteRect!.height).toBeGreaterThanOrEqual(44);
+          expect(deleteRect!.width).toBeGreaterThanOrEqual(40); // Per Figma spec
+          expect(deleteRect!.height).toBeGreaterThanOrEqual(40);
         }
 
         // Verify keyword tags are visible
@@ -889,7 +895,8 @@ test.describe("Tablet - News Explorer App", () => {
 
       // Form should be properly sized for tablet
       const modal = page.getByTestId("sign-in-modal");
-      const modalRect = await modal.boundingBox();
+      const modalContainer = modal.getByTestId("modal-container");
+      const modalRect = await modalContainer.boundingBox();
 
       expect(modalRect!.width).toBeGreaterThan(300);
       expect(modalRect!.width).toBeLessThan(600); // Not too wide on tablet
@@ -898,7 +905,7 @@ test.describe("Tablet - News Explorer App", () => {
       const emailInput = page.getByTestId("email-input");
       const emailRect = await emailInput.boundingBox();
 
-      expect(emailRect!.height).toBeGreaterThanOrEqual(40);
+      expect(emailRect!.height).toBeGreaterThanOrEqual(35); // Per Figma spec
       expect(emailRect!.width).toBeGreaterThan(200);
     });
 
@@ -933,12 +940,13 @@ test.describe("Tablet - News Explorer App", () => {
       await page.getByTestId("nav-button-signin").click();
       await page.getByRole("button", { name: "Sign up" }).click();
 
-      await expect(page.getByTestId("sign-up-modal")).toBeVisible();
+      const signupModal = page.getByTestId("sign-up-modal");
+      await expect(signupModal).toBeVisible();
 
       // Test tabbing between form fields
-      const emailInput = page.getByTestId("email-input");
-      const passwordInput = page.getByTestId("password-input");
-      const usernameInput = page.getByTestId("username-input");
+      const emailInput = signupModal.getByTestId("registerEmail-input");
+      const passwordInput = signupModal.getByTestId("registerPassword-input");
+      const usernameInput = signupModal.getByTestId("username-input");
 
       // Fill and tab through form
       await emailInput.fill("test@example.com");
