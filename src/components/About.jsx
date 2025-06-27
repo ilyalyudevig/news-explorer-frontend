@@ -1,4 +1,4 @@
-import avatar from "../images/avatar.jpeg";
+import avatar from "../images/avatar.avif";
 
 function About() {
   return (

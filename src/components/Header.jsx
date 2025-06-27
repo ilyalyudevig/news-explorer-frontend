@@ -1,4 +1,4 @@
-import backgroundImg from "../images/background-image.png";
+import backgroundImg from "../images/background-image.avif";
 import Navigation from "./Navigation";
 import SearchForm from "./SearchForm";
 
@@ -35,6 +35,7 @@ function Header({
         src={backgroundImg}
         alt=""
         aria-hidden="true"
+        fetchPriority="high"
       />
     </header>
   );

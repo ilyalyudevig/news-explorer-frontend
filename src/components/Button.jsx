@@ -10,6 +10,7 @@ function Button({
   dataTestId,
   ariaLabel,
   ariaExpanded,
+  role,
 }) {
   return (
     <button
@@ -22,6 +23,7 @@ function Button({
       data-testid={dataTestId}
       aria-label={ariaLabel}
       aria-expanded={ariaExpanded}
+      role={role}
     >
       {buttonText}
       {children}
