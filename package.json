@@ -4,6 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://news-explorer.info",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ilyalyudevig/news-explorer-frontend"
+  },
   "scripts": {
     "start": "vite",
     "dev": "vite --open",

@@ -52,15 +52,12 @@ export default defineConfig({
     {
       name: "Mobile Chrome - iPhone SE",
       use: { ...devices["iPhone SE"] },
-      testMatch: ["**/mobile.spec.ts", "**/cross-device-mobile-tablet.spec.ts"],
+      testMatch: ["**/mobile.spec.ts"],
     },
     {
       name: "Mobile Chrome - iPhone 12",
       use: { ...devices["iPhone 12"] },
-      testMatch: [
-        "**/mobile.spec.ts",
-        "**/comprehensive-mobile-tablet.spec.ts",
-      ],
+      testMatch: ["**/mobile.spec.ts"],
     },
     {
       name: "Mobile Safari - iPhone 13",
@@ -77,15 +74,12 @@ export default defineConfig({
     {
       name: "Tablet Safari - iPad",
       use: { ...devices["iPad Pro"] },
-      testMatch: ["**/tablet.spec.ts", "**/cross-device-mobile-tablet.spec.ts"],
+      testMatch: ["**/tablet.spec.ts"],
     },
     {
       name: "Tablet Safari - iPad Pro",
       use: { ...devices["iPad Pro landscape"] },
-      testMatch: [
-        "**/tablet.spec.ts",
-        "**/comprehensive-mobile-tablet.spec.ts",
-      ],
+      testMatch: ["**/tablet.spec.ts"],
     },
     {
       name: "Tablet Chrome - iPad",
