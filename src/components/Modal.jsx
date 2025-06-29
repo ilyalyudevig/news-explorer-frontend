@@ -25,7 +25,11 @@ function Modal({
       aria-labelledby={`modal-title-${name}`}
       data-testid={dataTestId}
     >
-      <div className="modal__container" ref={focusTrapRef}>
+      <div
+        className="modal__container"
+        ref={focusTrapRef}
+        data-testid="modal-container"
+      >
         <button
           className="modal__close-button"
           type="button"

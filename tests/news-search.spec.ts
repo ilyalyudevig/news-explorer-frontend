@@ -25,7 +25,7 @@ test.describe("News Search Functionality", () => {
     await expect(
       page.getByRole("link", { name: "NewsExplorer logo" })
     ).toBeVisible();
-    await expect(page.getByRole("button", { name: "Sign in" })).toBeVisible();
+    await expect(page.getByTestId("nav-button-signin")).toBeVisible();
   });
 
   test("should perform news search and display results", async ({ page }) => {
