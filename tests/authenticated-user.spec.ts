@@ -155,7 +155,7 @@ test.describe("Authenticated User Functionality", () => {
 
     const firstArticle = page.getByRole("article").first();
     await expect(firstArticle).toBeVisible();
-    const bookmarkButton = firstArticle.locator("button").first();
+    const bookmarkButton = firstArticle.getByTestId("save-button");
     await expect(bookmarkButton).toBeVisible();
     await bookmarkButton.click();
 
@@ -184,8 +184,8 @@ test.describe("Authenticated User Functionality", () => {
     // Remove article to preserve the initial state
     await page
       .getByRole("article")
-      .getByTestId("delete-button")
       .first()
+      .getByTestId("delete-button")
       .click();
   });
 
@@ -230,7 +230,7 @@ test.describe("Authenticated User Functionality", () => {
     // Bookmark an article
     const firstArticle = page.getByRole("article").first();
     await expect(firstArticle).toBeVisible();
-    const bookmarkButton = firstArticle.locator("button").first();
+    const bookmarkButton = firstArticle.getByTestId("save-button");
     await expect(bookmarkButton).toBeVisible();
     await bookmarkButton.click();
 
@@ -242,5 +242,12 @@ test.describe("Authenticated User Functionality", () => {
       page.getByRole("heading", { name: "Search results" })
     ).toBeVisible();
     await expect(page.getByRole("article")).toHaveCount(3);
+
+    // Remove article to preserve the initial state
+    await page
+      .getByRole("article")
+      .first()
+      .getByTestId("delete-button")
+      .click();
   });
 });

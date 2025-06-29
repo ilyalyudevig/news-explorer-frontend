@@ -566,20 +566,25 @@ test.describe("Mobile - News Explorer App", () => {
 
       // Save an article with touch interaction
       const firstArticle = page.getByRole("article").first();
-      const bookmarkButton = firstArticle.locator("button").first();
+      const bookmarkButton = firstArticle.getByTestId("save-button");
       await bookmarkButton.tap();
 
       // Wait for save operation
       await page.waitForTimeout(1000);
 
       // Navigate to saved articles to verify
-      await navigation.getByRole("button").first().click();
+      await navigation.getByTestId("mobile-menu-btn").click();
       await page.getByTestId("nav-link-savednews").click();
 
       // Verify article appears in saved articles
       const articles = page.getByRole("article");
       const articleCount = await articles.count();
       expect(articleCount).toBeGreaterThan(0);
+
+      // Remove saved article
+      const firstSavedArticle = articles.first();
+      expect(firstSavedArticle.getByTestId("delete-button")).toBeVisible();
+      firstSavedArticle.getByTestId("delete-button").click();
     });
 
     test("should handle logout on mobile", async ({ page }) => {
@@ -753,7 +758,7 @@ test.describe("Mobile - News Explorer App", () => {
       const bookmarkButton = page
         .getByRole("article")
         .first()
-        .locator("button")
+        .getByTestId("save-button")
         .first();
       const buttonBox = await bookmarkButton.boundingBox();
 
@@ -800,8 +805,7 @@ test.describe("Mobile - News Explorer App", () => {
       // Start search and immediately check for loading state
       const searchPromise = searchButton.click();
 
-      // Note: In a real app, you might have a loading spinner or disabled button
-      // This test structure allows for that verification
+      await expect(page.getByTestId("preloader")).toBeVisible();
 
       await searchPromise;
       await expect(
@@ -819,6 +823,9 @@ test.describe("Mobile - News Explorer App", () => {
       });
 
       await page.goto(testConfig.baseUrl);
+
+      // Should show preloader
+      await expect(page.getByTestId("preloader")).toBeVisible();
 
       // Should still load main content despite slow network
       await expect(
@@ -840,7 +847,7 @@ test.describe("Mobile - News Explorer App", () => {
       await page.getByTestId("search-button").click();
 
       // Should show error message (adjust selector based on your error handling)
-      await expect(page.locator('[data-testid="api-error"]')).toBeVisible({
+      await expect(page.getByTestId("api-error")).toBeVisible({
         timeout: 5000,
       });
     });
@@ -862,7 +869,9 @@ test.describe("Mobile - News Explorer App", () => {
       await page.getByTestId("search-button").click();
 
       // Should handle the error gracefully (specific implementation depends on your error handling)
-      // This test ensures the app doesn't crash and shows appropriate feedback
+      await expect(page.getByTestId("api-error")).toBeVisible({
+        timeout: 5000,
+      });
     });
 
     test("should validate form inputs with proper error messages", async ({
@@ -871,7 +880,7 @@ test.describe("Mobile - News Explorer App", () => {
       // Open hamburger menu and sign-in modal
       await page
         .getByRole("navigation", { name: "Main navigation" })
-        .getByRole("button")
+        .getByTestId("mobile-menu-btn")
         .click();
       await page.getByTestId("nav-button-signin").click();
 
@@ -884,8 +893,8 @@ test.describe("Mobile - News Explorer App", () => {
         page.getByTestId("sign-in-modal").getByTestId("form-submit-button")
       ).toBeDisabled();
 
-      // Should show validation error (adjust based on your validation implementation)
-      const emailError = page.locator('[data-testid="email-error"]');
+      // Should show validation error
+      const emailError = page.getByTestId("email-error");
       if ((await emailError.count()) > 0) {
         await expect(emailError).toBeVisible();
       }

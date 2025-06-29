@@ -715,7 +715,7 @@ test.describe("Tablet - News Explorer App", () => {
 
       // Save an article
       const firstArticle = page.getByRole("article").first();
-      const bookmarkButton = firstArticle.locator("button").first();
+      const bookmarkButton = firstArticle.getByTestId("save-button");
       await bookmarkButton.click();
 
       // Wait for save operation
@@ -726,8 +726,13 @@ test.describe("Tablet - News Explorer App", () => {
 
       // Verify article count increased
       const updatedArticles = page.getByRole("article");
-      const updatedCount = await updatedArticles.count();
+      let updatedCount = await updatedArticles.count();
       expect(updatedCount).toBeGreaterThanOrEqual(initialCount);
+
+      // Remove saved article to restore the initial state
+      await updatedArticles.first().getByTestId("delete-button").click();
+      updatedCount = await updatedArticles.count();
+      expect(updatedCount).toEqual(initialCount);
     });
 
     test("should handle logout functionality on tablet", async ({ page }) => {
