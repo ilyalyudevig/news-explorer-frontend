@@ -45,6 +45,7 @@ function ModalWithForm({
             type="button"
             className="form__button form__button--second"
             onClick={switchBtnHandler}
+            dataTestId="form-second-button"
           />
         </div>
       </Form>
