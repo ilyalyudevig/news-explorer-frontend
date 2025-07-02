@@ -32,7 +32,7 @@ To get a local copy up and running, follow these simple steps.
    ```
 3. Start the development server
    ```sh
-   npm start
+   npm run dev
    ```
    The application will be available at `http://localhost:3000`.
 

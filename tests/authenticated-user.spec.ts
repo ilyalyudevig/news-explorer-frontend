@@ -28,9 +28,11 @@ test.describe("Authenticated User Functionality", () => {
 
     // Find the first article and bookmark it
     const firstArticle = page.getByRole("article").first();
+    const firstArticleHeadingText =
+      firstArticle.getByRole("heading").textContent;
     await expect(firstArticle).toBeVisible();
 
-    const bookmarkButton = firstArticle.locator("button").first();
+    const bookmarkButton = firstArticle.getByTestId("save-button");
     await expect(bookmarkButton).toBeVisible();
 
     // Test bookmarking
@@ -40,6 +42,10 @@ test.describe("Authenticated User Functionality", () => {
     // Verify article appears in saved articles
     await page.getByTestId("nav-link-savednews").click();
     await expect(page).toHaveURL(/.*\/saved-news$/);
+    const firstSavedArticle = page.getByRole("article").first();
+    const firstSavedArticleHeadingText =
+      firstSavedArticle.getByRole("heading").textContent;
+    await expect(firstSavedArticleHeadingText).toEqual(firstArticleHeadingText);
 
     // Navigate back to search results
     await page.getByRole("link", { name: "NewsExplorer logo" }).click();
@@ -49,7 +55,7 @@ test.describe("Authenticated User Functionality", () => {
 
     // Test unbookmarking
     const sameArticle = page.getByRole("article").first();
-    const sameBookmarkButton = sameArticle.locator("button").first();
+    const sameBookmarkButton = sameArticle.getByTestId("delete-button").first();
     await sameBookmarkButton.click();
     await page.waitForTimeout(1000);
 
