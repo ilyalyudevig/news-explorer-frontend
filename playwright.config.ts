@@ -65,8 +65,8 @@ export default defineConfig({
       testMatch: ["**/mobile.spec.ts"],
     },
     {
-      name: "Mobile Chrome - Galaxy S21",
-      use: { ...devices["Galaxy S8"] }, // Using similar Android device
+      name: "Mobile Chrome - Galaxy S8",
+      use: { ...devices["Galaxy S8"] },
       testMatch: ["**/mobile.spec.ts"],
     },
 
