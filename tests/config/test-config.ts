@@ -1,4 +1,3 @@
-// tests/config/test-config.ts
 export interface TestUserCredentials {
   email: string;
   password: string;
@@ -7,6 +6,7 @@ export interface TestUserCredentials {
 
 export interface TestConfig {
   baseUrl: string;
+  apiBaseUrl: string;
   user: TestUserCredentials;
   timeouts: {
     default: number;
@@ -18,6 +18,7 @@ export interface TestConfig {
 const TEST_ENVIRONMENTS: Record<string, TestConfig> = {
   staging: {
     baseUrl: "http://localhost:3000",
+    apiBaseUrl: "https://api-staging.news-explorer.info",
     user: {
       email: process.env.TEST_USER_EMAIL || "",
       password: process.env.TEST_USER_PASSWORD || "",
@@ -31,10 +32,11 @@ const TEST_ENVIRONMENTS: Record<string, TestConfig> = {
   },
   development: {
     baseUrl: "http://localhost:3000",
+    apiBaseUrl: "http://localhost:3001",
     user: {
       email: "test@test.com",
       password: "testtest123",
-      name: "John Doe",
+      name: "Test User",
     },
     timeouts: {
       default: 5000,
@@ -54,7 +56,6 @@ export function getTestConfig(): TestConfig {
     );
   }
 
-  // Validate staging credentials are provided
   if (environment === "staging") {
     const { email, password, name } = config.user;
     if (!email || !password || !name) {

@@ -1,4 +1,3 @@
-// tests/helpers/auth-helpers.ts
 import { Page, expect } from "@playwright/test";
 import { testConfig } from "../config/test-config";
 

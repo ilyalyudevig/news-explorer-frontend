@@ -1,13 +1,11 @@
 import { test, expect } from "@playwright/test";
-import { testConfig } from "./config/test-config";
 import { loginUser, verifyAuthenticatedState } from "./helpers/auth-helpers";
 import { resetUserState } from "./helpers/state-helpers";
 
-test.describe("Authenticated User Functionality", () => {
-  // Before each test, log in and reset the user's state to ensure isolation.
+test.describe.serial("Authenticated User Functionality", () => {
   test.beforeEach(async ({ page }) => {
-    await loginUser(page);
     await resetUserState(page);
+    await loginUser(page);
   });
 
   test("should display authenticated navigation after login", async ({
@@ -25,7 +23,7 @@ test.describe("Authenticated User Functionality", () => {
     await expect(page.getByRole("article")).toHaveCount(3);
 
     const firstArticle = page.getByRole("article").first();
-    const firstArticleHeading = firstArticle.getByRole("heading");
+    const firstArticleHeading = firstArticle.getByTestId("card-title");
     const firstArticleHeadingText = await firstArticleHeading.textContent();
 
     // 1. Bookmark the article
@@ -41,7 +39,7 @@ test.describe("Authenticated User Functionality", () => {
     await expect(page.getByRole("article")).toHaveCount(1);
     const savedArticle = page.getByRole("article").first();
     const savedArticleHeadingText = await savedArticle
-      .getByRole("heading")
+      .getByTestId("card-title")
       .textContent();
     expect(savedArticleHeadingText).toEqual(firstArticleHeadingText);
 
@@ -89,7 +87,7 @@ test.describe("Authenticated User Functionality", () => {
     // Verify the keyword is displayed
     const keywordsSection = page.getByText("By keywords:");
     await expect(keywordsSection).toBeVisible();
-    await expect(page.getByText("Apple")).toBeVisible();
+    await expect(page.getByTestId("header-keywords")).toHaveText("Apple");
 
     // Remove the article
     const savedArticle = page.getByRole("article").first();

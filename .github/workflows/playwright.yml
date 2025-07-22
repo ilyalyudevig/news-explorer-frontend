@@ -34,8 +34,8 @@ jobs:
           CI: true
           VITE_NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
 
-      - name: Run desktop tests
-        run: npm run test:staging-desktop
+      - name: Run Chrome tests
+        run: npm run test:staging-desktop-chrome
         env:
           CI: true
           VITE_NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
