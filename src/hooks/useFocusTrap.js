@@ -21,8 +21,8 @@ export function useFocusTrap(isActive) {
 
     // Wait for a modal to render
     setTimeout(() => {
-      firstElement.focus();
-    }, 50);
+      focusableElements[1].focus(); // Focus on first input
+    }, 35);
 
     const handleTabKey = (e) => {
       if (e.key !== "Tab") return;

@@ -74,8 +74,9 @@ function Navigation({
       <Button
         className="nav__mobile-menu-btn"
         onClick={toggleMobileMenu}
-        aria-label="Toggle mobile menu"
-        aria-expanded={isMobileMenuOpen}
+        ariaLabel="Toggle mobile menu"
+        ariaExpanded={isMobileMenuOpen}
+        dataTestId="mobile-menu-btn"
       >
         <img
           className="nav__mobile-menu-icon"
@@ -84,7 +85,7 @@ function Navigation({
           aria-hidden="true"
         />
       </Button>
-      <ul className={navItemsClasses} role="menubar">
+      <ul className={navItemsClasses} role="menubar" data-testid="nav-items">
         <li className={navItemBaseClasses} role="none">
           <Link
             className={homeLinkClasses}

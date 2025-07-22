@@ -14,6 +14,7 @@ function RegisterModal({
   switchBtnText,
   handleRegister,
   apiError,
+  dataTestId,
 }) {
   const { values, setValues, handleChange, errors, setErrors, getInputRef } =
     useForm({
@@ -57,6 +58,7 @@ function RegisterModal({
       submitDisabled={
         errors.registerEmail || errors.registerPassword || errors.username
       }
+      dataTestId={dataTestId}
     >
       <Input
         label="Email"
@@ -75,6 +77,7 @@ function RegisterModal({
         aria-describedby={
           errors.registerEmail ? "register-email-error" : undefined
         }
+        dataTestId="registerEmail-input"
       />
       <Input
         label="Password"
@@ -93,6 +96,7 @@ function RegisterModal({
         aria-describedby={
           errors.registerPassword ? "register-password-error" : undefined
         }
+        dataTestId="registerPassword-input"
       />
       <Input
         label="Username"
@@ -119,6 +123,7 @@ function RegisterModal({
         aria-describedby={
           errors.username || apiError ? "register-username-error" : undefined
         }
+        dataTestId="username-input"
       />
     </ModalWithForm>
   );

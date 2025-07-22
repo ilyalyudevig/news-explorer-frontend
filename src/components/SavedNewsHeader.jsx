@@ -26,7 +26,9 @@ function SavedNewsHeader({
         </h2>
         <p className="header__paragraph header__paragraph--keywords">
           By keywords:{" "}
-          <span className="header__keywords-bold">{keywords.join(", ")}</span>
+          <span className="header__keywords-bold" data-testid="header-keywords">
+            {keywords.join(", ")}
+          </span>
         </p>
       </div>
     </header>
