@@ -18,7 +18,7 @@ export interface TestConfig {
 const TEST_ENVIRONMENTS: Record<string, TestConfig> = {
   staging: {
     baseUrl: "http://localhost:3000",
-    apiBaseUrl: "https://api-staging.news-explorer.info",
+    apiBaseUrl: "https://staging-api.news-explorer.info",
     user: {
       email: process.env.TEST_USER_EMAIL || "",
       password: process.env.TEST_USER_PASSWORD || "",
