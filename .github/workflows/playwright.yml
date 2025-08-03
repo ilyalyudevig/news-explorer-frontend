@@ -34,7 +34,7 @@ jobs:
           CI: true
           VITE_NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
 
-      - name: Run Chrome tests
+      - name: Run Desktop Chrome E2E
         run: npm run test:staging-desktop-chrome
         env:
           CI: true
@@ -43,8 +43,8 @@ jobs:
           TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
           TEST_USER_NAME: ${{ secrets.TEST_USER_NAME }}
 
-      - name: Run mobile tests
-        run: npm run test:staging-mobile
+      - name: Run Mobile Safari - iPhone 13 tests
+        run: npm run test:staging-mobile-safari
         env:
           CI: true
           VITE_NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
@@ -52,8 +52,8 @@ jobs:
           TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
           TEST_USER_NAME: ${{ secrets.TEST_USER_NAME }}
 
-      - name: Run tablet tests
-        run: npm run test:staging-tablet
+      - name: Run Tablet Chrome - iPad tests
+        run: npm run test:staging-tablet-chrome
         env:
           CI: true
           VITE_NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
