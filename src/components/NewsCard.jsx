@@ -1,7 +1,7 @@
 import Button from "./Button";
 
 import { formatDisplayDate } from "../utils/formatDate";
-import { useState } from "react";
+import { useState, memo } from "react";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 
 function NewsCard({
@@ -84,4 +84,4 @@ function NewsCard({
     </article>
   );
 }
-export default NewsCard;
+export default memo(NewsCard);

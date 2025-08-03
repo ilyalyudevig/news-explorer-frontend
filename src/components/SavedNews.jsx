@@ -2,6 +2,7 @@ import NewsCard from "./NewsCard";
 import Preloader from "./Preloader";
 import ApiError from "./ApiError";
 
+import { memo } from "react";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 
 function SavedNews({ handleDeleteArticle }) {
@@ -47,4 +48,4 @@ function SavedNews({ handleDeleteArticle }) {
     </main>
   );
 }
-export default SavedNews;
+export default memo(SavedNews);

@@ -1,7 +1,7 @@
 import Button from "./Button";
 import NewsCard from "./NewsCard";
 
-import { useState } from "react";
+import { useState, useMemo, memo } from "react";
 
 function SearchResults({
   searchResults,
@@ -10,6 +10,11 @@ function SearchResults({
   handleDeleteArticle,
 }) {
   const [visibleCount, setVisibleCount] = useState(3);
+
+  // Create a lookup map for saved articles to avoid O(n*m) complexity
+  const savedArticlesMap = useMemo(() => {
+    return new Set(savedArticles.map(article => article.url));
+  }, [savedArticles]);
 
   const handleShowMore = () => {
     setVisibleCount((prev) => prev + 3);
@@ -35,9 +40,7 @@ function SearchResults({
               url,
               keywords,
             }) => {
-              const isSaved = savedArticles.some(
-                (savedArticle) => savedArticle.url == url
-              );
+              const isSaved = savedArticlesMap.has(url);
               return (
                 <NewsCard
                   key={url}
@@ -67,4 +70,4 @@ function SearchResults({
     </section>
   );
 }
-export default SearchResults;
+export default memo(SearchResults);

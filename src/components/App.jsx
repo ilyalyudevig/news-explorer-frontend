@@ -57,10 +57,10 @@ function App() {
 
     setSearchResults(articlesWithKeywords);
     setKeywords((prev) => {
-      const allKeywords = [...prev, ...keywords];
-      return allKeywords.filter(
-        (keyword, index, self) => self.indexOf(keyword) === index
-      );
+      // Use Set for efficient deduplication
+      const existingKeywords = new Set(prev);
+      const newKeywords = keywords.filter(keyword => !existingKeywords.has(keyword));
+      return [...prev, ...newKeywords];
     });
   };
 
