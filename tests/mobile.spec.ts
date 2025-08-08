@@ -498,6 +498,21 @@ test.describe("Mobile - News Explorer App", () => {
 
   test.describe("Mobile - Authenticated User Features", () => {
     test.beforeEach(async ({ page }) => {
+      // Reset user state before each test to ensure a clean state
+      const { apiBaseUrl } = testConfig;
+      
+      // Try to reset user state, but handle potential race conditions
+      try {
+        const response = await page.request.post(`${apiBaseUrl}/testing/reset-user`);
+        if (!response.ok()) {
+          // If reset fails, try logging in directly
+          console.warn(`Failed to reset user state: ${response.statusText()}. Attempting direct login.`);
+        }
+      } catch (error) {
+        console.warn(`Error resetting user state: ${error}. Attempting direct login.`);
+      }
+      
+      // Login the test user
       await loginUser(page);
     });
 
@@ -569,8 +584,8 @@ test.describe("Mobile - News Explorer App", () => {
       const bookmarkButton = firstArticle.getByTestId("save-button");
       await bookmarkButton.tap();
 
-      // Wait for save operation
-      await page.waitForTimeout(1000);
+      // Wait for save operation to complete and UI to update
+      await page.waitForTimeout(2000);
 
       // Navigate to saved articles to verify
       await navigation.getByTestId("mobile-menu-btn").click();
@@ -578,13 +593,13 @@ test.describe("Mobile - News Explorer App", () => {
 
       // Verify article appears in saved articles
       const articles = page.getByRole("article");
-      const articleCount = await articles.count();
-      expect(articleCount).toBeGreaterThan(0);
+      await expect(articles).toHaveCount(1, { timeout: 5000 });
 
       // Remove saved article
       const firstSavedArticle = articles.first();
-      expect(firstSavedArticle.getByTestId("delete-button")).toBeVisible();
-      firstSavedArticle.getByTestId("delete-button").click();
+      const deleteButton = firstSavedArticle.getByTestId("delete-button");
+      await expect(deleteButton).toBeVisible({ timeout: 5000 });
+      await deleteButton.click();
     });
 
     test("should handle logout on mobile", async ({ page }) => {
