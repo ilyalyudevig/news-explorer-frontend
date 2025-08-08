@@ -4,6 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://news-explorer.info",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ilyalyudevig/news-explorer-frontend"
+  },
   "scripts": {
     "start": "vite",
     "dev": "vite --open",
@@ -12,7 +16,17 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "npx playwright test",
-    "test:staging": "NODE_ENV=staging npx playwright test"
+    "test:staging-desktop-chrome": "NODE_ENV=staging npx playwright test auth.spec.ts authenticated-user.spec.ts news-search.spec.ts --project=chromium",
+    "test:staging-mobile": "NODE_ENV=staging npx playwright test mobile.spec.ts",
+    "test:staging-tablet": "NODE_ENV=staging npx playwright test tablet.spec.ts",
+    "test:staging-mobile-chrome": "NODE_ENV=staging npx playwright test --project='Mobile Chrome - iPhone SE'",
+    "test:staging-mobile-safari": "NODE_ENV=staging npx playwright test --project='Mobile Safari - iPhone 13'",
+    "test:staging-tablet-safari": "NODE_ENV=staging npx playwright test --project='Tablet Safari - iPad'",
+    "test:staging-tablet-chrome": "NODE_ENV=staging npx playwright test --project='Tablet Chrome - iPad'",
+    "test:all-devices": "npx playwright test --project='Mobile Chrome - iPhone SE' --project='Mobile Chrome - iPhone 12' --project='Mobile Safari - iPhone 13' --project='Tablet Safari - iPad' --project='Tablet Safari - iPad Pro'",
+    "test:ui": "npx playwright test --ui",
+    "test:debug": "npx playwright test --debug",
+    "test:headed": "npx playwright test --headed"
   },
   "dependencies": {
     "dotenv": "^16.5.0",

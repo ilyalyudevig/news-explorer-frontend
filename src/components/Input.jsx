@@ -37,7 +37,11 @@ function Input({
         data-testid={dataTestId}
       />
       <div className="form__input-error-container">
-        <p className={`form__input-error ${errorClass}`} id={ariaDescribedby}>
+        <p
+          className={`form__input-error ${errorClass}`}
+          id={ariaDescribedby}
+          data-testid={`${name}-validation-error`}
+        >
           {errorMessage}
         </p>
       </div>

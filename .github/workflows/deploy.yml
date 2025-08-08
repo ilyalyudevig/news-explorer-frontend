@@ -1,14 +1,14 @@
-name: Deploy to Production
+name: Deployment
 
 on:
-  push:
-    branches: [production]
   pull_request:
     branches: [production]
+    types: [closed]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
 
     steps:
       - uses: actions/checkout@v4

@@ -8,6 +8,9 @@ function Button({
   className,
   children,
   dataTestId,
+  ariaLabel,
+  ariaExpanded,
+  role,
 }) {
   return (
     <button
@@ -18,6 +21,9 @@ function Button({
       onClick={onClick}
       disabled={disabled}
       data-testid={dataTestId}
+      aria-label={ariaLabel}
+      aria-expanded={ariaExpanded}
+      role={role}
     >
       {buttonText}
       {children}

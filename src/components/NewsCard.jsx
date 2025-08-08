@@ -1,7 +1,7 @@
 import Button from "./Button";
 
 import { formatDisplayDate } from "../utils/formatDate";
-import { useState } from "react";
+import { useState, memo } from "react";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 
 function NewsCard({
@@ -75,11 +75,13 @@ function NewsCard({
       <img className="card__image" src={urlToImage} alt={title} />
       <div className="card__content">
         <p className="card__date">{displayDate}</p>
-        <h3 className="card__title">{title}</h3>
+        <h3 className="card__title" data-testid="card-title">
+          {title}
+        </h3>
         <p className="card__paragraph">{content}</p>
         <h4 className="card__source">{source.name}</h4>
       </div>
     </article>
   );
 }
-export default NewsCard;
+export default memo(NewsCard);

@@ -14,6 +14,7 @@ function LoginModal({
   switchBtnText,
   handleLogin,
   apiError,
+  dataTestId,
 }) {
   const { values, setValues, handleChange, errors, setErrors, getInputRef } =
     useForm({
@@ -52,7 +53,7 @@ function LoginModal({
       switchBtnText={switchBtnText}
       onSubmit={handleSubmit}
       submitDisabled={errors.email || errors.password}
-      dataTestId="sign-in-modal"
+      dataTestId={dataTestId}
     >
       <Input
         label="Email"

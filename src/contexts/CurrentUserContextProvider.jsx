@@ -38,20 +38,25 @@ export function CurrentUserProvider({ children }) {
   }, []);
 
   const extractKeywords = useCallback((articles) => {
-    return articles
-      .map((article) => article.keywords)
-      .flat()
-      .filter(Boolean)
-      .filter((keyword, index, self) => self.indexOf(keyword) === index);
+    const keywordSet = new Set();
+    articles.forEach(article => {
+      if (article.keywords) {
+        article.keywords.forEach(keyword => {
+          if (keyword) keywordSet.add(keyword);
+        });
+      }
+    });
+    return Array.from(keywordSet);
   }, []);
 
   const updateKeywords = useCallback(
     (newArticles) => {
       const newKeywords = extractKeywords(newArticles);
-      setKeywords((prev) => [
-        ...prev,
-        ...newKeywords.filter((keyword) => !prev.includes(keyword)),
-      ]);
+      setKeywords((prev) => {
+        const existingKeywords = new Set(prev);
+        const uniqueNewKeywords = newKeywords.filter(keyword => !existingKeywords.has(keyword));
+        return uniqueNewKeywords.length > 0 ? [...prev, ...uniqueNewKeywords] : prev;
+      });
     },
     [extractKeywords]
   );
@@ -148,15 +153,26 @@ export function CurrentUserProvider({ children }) {
             const updatedArticles = prev.filter(
               (article) => article._id !== articleToDelete._id
             );
-            const newKeywords = extractKeywords(updatedArticles);
-            setKeywords(newKeywords);
+            
+            // Recalculate keywords from remaining articles
+            const remainingKeywords = new Set();
+            
+            updatedArticles.forEach(article => {
+              if (article.keywords) {
+                article.keywords.forEach(keyword => remainingKeywords.add(keyword));
+              }
+            });
+            
+            // Update keywords
+            setKeywords(Array.from(remainingKeywords));
+            
             return updatedArticles;
           });
         },
         () => {} // no-op loading setter to suppress the Preloader on delete article call
       );
     },
-    [withAsyncHandler, savedArticles, extractKeywords]
+    [withAsyncHandler, savedArticles]
   );
 
   useEffect(() => {
