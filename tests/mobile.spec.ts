@@ -621,12 +621,55 @@ test.describe("Mobile - News Explorer App", () => {
 
   test.describe("Mobile Visual Regression", () => {
     test("should match mobile homepage screenshot", async ({ page }) => {
+      // Wait for the Preloader to be hidden before taking screenshot
+      await expect(page.getByTestId("preloader")).not.toBeVisible({
+        timeout: 10000,
+      });
+      
       await expect(page).toHaveScreenshot("mobile-homepage-full.png", {
         fullPage: true,
       });
     });
 
     test("should match mobile search results screenshot", async ({ page }) => {
+      // Mock the API response to ensure consistent search results for visual regression testing
+      await page.route("**/everything**", async (route) => {
+        await route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify({
+            status: "ok",
+            totalResults: 2,
+            articles: [
+              {
+                source: { id: null, name: "Tech News" },
+                author: "John Doe",
+                title: "Latest Technology Trends in 2025",
+                description:
+                  "Explore the latest technology trends that are shaping the future in 2025.",
+                url: "https://example.com/article1",
+                urlToImage: "https://placehold.co/600x400/000000/FFFFFF/png",
+                publishedAt: "2025-01-01T12:00:00Z",
+                content:
+                  "This is a sample article content for visual regression testing purposes.",
+              },
+              {
+                source: { id: null, name: "Digital World" },
+                author: "Jane Smith",
+                title: "The Impact of AI on Modern Development",
+                description:
+                  "How artificial intelligence is revolutionizing the way we approach software development.",
+                url: "https://example.com/article2",
+                urlToImage: "https://placehold.co/600x400/000000/FFFFFF/png",
+                publishedAt: "2025-01-02T14:30:00Z",
+                content:
+                  "Another sample article content for visual regression testing.",
+              },
+            ],
+          }),
+        });
+      });
+
       await page
         .getByRole("searchbox", { name: "Search for news" })
         .fill("technology");
