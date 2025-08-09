@@ -7,10 +7,11 @@ import SuccessModal from "./SuccessModal";
 import SavedNews from "./SavedNews";
 import SavedNewsHeader from "./SavedNewsHeader";
 import ProtectedRoute from "./ProtectedRoute";
+import Preloader from "./Preloader";
 
 import { getSearchResults } from "../utils/newsApi";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 import { useModal } from "../hooks/useModal";
@@ -21,6 +22,7 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [searchAttempted, setSearchAttempted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const {
     savedArticles,
@@ -31,6 +33,7 @@ function App() {
     logout,
     saveArticle,
     deleteArticle,
+    authLoading,
   } = useCurrentUser();
 
   const { activeModal, modalIsOpen, handleModalOpen, handleModalClose } =
@@ -59,7 +62,9 @@ function App() {
     setKeywords((prev) => {
       // Use Set for efficient deduplication
       const existingKeywords = new Set(prev);
-      const newKeywords = keywords.filter(keyword => !existingKeywords.has(keyword));
+      const newKeywords = keywords.filter(
+        (keyword) => !existingKeywords.has(keyword)
+      );
       return [...prev, ...newKeywords];
     });
   };
@@ -88,6 +93,17 @@ function App() {
   const handleDeleteArticle = async (url) => {
     await authApi.execute(deleteArticle, url);
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!authLoading) {
+        setIsInitialLoad(false);
+      }
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [authLoading]);
+
+  if (isInitialLoad) return <Preloader text="Loading..." />;
 
   return (
     <>
