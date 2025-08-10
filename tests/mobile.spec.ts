@@ -175,14 +175,6 @@ test.describe("Mobile - News Explorer App", () => {
     });
 
     test("should handle authenticated mobile navigation", async ({ page }) => {
-      const navigation = page.getByRole("navigation", {
-        name: "Main navigation",
-      });
-      const hamburgerButton = navigation.getByTestId("mobile-menu-btn");
-
-      // Open mobile menu
-      await hamburgerButton.click();
-
       // Login first
       await loginUser(page);
 
@@ -500,18 +492,24 @@ test.describe("Mobile - News Explorer App", () => {
     test.beforeEach(async ({ page }) => {
       // Reset user state before each test to ensure a clean state
       const { apiBaseUrl } = testConfig;
-      
+
       // Try to reset user state, but handle potential race conditions
       try {
-        const response = await page.request.post(`${apiBaseUrl}/testing/reset-user`);
+        const response = await page.request.post(
+          `${apiBaseUrl}/testing/reset-user`
+        );
         if (!response.ok()) {
           // If reset fails, try logging in directly
-          console.warn(`Failed to reset user state: ${response.statusText()}. Attempting direct login.`);
+          console.warn(
+            `Failed to reset user state: ${response.statusText()}. Attempting direct login.`
+          );
         }
       } catch (error) {
-        console.warn(`Error resetting user state: ${error}. Attempting direct login.`);
+        console.warn(
+          `Error resetting user state: ${error}. Attempting direct login.`
+        );
       }
-      
+
       // Login the test user
       await loginUser(page);
     });
@@ -625,7 +623,7 @@ test.describe("Mobile - News Explorer App", () => {
       await expect(page.getByTestId("preloader")).not.toBeVisible({
         timeout: 10000,
       });
-      
+
       await expect(page).toHaveScreenshot("mobile-homepage-full.png", {
         fullPage: true,
       });
@@ -961,6 +959,7 @@ test.describe("Mobile - News Explorer App", () => {
 
   test.describe("Mobile Accessibility", () => {
     test("should have proper heading hierarchy", async ({ page }) => {
+      await expect(page.getByTestId("preloader")).not.toBeVisible();
       // Check heading structure
       const h1Count = await page.locator("h1").count();
       expect(h1Count).toBe(1); // Should have exactly one h1
