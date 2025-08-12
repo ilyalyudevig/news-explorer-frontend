@@ -1,13 +1,6 @@
 import { test, expect, devices } from "@playwright/test";
 import { testConfig } from "./config/test-config";
-import {
-  loginUser,
-  logoutUser,
-  verifyAuthenticatedState,
-  verifyUnauthenticatedState,
-} from "./helpers/auth-helpers";
-
-import { navigateToSignIn } from "./helpers/auth-helpers";
+import { loginUser, verifyUnauthenticatedState } from "./helpers/auth-helpers";
 
 // Mobile test configuration for iPhone viewport
 test.use({ ...devices["iPhone SE"] });

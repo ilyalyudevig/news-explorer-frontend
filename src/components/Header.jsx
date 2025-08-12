@@ -33,9 +33,10 @@ function Header({
       <img
         className="header__bg-image"
         src={backgroundImg}
-        alt=""
+        alt="Background image"
         aria-hidden="true"
         fetchPriority="high"
+        data-testid="header-bg-image"
       />
     </header>
   );
