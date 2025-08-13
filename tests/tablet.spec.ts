@@ -716,9 +716,10 @@ test.describe("Tablet - News Explorer App", () => {
       const bookmarkButton = firstArticle.getByTestId("save-button");
       await bookmarkButton.click();
 
-      // Wait for save operation
-      await page.waitForTimeout(1000);
-
+      // Wait for save operation to complete by checking for visual feedback
+      await expect(firstArticle.getByTestId("delete-button")).toBeVisible({
+        timeout: 5000,
+      });
       // Navigate to saved articles to verify
       await page.getByTestId("nav-link-savednews").click();
 
@@ -728,9 +729,17 @@ test.describe("Tablet - News Explorer App", () => {
       expect(updatedCount).toBeGreaterThanOrEqual(initialCount);
 
       // Remove saved article to restore the initial state
-      await updatedArticles.first().getByTestId("delete-button").click();
+      const firstSavedArticle = updatedArticles.first();
+      const deleteButton = firstSavedArticle.getByTestId("delete-button");
+
+      // Check that delete button is visible before clicking
+      await expect(deleteButton).toBeVisible({ timeout: 5000 });
+      await deleteButton.click();
+
+      // Wait for the article to be removed
+      await expect(firstSavedArticle).not.toBeVisible({ timeout: 5000 });
+
       updatedCount = await updatedArticles.count();
-      await page.waitForLoadState("networkidle");
       expect(updatedCount).toEqual(initialCount);
     });
 
