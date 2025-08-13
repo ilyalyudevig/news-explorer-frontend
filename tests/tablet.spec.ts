@@ -1268,7 +1268,7 @@ test.describe("Tablet - News Explorer App", () => {
       ).toBeVisible();
 
       // Images should load properly
-      const heroImage = page.getByTestId("iheader-bg-imagemg");
+      const heroImage = page.getByTestId("header-bg-image");
       if ((await heroImage.count()) > 0) {
         await expect(heroImage).toBeVisible();
       }
