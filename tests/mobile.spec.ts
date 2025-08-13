@@ -8,6 +8,7 @@ test.use({ ...devices["iPhone SE"] });
 test.describe("Mobile - News Explorer App", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(testConfig.baseUrl);
+    await expect(page.getByTestId("preloader")).not.toBeVisible();
   });
 
   test.describe("Layout & Responsive Design", () => {
