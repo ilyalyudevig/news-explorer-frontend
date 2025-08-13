@@ -1,11 +1,6 @@
 import { test, expect, devices } from "@playwright/test";
 import { testConfig } from "./config/test-config";
-import {
-  loginUser,
-  logoutUser,
-  verifyAuthenticatedState,
-  verifyUnauthenticatedState,
-} from "./helpers/auth-helpers";
+import { loginUser, verifyUnauthenticatedState } from "./helpers/auth-helpers";
 import { resetUserState } from "./helpers/state-helpers";
 
 // Tablet test configuration for iPad viewport
@@ -14,6 +9,7 @@ test.use({ ...devices["iPad Pro"] });
 test.describe("Tablet - News Explorer App", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(testConfig.baseUrl);
+    await expect(page.getByTestId("preloader")).not.toBeVisible();
   });
 
   test.describe("Tablet Layout & Responsive Design", () => {
@@ -539,7 +535,6 @@ test.describe("Tablet - News Explorer App", () => {
 
   test.describe("Tablet Accessibility", () => {
     test("should be accessible with keyboard navigation", async ({ page }) => {
-      await expect(page.getByTestId("preloader")).not.toBeVisible();
       // Test tab navigation through main elements
       await page.keyboard.press("Tab"); // Should focus logo
       await expect(page.locator(":focus")).toBeVisible();
@@ -605,9 +600,6 @@ test.describe("Tablet - News Explorer App", () => {
       const emailInput = signinModal.getByTestId("email-input");
       const passwordInput = signinModal.getByTestId("password-input");
       const submitButton = signinModal.getByTestId("form-submit-button");
-      const closeButton = signinModal.getByRole("button", {
-        name: "Close modal",
-      });
 
       // Test tab navigation within modal
       await expect(emailInput).toBeFocused(); // Focus on the first input
@@ -632,6 +624,7 @@ test.describe("Tablet - News Explorer App", () => {
       // Reset user state before each test to ensure a clean state
       await resetUserState(page);
       await page.goto(testConfig.baseUrl);
+      await expect(page.getByTestId("preloader")).not.toBeVisible();
       await loginUser(page);
     });
 
