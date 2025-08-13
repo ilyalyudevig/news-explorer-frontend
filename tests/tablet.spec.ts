@@ -730,6 +730,7 @@ test.describe("Tablet - News Explorer App", () => {
       // Remove saved article to restore the initial state
       await updatedArticles.first().getByTestId("delete-button").click();
       updatedCount = await updatedArticles.count();
+      await page.waitForLoadState("networkidle");
       expect(updatedCount).toEqual(initialCount);
     });
 
