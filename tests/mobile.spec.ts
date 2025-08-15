@@ -1,13 +1,6 @@
 import { test, expect, devices } from "@playwright/test";
 import { testConfig } from "./config/test-config";
-import {
-  loginUser,
-  logoutUser,
-  verifyAuthenticatedState,
-  verifyUnauthenticatedState,
-} from "./helpers/auth-helpers";
-
-import { navigateToSignIn } from "./helpers/auth-helpers";
+import { loginUser, verifyUnauthenticatedState } from "./helpers/auth-helpers";
 
 // Mobile test configuration for iPhone viewport
 test.use({ ...devices["iPhone SE"] });
@@ -15,6 +8,8 @@ test.use({ ...devices["iPhone SE"] });
 test.describe("Mobile - News Explorer App", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(testConfig.baseUrl);
+    await expect(page.getByTestId("preloader")).not.toBeVisible();
+    await page.waitForLoadState("networkidle");
   });
 
   test.describe("Layout & Responsive Design", () => {
@@ -175,14 +170,6 @@ test.describe("Mobile - News Explorer App", () => {
     });
 
     test("should handle authenticated mobile navigation", async ({ page }) => {
-      const navigation = page.getByRole("navigation", {
-        name: "Main navigation",
-      });
-      const hamburgerButton = navigation.getByTestId("mobile-menu-btn");
-
-      // Open mobile menu
-      await hamburgerButton.click();
-
       // Login first
       await loginUser(page);
 
@@ -500,18 +487,24 @@ test.describe("Mobile - News Explorer App", () => {
     test.beforeEach(async ({ page }) => {
       // Reset user state before each test to ensure a clean state
       const { apiBaseUrl } = testConfig;
-      
+
       // Try to reset user state, but handle potential race conditions
       try {
-        const response = await page.request.post(`${apiBaseUrl}/testing/reset-user`);
+        const response = await page.request.post(
+          `${apiBaseUrl}/testing/reset-user`
+        );
         if (!response.ok()) {
           // If reset fails, try logging in directly
-          console.warn(`Failed to reset user state: ${response.statusText()}. Attempting direct login.`);
+          console.warn(
+            `Failed to reset user state: ${response.statusText()}. Attempting direct login.`
+          );
         }
       } catch (error) {
-        console.warn(`Error resetting user state: ${error}. Attempting direct login.`);
+        console.warn(
+          `Error resetting user state: ${error}. Attempting direct login.`
+        );
       }
-      
+
       // Login the test user
       await loginUser(page);
     });
@@ -621,12 +614,55 @@ test.describe("Mobile - News Explorer App", () => {
 
   test.describe("Mobile Visual Regression", () => {
     test("should match mobile homepage screenshot", async ({ page }) => {
+      // Wait for the Preloader to be hidden before taking screenshot
+      await expect(page.getByTestId("preloader")).not.toBeVisible({
+        timeout: 10000,
+      });
+
       await expect(page).toHaveScreenshot("mobile-homepage-full.png", {
         fullPage: true,
       });
     });
 
     test("should match mobile search results screenshot", async ({ page }) => {
+      // Mock the API response to ensure consistent search results for visual regression testing
+      await page.route("**/everything**", async (route) => {
+        await route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify({
+            status: "ok",
+            totalResults: 2,
+            articles: [
+              {
+                source: { id: null, name: "Tech News" },
+                author: "John Doe",
+                title: "Latest Technology Trends in 2025",
+                description:
+                  "Explore the latest technology trends that are shaping the future in 2025.",
+                url: "https://example.com/article1",
+                urlToImage: "https://placehold.co/600x400/000000/FFFFFF/png",
+                publishedAt: "2025-01-01T12:00:00Z",
+                content:
+                  "This is a sample article content for visual regression testing purposes.",
+              },
+              {
+                source: { id: null, name: "Digital World" },
+                author: "Jane Smith",
+                title: "The Impact of AI on Modern Development",
+                description:
+                  "How artificial intelligence is revolutionizing the way we approach software development.",
+                url: "https://example.com/article2",
+                urlToImage: "https://placehold.co/600x400/000000/FFFFFF/png",
+                publishedAt: "2025-01-02T14:30:00Z",
+                content:
+                  "Another sample article content for visual regression testing.",
+              },
+            ],
+          }),
+        });
+      });
+
       await page
         .getByRole("searchbox", { name: "Search for news" })
         .fill("technology");
@@ -918,6 +954,7 @@ test.describe("Mobile - News Explorer App", () => {
 
   test.describe("Mobile Accessibility", () => {
     test("should have proper heading hierarchy", async ({ page }) => {
+      await expect(page.getByTestId("preloader")).not.toBeVisible();
       // Check heading structure
       const h1Count = await page.locator("h1").count();
       expect(h1Count).toBe(1); // Should have exactly one h1

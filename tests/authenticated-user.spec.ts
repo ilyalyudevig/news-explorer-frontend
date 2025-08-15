@@ -1,10 +1,12 @@
 import { test, expect } from "@playwright/test";
+import { testConfig } from "./config/test-config";
 import { loginUser, verifyAuthenticatedState } from "./helpers/auth-helpers";
 import { resetUserState } from "./helpers/state-helpers";
 
 test.describe.serial("Authenticated User Functionality", () => {
   test.beforeEach(async ({ page }) => {
     await resetUserState(page);
+    await page.goto(testConfig.baseUrl);
     await loginUser(page);
   });
 
