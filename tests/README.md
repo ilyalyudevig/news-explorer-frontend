@@ -8,6 +8,7 @@ This directory contains the end-to-end (E2E) test suite for the News Explorer ap
 - [Project Structure](#project-structure)
   - [Test Suites](#test-suites)
   - [Configuration Files](#configuration-files)
+  - [Fixtures](#fixtures)
   - [Helper Files](#helper-files)
   - [Test States](#test-states)
 - [Test Suite Descriptions](#test-suite-descriptions)
@@ -56,12 +57,17 @@ These are the main test files, each focusing on a specific area of the applicati
 - `config/test-config.ts`: Provides centralized configuration for the tests, including the base URL, test user credentials, and environment-specific settings (e.g., `development` vs. `staging`).
 - `config/mobile-tablet-config.ts`: Defines a comprehensive set of constants and configurations for responsive testing, including device viewport dimensions, user agents, performance budgets, and accessibility requirements for various mobile and tablet devices.
 
+### Fixtures
+
+- `fixtures/resetUserFixture.ts`: Defines an automatic `resetUser` fixture that runs before each test. This fixture calls a dedicated API endpoint (`/testing/reset-user`) to reset the test user's data on the backend, ensuring that each test runs in a clean, isolated environment.
+
 ### Helper Files
 
 To avoid code duplication and improve readability, common actions are abstracted into helper functions.
 
 - `helpers/auth-helpers.ts`: Contains reusable functions for common authentication tasks like `loginUser`, `logoutUser`, and verifying UI states (`verifyAuthenticatedState`, `verifyUnauthenticatedState`).
 - `helpers/mobile-tablet-helpers.ts`: Provides utilities for responsive testing, such as opening the mobile navigation, verifying touch target sizes, and simulating device-specific interactions.
+- `helpers/state-helpers.ts`: Includes functions for programmatically managing application state, such as `resetUserState`, which can be called manually within tests to reset the user's data.
 
 ### Test States
 
@@ -81,7 +87,7 @@ This suite focuses on the user authentication process.
 
 ### `authenticated-user.spec.ts`
 
-This suite tests features that are only available to authenticated users.
+This suite tests features that are only available to authenticated users. It relies on the `resetUser` fixture to ensure a consistent state for each test.
 
 - **Authenticated State**: Verifies that the navigation and UI correctly reflect an authenticated user's status (e.g., showing a "Saved articles" link and a logout button with the user's name).
 - **Article Bookmarking**: Tests the ability to bookmark and unbookmark articles from the search results.
