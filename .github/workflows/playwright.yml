@@ -43,6 +43,24 @@ jobs:
           TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
           TEST_USER_NAME: ${{ secrets.TEST_USER_NAME }}
 
+      - name: Run Desktop Firefox E2E
+        run: npm run test:staging-desktop-firefox
+        env:
+          CI: true
+          VITE_NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+          TEST_USER_NAME: ${{ secrets.TEST_USER_NAME }}
+
+      - name: Run Desktop Safari E2E
+        run: npm run test:staging-desktop-webkit
+        env:
+          CI: true
+          VITE_NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+          TEST_USER_NAME: ${{ secrets.TEST_USER_NAME }}
+
       - name: Run Mobile Safari - iPhone 13 tests
         run: npm run test:staging-mobile-safari
         env:

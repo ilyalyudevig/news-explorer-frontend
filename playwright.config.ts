@@ -33,7 +33,7 @@ export default defineConfig({
   },
   expect: {
     toHaveScreenshot: {
-      threshold: 0.02, // 2% default threshold for all visual tests
+      maxDiffPixelRatio: 0.02, // 2% default threshold for all visual tests
     },
   },
 

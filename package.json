@@ -17,6 +17,8 @@
     "preview": "vite preview",
     "test": "npx playwright test",
     "test:staging-desktop-chrome": "NODE_ENV=staging npx playwright test auth.spec.ts authenticated-user.spec.ts news-search.spec.ts --project=chromium",
+    "test:staging-desktop-firefox": "NODE_ENV=staging npx playwright test auth.spec.ts authenticated-user.spec.ts news-search.spec.ts --project=firefox",
+    "test:staging-desktop-safari": "NODE_ENV=staging npx playwright test auth.spec.ts authenticated-user.spec.ts news-search.spec.ts --project=webkit",
     "test:staging-mobile": "NODE_ENV=staging npx playwright test mobile.spec.ts",
     "test:staging-tablet": "NODE_ENV=staging npx playwright test tablet.spec.ts",
     "test:staging-mobile-chrome": "NODE_ENV=staging npx playwright test --project='Mobile Chrome - iPhone SE'",
