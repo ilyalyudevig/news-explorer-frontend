@@ -16,6 +16,7 @@ To get a local copy up and running, follow these simple steps.
 ### Prerequisites
 
 - npm
+
   ```sh
   npm install npm@latest -g
   ```
@@ -23,17 +24,23 @@ To get a local copy up and running, follow these simple steps.
 ### Installation
 
 1. Clone the repo
+
    ```sh
    git clone https://github.com/ilyalyudevig/news-explorer-frontend.git
    ```
+
 2. Install NPM packages
+
    ```sh
    npm install
    ```
+
 3. Start the development server
+
    ```sh
    npm run dev
    ```
+
    The application will be available at `http://localhost:3000`.
 
 ## Available Scripts
@@ -52,14 +59,66 @@ In the project directory, you can run:
 This project uses [Playwright](https://playwright.dev/) for end-to-end testing. The following test scripts are available:
 
 - `npm test`: Runs all Playwright tests.
-- `npm run test:staging-desktop`: Runs tests for desktop on the staging environment.
-- `npm run test:staging-mobile`: Runs tests for mobile on the staging environment.
-- `npm run test:staging-tablet`: Runs tests for tablet on the staging environment.
-- `npm run test:mobile-tablet`: Runs tests for both mobile and tablet devices.
+- `npm run test:staging-desktop-chrome`: Runs desktop tests on the staging environment.
+- `npm run test:staging-mobile`: Runs generic mobile tests on the staging environment.
+- `npm run test:staging-tablet`: Runs generic tablet tests on the staging environment.
+- `npm run test:staging-mobile-chrome`: Runs tests on a mobile Chrome device profile.
+- `npm run test:staging-mobile-safari`: Runs tests on a mobile Safari device profile.
+- `npm run test:staging-tablet-chrome`: Runs tests on a tablet Chrome device profile.
+- `npm run test:staging-tablet-safari`: Runs tests on a tablet Safari device profile.
 - `npm run test:all-devices`: Runs tests across a wide range of mobile and tablet devices.
 - `npm run test:ui`: Runs tests with the Playwright UI.
 - `npm run test:debug`: Runs tests in debug mode.
 - `npm run test:headed`: Runs tests in headed mode.
+
+## Application Architecture
+
+This is a **Single Page Application (SPA)** built with **React** and **Vite**. It uses `react-router-dom` for client-side routing and the React Context API for global state management. The application communicates with two external services: a third-party News API for fetching articles and a main backend API for user authentication and data persistence.
+
+```mermaid
+graph TD
+    subgraph User
+        A[User]
+    end
+
+    subgraph Browser
+        B(React SPA - News Explorer)
+    end
+
+    subgraph External Services
+        C[News API]
+        D[Main Backend API]
+    end
+
+    subgraph Local Storage
+        E[localStorage - JWT]
+    end
+
+    A -- Interacts with --> B
+
+    B -- Search Query --> C
+    C -- Returns Articles --> B
+
+    B -- Login/Register --> D
+    D -- Returns JWT --> B
+    B -- Stores Token --> E
+
+    subgraph Authenticated Actions
+        B -- Save/Delete Article (with JWT from Local Storage) --> D
+        D -- Confirms Action --> B
+    end
+
+    subgraph App Structure
+        B --> F[main.jsx - Entry Point]
+        F --> G[CurrentUserProvider]
+        G --> H[App.jsx]
+        H --> I{React Router}
+        I -- Route / --> J[HomePage: Header, Main, Footer]
+        I -- Route /saved-news --> K[SavedNewsPage: SavedNewsHeader, SavedNews]
+
+        H -- Manages State & Logic --> L[Modals, API Calls, etc.]
+    end
+```
 
 ## Interesting Techniques
 
